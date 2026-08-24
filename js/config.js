@@ -7,5 +7,5 @@
 //   2) YouTube Data API v3 únicamente.
 
 window.CGO_CONFIG = Object.freeze({
-  YOUTUBE_API_KEY: "PEGA_AQUI_TU_API_KEY"
+  YOUTUBE_API_KEY: "AIzaSyBJJ92vcUhVLZEP9hzZSlNcMQPFrSWoIO0"
 });
