@@ -1,4 +1,4 @@
-const CACHE_NAME = "cgo-music-pwa-v9-refined-mobile";
+const CACHE_NAME = "cgo-music-pwa-v10-list-actions";
 
 const PRECACHE_URLS = [
   "./",

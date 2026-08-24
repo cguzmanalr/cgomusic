@@ -84,13 +84,27 @@
         <div class="library-toolbar">
           <div>
             <span class="eyebrow" id="collectionEyebrow">COLECCIÓN EN INGLÉS</span>
-            <h2 id="libraryTitle">Todas las décadas</h2>
+            <h2 id="libraryTitle"></h2>
             <p id="songCount">0 canciones</p>
           </div>
           <div class="toolbar-actions">
             <button id="addSongBtn" class="secondary-btn add-song-btn" type="button">＋ Agregar canción</button>
-            <button id="shuffleAllBtn" class="primary-btn playlist-action-btn" type="button"><span aria-hidden="true">🔀</span><span>Aleatorio</span></button>
-            <button id="playAllBtn" class="primary-btn playlist-action-btn" type="button"><span aria-hidden="true">▶</span><span>Lista</span></button>
+            <button id="shuffleAllBtn" class="primary-btn playlist-action-btn" type="button">
+              <span class="playlist-action-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 3h5v5"></path>
+                  <path d="M4 20L21 3"></path>
+                  <path d="M21 16v5h-5"></path>
+                  <path d="M15 15l6 6"></path>
+                  <path d="M4 4l5 5"></path>
+                </svg>
+              </span>
+              <span>Aleatorio</span>
+            </button>
+            <button id="playAllBtn" class="primary-btn playlist-action-btn" type="button">
+              <span class="playlist-action-icon" aria-hidden="true">▶</span>
+              <span>Lista</span>
+            </button>
           </div>
         </div>
 

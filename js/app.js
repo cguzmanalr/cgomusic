@@ -1845,7 +1845,7 @@ function updateLibraryHeader(query) {
     `COLECCIÓN EN ${languageLabel(selectedLanguage).toUpperCase()}`;
 
   if (selectedDecade === "all") {
-    $("libraryTitle").textContent = "Todas las décadas";
+    $("libraryTitle").textContent = "";
     const languageSongs = catalog.filter(song => song.language === selectedLanguage);
     const verified = languageSongs.filter(song => song.verified).length;
 
