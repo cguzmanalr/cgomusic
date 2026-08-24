@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="CGO Music">
   <meta name="application-name" content="CGO Music">
-  <meta name="description" content="CGO Music: grandes canciones por décadas con reproductor híbrido de audio y YouTube.">
+  <meta name="description" content="CGO Music: catálogo musical por décadas con Mi Música y reproductor híbrido de audio y YouTube.">
   <title>CGO Music</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -35,15 +35,14 @@
       <button id="clearSearchBtn" class="clear-search" type="button" title="Limpiar búsqueda">×</button>
     </div>
 
-    <div class="header-badge">50s → 2000s</div>
+    <div class="header-badge">Catálogo + Mi Música</div>
   </header>
 
   <main class="app-main">
     <section class="hero">
-      <div>
+      <div class="hero-copy">
         <span class="eyebrow">COLECCIONES</span>
-        <h1>Grandes canciones de seis décadas.</h1>
-        <p>Catálogo Top 10 Chile/UK con verificación documental visible por canción.</p>
+        <p>Catálogo Top 10 Chile/UK y canciones agregadas por ti.</p>
       </div>
       <div class="hero-stats">
         <div><strong id="catalogTotal">0</strong><span>canciones cargadas</span></div>
@@ -61,6 +60,10 @@
         <span class="flag">🇨🇱</span>
         <span><strong>Español</strong><small>600 canciones</small></span>
       </button>
+      <button class="collection-tab" data-language="custom">
+        <span class="flag">♥</span>
+        <span><strong>Mi Música</strong><small id="customTabCount">0 canciones agregadas</small></span>
+      </button>
     </nav>
 
     <section class="content-grid">
@@ -72,7 +75,9 @@
             <p id="songCount">0 canciones</p>
           </div>
           <div class="toolbar-actions">
-            <button id="installAppBtn" class="secondary-btn install-app-btn" type="button" hidden>⬇ Instalar</button>
+            <button id="addSongBtn" class="secondary-btn add-song-btn" type="button">＋ Agregar canción</button>
+            <button id="importSongsBtn" class="secondary-btn custom-only-action" type="button" hidden>Importar</button>
+            <button id="exportSongsBtn" class="secondary-btn custom-only-action" type="button" hidden>Exportar</button>
             <button id="shuffleAllBtn" class="secondary-btn" type="button">🔀 Aleatorio</button>
             <button id="playAllBtn" class="primary-btn" type="button">▶ Reproducir lista</button>
           </div>
@@ -86,6 +91,9 @@
           <button class="decade" data-decade="80s">80s</button>
           <button class="decade" data-decade="90s">90s</button>
           <button class="decade" data-decade="2000s">2000s</button>
+          <button class="decade custom-decade" data-decade="2010s">2010s</button>
+          <button class="decade custom-decade" data-decade="2020s">2020s</button>
+          <button class="decade custom-decade" data-decade="other">Otras</button>
         </div>
 
         <div class="list-head">
@@ -97,6 +105,7 @@
           <div class="empty-icon">♫</div>
           <h3>No encontramos canciones</h3>
           <p>Prueba otra década, colección o búsqueda.</p>
+          <button id="emptyAddBtn" class="secondary-btn empty-add-btn" type="button" hidden>＋ Buscar en YouTube y agregar</button>
         </div>
       </div>
 
@@ -139,6 +148,88 @@
       </aside>
     </section>
   </main>
+
+
+  <dialog id="customSongDialog" class="song-dialog">
+    <form id="customSongForm" class="song-dialog-card" method="dialog" novalidate>
+      <div class="song-dialog-head">
+        <div>
+          <span class="eyebrow">MI MÚSICA</span>
+          <h2 id="customSongDialogTitle">Agregar canción</h2>
+        </div>
+        <button id="closeSongDialogBtn" class="dialog-close" type="button" aria-label="Cerrar">×</button>
+      </div>
+
+      <p class="song-dialog-help">
+        Si la canción no está en el catálogo, búscala en YouTube, copia la URL del video que quieras usar y guárdala aquí.
+      </p>
+
+      <div class="song-form-grid">
+        <label class="field field-wide">
+          <span>Título *</span>
+          <input id="customTitle" name="title" type="text" maxlength="180" required autocomplete="off">
+        </label>
+        <label class="field field-wide">
+          <span>Artista *</span>
+          <input id="customArtist" name="artist" type="text" maxlength="180" required autocomplete="off">
+        </label>
+        <label class="field">
+          <span>Año</span>
+          <input id="customYear" name="year" type="number" min="1900" max="2100" inputmode="numeric">
+        </label>
+        <label class="field">
+          <span>Idioma *</span>
+          <select id="customLanguage" name="language" required>
+            <option value="english">Inglés</option>
+            <option value="spanish">Español</option>
+          </select>
+        </label>
+        <label class="field field-wide">
+          <span>Década *</span>
+          <select id="customDecade" name="decade" required>
+            <option value="50s">50s</option>
+            <option value="60s">60s</option>
+            <option value="70s">70s</option>
+            <option value="80s">80s</option>
+            <option value="90s">90s</option>
+            <option value="2000s">2000s</option>
+            <option value="2010s">2010s</option>
+            <option value="2020s">2020s</option>
+            <option value="other">Otra</option>
+          </select>
+        </label>
+
+        <div class="field field-wide youtube-field">
+          <span>Video de YouTube</span>
+          <div class="url-action-row">
+            <input id="customYoutubeUrl" name="youtubeUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/watch?v=...">
+            <button id="searchYouTubeBtn" class="secondary-btn" type="button">Buscar en YouTube</button>
+          </div>
+          <small>Elige tú mismo la versión correcta y pega aquí su enlace.</small>
+        </div>
+
+        <label class="field field-wide advanced-field">
+          <span>Audio directo (opcional)</span>
+          <input id="customAudioUrl" name="audioUrl" type="url" inputmode="url" placeholder="https://.../cancion.m4a">
+          <small>Si existe, CGO Music lo usará primero y podrá continuar con la pantalla bloqueada.</small>
+        </label>
+
+        <label class="field field-wide advanced-field">
+          <span>Carátula (opcional)</span>
+          <input id="customArtworkUrl" name="artworkUrl" type="url" inputmode="url" placeholder="https://.../caratula.jpg">
+        </label>
+      </div>
+
+      <p id="customSongFormStatus" class="form-status" aria-live="polite"></p>
+
+      <div class="song-dialog-actions">
+        <button id="cancelSongBtn" class="secondary-btn" type="button">Cancelar</button>
+        <button id="saveSongBtn" class="primary-btn" type="submit">Guardar en Mi Música</button>
+      </div>
+    </form>
+  </dialog>
+
+  <input id="importSongsInput" type="file" accept="application/json,.json" hidden>
 
   <section class="player-dock" aria-label="Reproductor">
     <div class="dock-track">

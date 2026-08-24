@@ -1,0 +1,28 @@
+CGO MUSIC — ACTUALIZACIÓN MI MÚSICA
+
+Sube el CONTENIDO de esta carpeta a la raíz de tu repositorio cgոմusic y permite que GitHub reemplace los archivos existentes.
+
+Archivos que se reemplazan:
+- index.html
+- manifest.webmanifest
+- sw.js
+- css/styles.css
+- js/app.js
+
+IMPORTANTE:
+- Esta actualización NO contiene la carpeta data/.
+- No borres ni reemplaces data/: ahí están tus 1.200 canciones y los youtubeId/URL que completaste con el BAT.
+- La nueva sección Mi Música se guarda localmente en cada navegador/dispositivo.
+- Usa Exportar/Importar para copiar Mi Música entre iPhone, Android y PC.
+
+NOVEDADES:
+- + Agregar canción
+- Buscar en YouTube y pegar URL
+- Mi Música
+- Editar / Eliminar
+- Importar / Exportar JSON
+- 2010s, 2020s y Otras para canciones personales
+- Búsqueda global incluye Mi Música
+- Sin botón Instalar
+- Eliminado el texto "Grandes canciones de seis décadas."
+- Service Worker actualizado a v3 para forzar la nueva versión.

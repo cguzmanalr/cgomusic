@@ -1,7 +1,7 @@
 {
   "name": "CGO Music",
   "short_name": "CGO Music",
-  "description": "CGO Music: catálogo musical con reproducción híbrida, PWA y controles multimedia.",
+  "description": "CGO Music: catálogo por décadas, Mi Música y reproductor híbrido para iPhone y Android.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

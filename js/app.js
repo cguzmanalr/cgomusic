@@ -15,6 +15,9 @@ let progressTimer = null;
 let selectedDecade = "all";
 let selectedLanguage = "english";
 let globalSearchActive = false;
+let customSongs = [];
+let editingCustomSongId = null;
+const CUSTOM_SONGS_STORAGE_KEY = "cgoMusicCustomSongsV1";
 
 // Reproductor estático: usa únicamente IDs guardados en los JSON.
 let stoppedByUser = true;
@@ -31,28 +34,9 @@ const $ = (id) => document.getElementById(id);
 
 // =========================================================
 // PWA + Media Session (iPhone / Android)
+// La instalación sigue disponible desde el navegador, pero CGO Music ya no
+// muestra un botón de instalación dentro de la interfaz.
 // =========================================================
-let deferredInstallPrompt = null;
-
-function isIosDevice() {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-}
-
-function isAndroidDevice() {
-  return /Android/i.test(navigator.userAgent);
-}
-
-function isStandaloneMode() {
-  return window.matchMedia?.("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true;
-}
-
-function setInstallButtonVisible(visible) {
-  const button = $("installAppBtn");
-  if (button) button.hidden = !visible;
-}
-
 async function registerServiceWorker() {
   if (!("serviceWorker" in navigator) || isFileProtocol()) return;
 
@@ -61,68 +45,6 @@ async function registerServiceWorker() {
   } catch (error) {
     console.warn("No se pudo registrar el Service Worker:", error);
   }
-}
-
-function setupInstallExperience() {
-  if (isStandaloneMode()) {
-    setInstallButtonVisible(false);
-    return;
-  }
-
-  // iOS no entrega beforeinstallprompt: mostramos nuestro botón con instrucciones.
-  if (isIosDevice()) {
-    setInstallButtonVisible(true);
-  }
-
-  // Android puede tardar unos segundos en considerar la PWA instalable.
-  if (isAndroidDevice()) {
-    setInstallButtonVisible(true);
-  }
-
-  window.addEventListener("beforeinstallprompt", event => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    setInstallButtonVisible(true);
-  });
-
-  window.addEventListener("appinstalled", () => {
-    deferredInstallPrompt = null;
-    setInstallButtonVisible(false);
-    setStatus("CGO Music quedó instalada como aplicación.");
-  });
-
-  $("installAppBtn")?.addEventListener("click", async () => {
-    if (isStandaloneMode()) {
-      setInstallButtonVisible(false);
-      return;
-    }
-
-    if (deferredInstallPrompt) {
-      deferredInstallPrompt.prompt();
-      try {
-        await deferredInstallPrompt.userChoice;
-      } finally {
-        deferredInstallPrompt = null;
-      }
-      return;
-    }
-
-    if (isIosDevice()) {
-      alert(
-        "Para instalar CGO Music en iPhone:\n\n" +
-        "1. Ábrela en Safari.\n" +
-        "2. Pulsa Compartir (cuadrado con flecha hacia arriba).\n" +
-        "3. Elige ‘Añadir a pantalla de inicio’.\n" +
-        "4. Abre CGO Music desde el nuevo icono."
-      );
-      return;
-    }
-
-    alert(
-      "En Android abre el menú del navegador y elige ‘Instalar aplicación’ o " +
-      "‘Añadir a pantalla principal’. Si esa opción todavía no aparece, recarga la página."
-    );
-  });
 }
 
 function setMediaAction(action, handler) {
@@ -328,7 +250,7 @@ function updateMediaSessionMetadata() {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: currentSong.title,
       artist: currentSong.artist,
-      album: `CGO Music · ${currentSong.decade || "Grandes canciones"}`,
+      album: `CGO Music · ${currentSong.custom ? "Mi Música" : (currentSong.decade || "Catálogo")}`,
       artwork
     });
   } catch (error) {
@@ -551,6 +473,317 @@ function languageLabel(lang) {
   return lang === "spanish" ? "Español" : "Inglés";
 }
 
+
+function makeCustomSongId() {
+  if (window.crypto?.randomUUID) return `custom-${window.crypto.randomUUID()}`;
+  return `custom-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function inferDecadeFromYear(year) {
+  const value = Number(year);
+  if (!Number.isFinite(value)) return "other";
+  if (value >= 1950 && value <= 1959) return "50s";
+  if (value >= 1960 && value <= 1969) return "60s";
+  if (value >= 1970 && value <= 1979) return "70s";
+  if (value >= 1980 && value <= 1989) return "80s";
+  if (value >= 1990 && value <= 1999) return "90s";
+  if (value >= 2000 && value <= 2009) return "2000s";
+  if (value >= 2010 && value <= 2019) return "2010s";
+  if (value >= 2020 && value <= 2029) return "2020s";
+  return "other";
+}
+
+function normalizeCustomSong(song) {
+  const language = song?.language === "spanish" ? "spanish" : "english";
+  const year = song?.year ? Number(song.year) : null;
+  const youtubeId = String(song?.youtubeId || videoIdFromUrl(song?.youtubeUrl) || "").trim();
+  const youtubeUrl = youtubeId
+    ? `https://www.youtube.com/watch?v=${youtubeId}`
+    : String(song?.youtubeUrl || "").trim();
+
+  return {
+    id: String(song?.id || makeCustomSongId()),
+    title: String(song?.title || "").trim(),
+    artist: String(song?.artist || "").trim(),
+    year: Number.isFinite(year) ? year : null,
+    language,
+    decade: String(song?.decade || inferDecadeFromYear(year)),
+    youtubeId: /^[A-Za-z0-9_-]{11}$/.test(youtubeId) ? youtubeId : "",
+    youtubeUrl,
+    youtubeAlternatives: Array.isArray(song?.youtubeAlternatives) ? song.youtubeAlternatives : [],
+    audioUrl: String(song?.audioUrl || "").trim(),
+    artworkUrl: String(song?.artworkUrl || "").trim(),
+    verified: false,
+    chart: "",
+    chartPeak: null,
+    position: null,
+    custom: true,
+    addedAt: song?.addedAt || new Date().toISOString(),
+    updatedAt: song?.updatedAt || new Date().toISOString()
+  };
+}
+
+function loadCustomSongs() {
+  try {
+    const raw = localStorage.getItem(CUSTOM_SONGS_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    const items = Array.isArray(parsed) ? parsed : parsed?.songs;
+    if (!Array.isArray(items)) return [];
+    return items
+      .map(normalizeCustomSong)
+      .filter(song => song.title && song.artist && (song.audioUrl || staticVideoCandidates(song).length));
+  } catch (error) {
+    console.warn("No se pudo leer Mi Música:", error);
+    return [];
+  }
+}
+
+function saveCustomSongs() {
+  try {
+    localStorage.setItem(CUSTOM_SONGS_STORAGE_KEY, JSON.stringify(customSongs));
+  } catch (error) {
+    console.error("No se pudo guardar Mi Música:", error);
+    alert("El navegador no pudo guardar la canción. Revisa el espacio disponible o la configuración de privacidad.");
+  }
+}
+
+function rebuildCatalogWithCustomSongs() {
+  const baseSongs = catalog.filter(song => !song.custom);
+  catalog = [...baseSongs, ...customSongs];
+  updateCatalogProgress();
+  updateCustomTabCount();
+}
+
+function updateCustomTabCount() {
+  if ($("customTabCount")) {
+    const count = customSongs.length;
+    $("customTabCount").textContent = `${count} canción${count === 1 ? "" : "es"} agregada${count === 1 ? "" : "s"}`;
+  }
+}
+
+function updateCustomToolbarVisibility() {
+  const customView = selectedLanguage === "custom" && !globalSearchActive;
+  $("importSongsBtn")?.toggleAttribute("hidden", !customView);
+  $("exportSongsBtn")?.toggleAttribute("hidden", !customView);
+}
+
+function selectCollection(value) {
+  selectedLanguage = value;
+  document.querySelectorAll(".collection-tab").forEach(button => {
+    button.classList.toggle("active", button.dataset.language === value);
+  });
+}
+
+function selectDecade(value) {
+  selectedDecade = value;
+  document.querySelectorAll(".decade").forEach(button => {
+    button.classList.toggle("active", button.dataset.decade === value);
+  });
+}
+
+function openCustomSongDialog(song = null, initialQuery = "") {
+  const dialog = $("customSongDialog");
+  if (!dialog) return;
+
+  editingCustomSongId = song?.id || null;
+  $("customSongForm").reset();
+  $("customSongFormStatus").textContent = "";
+  $("customSongDialogTitle").textContent = song ? "Editar canción" : "Agregar canción";
+  $("saveSongBtn").textContent = song ? "Guardar cambios" : "Guardar en Mi Música";
+
+  if (song) {
+    $("customTitle").value = song.title || "";
+    $("customArtist").value = song.artist || "";
+    $("customYear").value = song.year || "";
+    $("customLanguage").value = song.language === "spanish" ? "spanish" : "english";
+    $("customDecade").value = song.decade || inferDecadeFromYear(song.year);
+    $("customYoutubeUrl").value = song.youtubeUrl || (song.youtubeId ? `https://www.youtube.com/watch?v=${song.youtubeId}` : "");
+    $("customAudioUrl").value = song.audioUrl || "";
+    $("customArtworkUrl").value = song.artworkUrl || "";
+  } else {
+    $("customTitle").value = initialQuery || "";
+    $("customLanguage").value = selectedLanguage === "spanish" ? "spanish" : "english";
+    $("customDecade").value = "2000s";
+  }
+
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+  setTimeout(() => $("customTitle")?.focus(), 50);
+}
+
+function closeCustomSongDialog() {
+  const dialog = $("customSongDialog");
+  if (!dialog) return;
+  editingCustomSongId = null;
+  if (typeof dialog.close === "function") dialog.close();
+  else dialog.removeAttribute("open");
+}
+
+function buildYouTubeSearchQuery() {
+  const title = $("customTitle")?.value.trim() || "";
+  const artist = $("customArtist")?.value.trim() || "";
+  return [artist, title, "official audio"].filter(Boolean).join(" ").trim();
+}
+
+function searchSongOnYouTube() {
+  const query = buildYouTubeSearchQuery();
+  if (!query) {
+    $("customSongFormStatus").textContent = "Escribe al menos el título o artista antes de buscar.";
+    return;
+  }
+  window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`, "_blank", "noopener,noreferrer");
+}
+
+function saveCustomSongFromForm(event) {
+  event.preventDefault();
+
+  const title = $("customTitle").value.trim();
+  const artist = $("customArtist").value.trim();
+  const yearValue = $("customYear").value.trim();
+  const year = yearValue ? Number(yearValue) : null;
+  const language = $("customLanguage").value;
+  const decade = $("customDecade").value || inferDecadeFromYear(year);
+  const youtubeInput = $("customYoutubeUrl").value.trim();
+  const audioUrl = $("customAudioUrl").value.trim();
+  const artworkUrl = $("customArtworkUrl").value.trim();
+  const youtubeId = youtubeInput ? videoIdFromUrl(youtubeInput) : "";
+  const status = $("customSongFormStatus");
+
+  if (!title || !artist) {
+    status.textContent = "Título y artista son obligatorios.";
+    return;
+  }
+  if (year !== null && (!Number.isFinite(year) || year < 1900 || year > 2100)) {
+    status.textContent = "Revisa el año ingresado.";
+    return;
+  }
+  if (youtubeInput && !youtubeId) {
+    status.textContent = "La URL de YouTube no parece válida. Usa un enlace del video (watch, youtu.be, shorts o live).";
+    return;
+  }
+  if (!youtubeId && !audioUrl) {
+    status.textContent = "Agrega una URL de YouTube o una URL de audio directo para poder reproducir la canción.";
+    return;
+  }
+
+  const previous = customSongs.find(song => song.id === editingCustomSongId);
+  const song = normalizeCustomSong({
+    ...(previous || {}),
+    id: previous?.id || makeCustomSongId(),
+    title,
+    artist,
+    year,
+    language,
+    decade,
+    youtubeId,
+    youtubeUrl: youtubeId ? `https://www.youtube.com/watch?v=${youtubeId}` : "",
+    audioUrl,
+    artworkUrl,
+    addedAt: previous?.addedAt || new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  });
+
+  if (previous) {
+    customSongs = customSongs.map(item => item.id === previous.id ? song : item);
+  } else {
+    customSongs.push(song);
+  }
+
+  saveCustomSongs();
+  rebuildCatalogWithCustomSongs();
+  closeCustomSongDialog();
+
+  $("searchInput").value = "";
+  globalSearchActive = false;
+  selectCollection("custom");
+  selectDecade("all");
+  applyFilters();
+  setStatus(previous ? `“${song.title}” fue actualizada en Mi Música.` : `“${song.title}” fue agregada a Mi Música.`);
+}
+
+function editCustomSong(songId) {
+  const song = customSongs.find(item => item.id === songId);
+  if (song) openCustomSongDialog(song);
+}
+
+function resetNowPlayingIfSong(songId) {
+  if (currentSong?.id !== songId) return;
+  stopPlayback();
+  currentSong = null;
+  playQueue = [];
+  currentQueueIndex = -1;
+  $("nowTitle").textContent = "Selecciona una canción";
+  $("nowArtist").textContent = "CGO Music";
+  $("sideTrackTitle").textContent = "Selecciona una canción";
+  $("sideTitle").textContent = "CGO Music";
+  $("sideArtist").textContent = "Elige un tema para comenzar";
+  $("dockThumb").innerHTML = "<span>♪</span>";
+  $("sideThumb").innerHTML = "<span>♪</span>";
+}
+
+function deleteCustomSong(songId) {
+  const song = customSongs.find(item => item.id === songId);
+  if (!song) return;
+  if (!confirm(`¿Eliminar “${song.title}” de Mi Música?`)) return;
+
+  resetNowPlayingIfSong(songId);
+  customSongs = customSongs.filter(item => item.id !== songId);
+  saveCustomSongs();
+  rebuildCatalogWithCustomSongs();
+  applyFilters();
+  setStatus(`“${song.title}” fue eliminada de Mi Música.`);
+}
+
+function exportCustomSongs() {
+  const payload = {
+    app: "CGO Music",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    songs: customSongs
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  const stamp = new Date().toISOString().slice(0, 10);
+  link.href = url;
+  link.download = `cgo-music-personal-${stamp}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  setStatus(`${customSongs.length} canción${customSongs.length === 1 ? "" : "es"} exportada${customSongs.length === 1 ? "" : "s"}.`);
+}
+
+async function importCustomSongs(file) {
+  if (!file) return;
+  try {
+    const parsed = JSON.parse(await file.text());
+    const items = Array.isArray(parsed) ? parsed : parsed?.songs;
+    if (!Array.isArray(items)) throw new Error("El JSON no contiene una lista de canciones.");
+
+    const imported = items
+      .map(normalizeCustomSong)
+      .filter(song => song.title && song.artist && (song.audioUrl || staticVideoCandidates(song).length));
+
+    const byId = new Map(customSongs.map(song => [song.id, song]));
+    imported.forEach(song => byId.set(song.id, song));
+    customSongs = [...byId.values()];
+    saveCustomSongs();
+    rebuildCatalogWithCustomSongs();
+    selectCollection("custom");
+    selectDecade("all");
+    $("searchInput").value = "";
+    applyFilters();
+    setStatus(`${imported.length} canción${imported.length === 1 ? "" : "es"} importada${imported.length === 1 ? "" : "s"} a Mi Música.`);
+  } catch (error) {
+    console.error("Error importando Mi Música:", error);
+    alert(`No se pudo importar el archivo: ${error.message || error}`);
+  } finally {
+    $("importSongsInput").value = "";
+  }
+}
+
 function normalizeSong(song, meta) {
   return {
     ...song,
@@ -671,6 +904,9 @@ async function loadCatalog() {
     );
 
     catalog = catalogResponses.flatMap(result => result.songs);
+    customSongs = loadCustomSongs();
+    catalog = [...catalog, ...customSongs];
+    updateCustomTabCount();
     catalogMeta = catalogResponses.map(result => ({
       ...result.meta,
       path: result.entry.path,
@@ -834,9 +1070,11 @@ function applyFilters() {
       return haystack.includes(query);
     }
 
-    const matchesLanguage = song.language === selectedLanguage;
+    const matchesCollection = selectedLanguage === "custom"
+      ? song.custom === true
+      : song.language === selectedLanguage;
     const matchesDecade = selectedDecade === "all" || song.decade === selectedDecade;
-    return matchesLanguage && matchesDecade;
+    return matchesCollection && matchesDecade;
   });
 
   visibleSongs.sort((a, b) => {
@@ -854,19 +1092,21 @@ function applyFilters() {
   });
 
   updateLibraryHeader(query);
+  updateCustomToolbarVisibility();
   renderSongList();
 }
 
 function decadeOrder(decade) {
   const order = {
     "50s": 0, "60s": 1, "70s": 2,
-    "80s": 3, "90s": 4, "2000s": 5
+    "80s": 3, "90s": 4, "2000s": 5,
+    "2010s": 6, "2020s": 7, "other": 99
   };
   return order[decade] ?? 999;
 }
 
 function getCurrentCatalogMeta() {
-  if (globalSearchActive || selectedDecade === "all") return null;
+  if (globalSearchActive || selectedLanguage === "custom" || selectedDecade === "all") return null;
   return catalogMeta.find(item =>
     item.language === selectedLanguage &&
     item.decade === selectedDecade
@@ -880,7 +1120,18 @@ function updateLibraryHeader(query) {
     $("collectionEyebrow").textContent = "RESULTADOS GLOBALES";
     $("libraryTitle").textContent = `“${$("searchInput").value.trim()}”`;
     $("songCount").textContent =
-      `${visibleSongs.length} resultado${visibleSongs.length === 1 ? "" : "s"} en los 12 catálogos`;
+      `${visibleSongs.length} resultado${visibleSongs.length === 1 ? "" : "s"} en todo CGO Music`;
+    return;
+  }
+
+  if (selectedLanguage === "custom") {
+    $("collectionEyebrow").textContent = "MI MÚSICA";
+    $("libraryTitle").textContent = selectedDecade === "all"
+      ? "Canciones agregadas por ti"
+      : selectedDecade === "other"
+        ? "Otras décadas"
+        : `Década de los ${selectedDecade === "2000s" ? "2000" : selectedDecade.replace("s", "")}`;
+    $("songCount").textContent = `${visibleSongs.length} canción${visibleSongs.length === 1 ? "" : "es"}`;
     return;
   }
 
@@ -892,27 +1143,25 @@ function updateLibraryHeader(query) {
     const languageSongs = catalog.filter(song => song.language === selectedLanguage);
     const verified = languageSongs.filter(song => song.verified).length;
 
-    $("songCount").textContent =
-      selectedLanguage === "spanish"
-        ? `${languageSongs.length} canciones`
-        : `${languageSongs.length} canciones · ${verified} con ranking verificado`;
+    $("songCount").textContent = selectedLanguage === "spanish"
+      ? `${languageSongs.length} canciones`
+      : `${languageSongs.length} canciones · ${verified} con ranking verificado`;
   } else {
-    $("libraryTitle").textContent =
-      `Década de los ${selectedDecade === "2000s" ? "2000" : selectedDecade.replace("s", "")}`;
+    $("libraryTitle").textContent = selectedDecade === "other"
+      ? "Otras décadas"
+      : `Década de los ${selectedDecade === "2000s" ? "2000" : selectedDecade.replace("s", "")}`;
 
     const currentCount = currentMeta?.currentCount ?? visibleSongs.length;
-    const verifiedCount =
-      currentMeta?.verifiedCount ??
-      visibleSongs.filter(song => song.verified).length;
+    const verifiedCount = currentMeta?.verifiedCount ?? visibleSongs.filter(song => song.verified).length;
 
-    $("songCount").textContent =
-      selectedLanguage === "spanish"
-        ? `${currentCount} canciones`
-        : `${currentCount} canciones · ${verifiedCount} verificadas`;
+    $("songCount").textContent = selectedLanguage === "spanish"
+      ? `${currentCount} canciones`
+      : `${currentCount} canciones · ${verifiedCount} verificadas`;
   }
 }
 
 function chartBadge(song) {
+  if (song.custom) return "Mi música";
   if (song.verified && song.chart && Number(song.chartPeak) > 0) {
     return `${song.chart} #${song.chartPeak}`;
   }
@@ -936,16 +1185,28 @@ function renderSongList() {
   const list = $("songList");
   list.innerHTML = "";
   $("emptyState").hidden = visibleSongs.length > 0;
+  if ($("emptyAddBtn")) {
+    $("emptyAddBtn").hidden = !(globalSearchActive && visibleSongs.length === 0);
+  }
 
   visibleSongs.forEach((song, index) => {
-    const row = document.createElement("button");
+    const row = document.createElement("div");
     row.className = `song-row ${currentSong?.id === song.id ? "active" : ""}`;
     row.dataset.songId = song.id;
+    row.setAttribute("role", "button");
+    row.setAttribute("tabindex", "0");
+    row.setAttribute("aria-label", `Reproducir ${song.title} de ${song.artist}`);
 
     const displayPosition =
       selectedDecade !== "all" && !globalSearchActive && song.position
         ? String(song.position).padStart(2, "0")
         : String(index + 1).padStart(2, "0");
+
+    const customActions = song.custom ? `
+      <span class="custom-song-actions" aria-label="Acciones de Mi Música">
+        <button class="mini-action edit-custom-song" type="button" title="Editar">Editar</button>
+        <button class="mini-action danger delete-custom-song" type="button" title="Eliminar">Eliminar</button>
+      </span>` : "";
 
     row.innerHTML = `
       <span class="song-index">${displayPosition}</span>
@@ -956,17 +1217,39 @@ function renderSongList() {
         </span>
         <span class="song-copy">
           <strong>${escapeHtml(song.title)}</strong>
-          <span>${escapeHtml(song.artist)} · ${languageLabel(song.language)}</span>
+          <span>${escapeHtml(song.artist)} · ${languageLabel(song.language)}${song.custom ? " · Mi Música" : ""}</span>
+          ${customActions}
         </span>
       </span>
       <span class="song-year">${song.year ?? "—"}</span>
-      <span class="peak ${(!song.verified && song.language !== "spanish") ? "pending" : ""}">${chartBadge(song)}</span>
+      <span class="peak ${(!song.verified && song.language !== "spanish" && !song.custom) ? "pending" : ""}">${chartBadge(song)}</span>
     `;
 
-    row.addEventListener("click", () => {
+    const playRow = () => {
       startUserPlayback();
       setQueueFromVisible(song.id);
       playCurrent();
+    };
+
+    row.addEventListener("click", event => {
+      if (event.target.closest(".custom-song-actions")) return;
+      playRow();
+    });
+    row.addEventListener("keydown", event => {
+      if (event.target.closest(".custom-song-actions")) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        playRow();
+      }
+    });
+
+    row.querySelector(".edit-custom-song")?.addEventListener("click", event => {
+      event.stopPropagation();
+      editCustomSong(song.id);
+    });
+    row.querySelector(".delete-custom-song")?.addEventListener("click", event => {
+      event.stopPropagation();
+      deleteCustomSong(song.id);
     });
 
     list.appendChild(row);
@@ -1207,7 +1490,12 @@ function updateNowPlaying() {
   $("sideArtist").textContent =
     `${currentSong.artist}${currentSong.year ? ` · ${currentSong.year}` : ""}`;
 
-  if (verified) {
+  if (currentSong.custom) {
+    $("verificationTitle").textContent = "Mi Música";
+    $("verificationText").textContent = "Canción agregada por ti a este dispositivo.";
+    $("verificationIcon").textContent = "♥";
+    $("verificationIcon").classList.remove("pending");
+  } else if (verified) {
     $("verificationTitle").textContent =
       `${currentSong.chart} Top ${currentSong.chartPeak}`;
     $("verificationText").textContent =
@@ -1306,7 +1594,6 @@ function clearSearch() {
 
 document.addEventListener("DOMContentLoaded", () => {
   registerServiceWorker();
-  setupInstallExperience();
   setupAudioPlayer();
   setupMediaSession();
   loadCatalog();
@@ -1315,13 +1602,26 @@ document.addEventListener("DOMContentLoaded", () => {
   $("searchInput").addEventListener("input", applyFilters);
   $("clearSearchBtn").addEventListener("click", clearSearch);
 
+
+  $("addSongBtn").addEventListener("click", () => openCustomSongDialog());
+  $("emptyAddBtn").addEventListener("click", () => openCustomSongDialog(null, $("searchInput").value.trim()));
+  $("searchYouTubeBtn").addEventListener("click", searchSongOnYouTube);
+  $("closeSongDialogBtn").addEventListener("click", closeCustomSongDialog);
+  $("cancelSongBtn").addEventListener("click", closeCustomSongDialog);
+  $("customSongForm").addEventListener("submit", saveCustomSongFromForm);
+  $("customYear").addEventListener("change", event => {
+    if (event.target.value) $("customDecade").value = inferDecadeFromYear(event.target.value);
+  });
+  $("customSongDialog").addEventListener("click", event => {
+    if (event.target === $("customSongDialog")) closeCustomSongDialog();
+  });
+  $("importSongsBtn").addEventListener("click", () => $("importSongsInput").click());
+  $("exportSongsBtn").addEventListener("click", exportCustomSongs);
+  $("importSongsInput").addEventListener("change", event => importCustomSongs(event.target.files?.[0]));
+
   document.querySelectorAll(".collection-tab").forEach(button => {
     button.addEventListener("click", () => {
-      selectedLanguage = button.dataset.language;
-
-      document.querySelectorAll(".collection-tab")
-        .forEach(b => b.classList.toggle("active", b === button));
-
+      selectCollection(button.dataset.language);
       if (globalSearchActive) $("searchInput").value = "";
       applyFilters();
     });
@@ -1329,11 +1629,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".decade").forEach(button => {
     button.addEventListener("click", () => {
-      selectedDecade = button.dataset.decade;
-
-      document.querySelectorAll(".decade")
-        .forEach(b => b.classList.toggle("active", b === button));
-
+      selectDecade(button.dataset.decade);
       if (globalSearchActive) $("searchInput").value = "";
       applyFilters();
     });
