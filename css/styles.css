@@ -1024,3 +1024,50 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
   .custom-song-actions { gap: 4px; }
   .mini-action { padding-inline: 7px; }
 }
+
+
+/* Alta automática de Mi Música desde una URL de YouTube */
+.auto-youtube-field {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+.auto-youtube-field input {
+  min-height: 50px;
+  font-size: 15px;
+}
+.manual-song-details {
+  margin-top: 16px;
+  border: 1px solid #303039;
+  border-radius: 14px;
+  background: #1b1b20;
+  overflow: hidden;
+}
+.manual-song-details summary {
+  padding: 13px 15px;
+  cursor: pointer;
+  color: #c9c9d0;
+  font-size: 12px;
+  font-weight: 750;
+  user-select: none;
+}
+.manual-song-details[open] summary {
+  border-bottom: 1px solid #303039;
+}
+.manual-song-grid {
+  padding: 15px;
+}
+.metadata-player-host {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+.primary-btn:disabled {
+  opacity: .62;
+  cursor: wait;
+}

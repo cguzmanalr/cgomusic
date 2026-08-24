@@ -160,71 +160,70 @@
         <button id="closeSongDialogBtn" class="dialog-close" type="button" aria-label="Cerrar">×</button>
       </div>
 
-      <p class="song-dialog-help">
-        Si la canción no está en el catálogo, búscala en YouTube, copia la URL del video que quieras usar y guárdala aquí.
+      <p id="customSongDialogHelp" class="song-dialog-help">
+        Pega el enlace de YouTube. CGO Music leerá el video y registrará automáticamente el título, artista, carátula y URL.
       </p>
 
-      <div class="song-form-grid">
-        <label class="field field-wide">
-          <span>Título *</span>
-          <input id="customTitle" name="title" type="text" maxlength="180" required autocomplete="off">
-        </label>
-        <label class="field field-wide">
-          <span>Artista *</span>
-          <input id="customArtist" name="artist" type="text" maxlength="180" required autocomplete="off">
-        </label>
-        <label class="field">
-          <span>Año</span>
-          <input id="customYear" name="year" type="number" min="1900" max="2100" inputmode="numeric">
-        </label>
-        <label class="field">
-          <span>Idioma *</span>
-          <select id="customLanguage" name="language" required>
-            <option value="english">Inglés</option>
-            <option value="spanish">Español</option>
-          </select>
-        </label>
-        <label class="field field-wide">
-          <span>Década *</span>
-          <select id="customDecade" name="decade" required>
-            <option value="50s">50s</option>
-            <option value="60s">60s</option>
-            <option value="70s">70s</option>
-            <option value="80s">80s</option>
-            <option value="90s">90s</option>
-            <option value="2000s">2000s</option>
-            <option value="2010s">2010s</option>
-            <option value="2020s">2020s</option>
-            <option value="other">Otra</option>
-          </select>
-        </label>
-
-        <div class="field field-wide youtube-field">
-          <span>Video de YouTube</span>
-          <div class="url-action-row">
-            <input id="customYoutubeUrl" name="youtubeUrl" type="url" inputmode="url" placeholder="https://www.youtube.com/watch?v=...">
-            <button id="searchYouTubeBtn" class="secondary-btn" type="button">Buscar en YouTube</button>
-          </div>
-          <small>Elige tú mismo la versión correcta y pega aquí su enlace.</small>
-        </div>
-
-        <label class="field field-wide advanced-field">
-          <span>Audio directo (opcional)</span>
-          <input id="customAudioUrl" name="audioUrl" type="url" inputmode="url" placeholder="https://.../cancion.m4a">
-          <small>Si existe, CGO Music lo usará primero y podrá continuar con la pantalla bloqueada.</small>
-        </label>
-
-        <label class="field field-wide advanced-field">
-          <span>Carátula (opcional)</span>
-          <input id="customArtworkUrl" name="artworkUrl" type="url" inputmode="url" placeholder="https://.../caratula.jpg">
-        </label>
+      <div class="field youtube-field auto-youtube-field">
+        <span>URL de YouTube *</span>
+        <input id="customYoutubeUrl" name="youtubeUrl" type="url" inputmode="url"
+               placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+        <small id="youtubeAutoHint">Sólo pega la URL. No necesitas escribir el título ni el artista.</small>
       </div>
+
+      <details id="manualSongDetails" class="manual-song-details">
+        <summary>Revisar o editar datos</summary>
+        <div class="song-form-grid manual-song-grid">
+          <label class="field field-wide">
+            <span>Título *</span>
+            <input id="customTitle" name="title" type="text" maxlength="180" autocomplete="off">
+          </label>
+          <label class="field field-wide">
+            <span>Artista *</span>
+            <input id="customArtist" name="artist" type="text" maxlength="180" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Año</span>
+            <input id="customYear" name="year" type="number" min="1900" max="2100" inputmode="numeric">
+          </label>
+          <label class="field">
+            <span>Idioma</span>
+            <select id="customLanguage" name="language">
+              <option value="english">Inglés</option>
+              <option value="spanish">Español</option>
+            </select>
+          </label>
+          <label class="field field-wide">
+            <span>Década</span>
+            <select id="customDecade" name="decade">
+              <option value="50s">50s</option>
+              <option value="60s">60s</option>
+              <option value="70s">70s</option>
+              <option value="80s">80s</option>
+              <option value="90s">90s</option>
+              <option value="2000s">2000s</option>
+              <option value="2010s">2010s</option>
+              <option value="2020s">2020s</option>
+              <option value="other">Otra</option>
+            </select>
+          </label>
+          <label class="field field-wide advanced-field">
+            <span>Audio directo (opcional)</span>
+            <input id="customAudioUrl" name="audioUrl" type="url" inputmode="url" placeholder="https://.../cancion.m4a">
+            <small>Si existe, CGO Music lo usará primero y podrá continuar con la pantalla bloqueada.</small>
+          </label>
+          <label class="field field-wide advanced-field">
+            <span>Carátula</span>
+            <input id="customArtworkUrl" name="artworkUrl" type="url" inputmode="url" placeholder="https://.../caratula.jpg">
+          </label>
+        </div>
+      </details>
 
       <p id="customSongFormStatus" class="form-status" aria-live="polite"></p>
 
       <div class="song-dialog-actions">
         <button id="cancelSongBtn" class="secondary-btn" type="button">Cancelar</button>
-        <button id="saveSongBtn" class="primary-btn" type="submit">Guardar en Mi Música</button>
+        <button id="saveSongBtn" class="primary-btn" type="submit">Agregar automáticamente</button>
       </div>
     </form>
   </dialog>
@@ -266,6 +265,7 @@
     </div>
   </section>
 
+  <div class="metadata-player-host" aria-hidden="true"><div id="metadataPlayer"></div></div>
   <audio id="audioPlayer" preload="metadata" playsinline></audio>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="js/app.js"></script>
