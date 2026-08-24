@@ -1,10 +1,11 @@
-const CACHE_NAME = "cgo-music-pwa-v6-search5";
+const CACHE_NAME = "cgo-music-pwa-v7-config";
 
 const PRECACHE_URLS = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
   "./css/styles.css",
+  "./js/config.js",
   "./js/app.js",
   "./icons/icon-192.png",
   "./icons/icon-512.png",

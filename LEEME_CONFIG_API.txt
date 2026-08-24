@@ -1,0 +1,42 @@
+CGO MUSIC - API KEY EN ARCHIVO DE CONFIGURACION
+================================================
+
+1. Abre este archivo:
+
+   js/config.js
+
+2. Busca:
+
+   YOUTUBE_API_KEY: "PEGA_AQUI_TU_API_KEY"
+
+3. Reemplaza SOLO PEGA_AQUI_TU_API_KEY por tu API key. Ejemplo:
+
+   YOUTUBE_API_KEY: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXX"
+
+4. Guarda el archivo y sube a GitHub:
+
+   index.html
+   manifest.webmanifest
+   sw.js
+   css/styles.css
+   js/app.js
+   js/config.js
+
+No reemplaces la carpeta data/.
+
+SEGURIDAD
+---------
+GitHub Pages es un sitio estatico. Cualquier valor que pongas en config.js puede
+ser visto por un visitante desde las herramientas del navegador. Por eso la API
+key DEBE estar restringida en Google Cloud:
+
+- Restriccion de aplicacion: Websites / HTTP referrers
+- Referrer permitido (ajustalo a tu sitio):
+  https://TU_USUARIO.github.io/cgomusic/*
+- Restriccion de API: YouTube Data API v3
+
+La clave NO se exporta dentro de personalizacion.json.
+
+Con esta version no hay pantalla para configurar la API key en CGO Music.
+La busqueda de 5 alternativas queda habilitada automaticamente en todos los
+dispositivos que abran el sitio cuando config.js tenga una clave valida.

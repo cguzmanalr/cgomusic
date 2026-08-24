@@ -180,19 +180,6 @@
 
         <div id="youtubeSearchResults" class="youtube-search-results" aria-live="polite"></div>
 
-        <details id="youtubeApiDetails" class="api-key-details">
-          <summary>Configurar búsqueda de YouTube</summary>
-          <div class="api-key-body">
-            <p>La búsqueda usa YouTube Data API v3. La clave se guarda sólo en este dispositivo y no se incluye al exportar tus canciones o favoritos.</p>
-            <div class="api-key-row">
-              <input id="youtubeApiKey" type="password" autocomplete="off" placeholder="Pega tu API key de YouTube Data API v3">
-              <button id="saveYoutubeApiKeyBtn" class="secondary-btn" type="button">Guardar clave</button>
-              <button id="clearYoutubeApiKeyBtn" class="secondary-btn" type="button">Borrar</button>
-            </div>
-            <small id="youtubeApiKeyStatus"></small>
-          </div>
-        </details>
-
         <details id="directUrlDetails" class="manual-song-details compact-details">
           <summary>También puedo agregar pegando una URL</summary>
           <div class="direct-url-body">
@@ -302,6 +289,7 @@
 
   <div class="metadata-player-host" aria-hidden="true"><div id="metadataPlayer"></div></div>
   <audio id="audioPlayer" preload="metadata" playsinline></audio>
+  <script src="js/config.js"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="js/app.js"></script>
 </body>

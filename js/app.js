@@ -29,7 +29,6 @@ let lastAutoAddedVideoId = "";
 let youtubeSearchResults = [];
 let selectedSearchVideoIds = new Set();
 let youtubeSearchAbortController = null;
-const YOUTUBE_API_KEY_STORAGE_KEY = "cgoMusicYouTubeApiKeyV1";
 const CUSTOM_SONGS_STORAGE_KEY = "cgoMusicCustomSongsV1";
 const PERSONALIZATION_STORAGE_KEY = "cgoMusicPersonalizationV2";
 const PERSONALIZATION_REMOTE_PATH = "data/personalizacion.json";
@@ -509,36 +508,18 @@ function inferDecadeFromYear(year) {
 }
 
 
-function getStoredYouTubeApiKey() {
+function getYouTubeApiKey() {
+  const configKey = String(window.CGO_CONFIG?.YOUTUBE_API_KEY || "").trim();
+  if (configKey && configKey !== "PEGA_AQUI_TU_API_KEY") return configKey;
+
+  // Compatibilidad con versiones anteriores: si ya había una clave guardada en
+  // este dispositivo, todavía puede usarse. La configuración oficial de esta
+  // versión es js/config.js.
   try {
-    return String(localStorage.getItem(YOUTUBE_API_KEY_STORAGE_KEY) || "").trim();
+    return String(localStorage.getItem("cgoMusicYouTubeApiKeyV1") || "").trim();
   } catch (error) {
     return "";
   }
-}
-
-function storeYouTubeApiKey() {
-  const input = $("youtubeApiKey");
-  const status = $("youtubeApiKeyStatus");
-  const key = String(input?.value || "").trim();
-  if (!key) {
-    if (status) status.textContent = "Pega una clave antes de guardar.";
-    return;
-  }
-  try {
-    localStorage.setItem(YOUTUBE_API_KEY_STORAGE_KEY, key);
-    if (status) status.textContent = "Clave guardada sólo en este dispositivo.";
-    if ($("youtubeApiDetails")) $("youtubeApiDetails").open = false;
-  } catch (error) {
-    if (status) status.textContent = "El navegador no permitió guardar la clave.";
-  }
-}
-
-function clearYouTubeApiKey() {
-  try { localStorage.removeItem(YOUTUBE_API_KEY_STORAGE_KEY); } catch (error) {}
-  if ($("youtubeApiKey")) $("youtubeApiKey").value = "";
-  if ($("youtubeApiKeyStatus")) $("youtubeApiKeyStatus").textContent = "Clave borrada de este dispositivo.";
-  if ($("youtubeApiDetails")) $("youtubeApiDetails").open = true;
 }
 
 function decodeYouTubeText(value) {
@@ -610,7 +591,7 @@ async function searchYouTubeCandidates() {
   const query = String($("youtubeSearchQuery")?.value || "").trim();
   const status = $("customSongFormStatus");
   const button = $("youtubeSearchBtn");
-  const apiKey = getStoredYouTubeApiKey();
+  const apiKey = getYouTubeApiKey();
 
   if (!query) {
     status.textContent = "Escribe el nombre de una canción o artista.";
@@ -619,9 +600,7 @@ async function searchYouTubeCandidates() {
   }
 
   if (!apiKey) {
-    status.textContent = "Para buscar dentro de CGO Music configura una API key de YouTube Data API v3 una sola vez.";
-    if ($("youtubeApiDetails")) $("youtubeApiDetails").open = true;
-    $("youtubeApiKey")?.focus();
+    status.textContent = "Falta la API key de YouTube. Agrégala en js/config.js y vuelve a cargar CGO Music.";
     return;
   }
 
@@ -672,8 +651,7 @@ async function searchYouTubeCandidates() {
   } catch (error) {
     if (error?.name === "AbortError") return;
     console.warn("Búsqueda YouTube Data API:", error);
-    status.textContent = `No pude buscar en YouTube: ${error.message || error}. Revisa la API key y su configuración.`;
-    if ($("youtubeApiDetails")) $("youtubeApiDetails").open = true;
+    status.textContent = `No pude buscar en YouTube: ${error.message || error}. Revisa js/config.js y las restricciones de la API key.`;
   } finally {
     button.disabled = false;
     button.textContent = "Buscar";
@@ -1255,10 +1233,6 @@ function openCustomSongDialog(song = null, initialQuery = "") {
   $("customSongForm").reset();
   $("customSongFormStatus").textContent = "";
   $("youtubeSearchResults").innerHTML = "";
-  $("youtubeApiKey").value = getStoredYouTubeApiKey();
-  $("youtubeApiKeyStatus").textContent = getStoredYouTubeApiKey()
-    ? "La clave ya está configurada en este dispositivo."
-    : "";
 
   const searchMode = $("youtubeSearchMode");
   const manualDetails = $("manualSongDetails");
@@ -2354,8 +2328,6 @@ document.addEventListener("DOMContentLoaded", () => {
       searchYouTubeCandidates();
     }
   });
-  $("saveYoutubeApiKeyBtn").addEventListener("click", storeYouTubeApiKey);
-  $("clearYoutubeApiKeyBtn").addEventListener("click", clearYouTubeApiKey);
   $("customYoutubeUrl").addEventListener("input", scheduleAutomaticAddFromUrl);
   $("customYear").addEventListener("change", event => {
     if (event.target.value) $("customDecade").value = inferDecadeFromYear(event.target.value);
