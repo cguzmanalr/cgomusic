@@ -1878,10 +1878,15 @@ body {
   height: auto;
   padding: 10px 14px;
   gap: 10px;
-  font-size: clamp(18px, 2vw, 22px);
-  font-weight: 800;
+  font-size: 18px;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.01em;
+}
+
+.toolbar-actions .playlist-action-btn > span:last-child {
+  font-size: 18px;
+  font-weight: 300;
 }
 
 .playlist-action-icon {
@@ -1923,7 +1928,8 @@ body {
     width: 100%;
     min-height: 56px;
     padding-inline: 8px;
-    font-size: clamp(18px, 5vw, 21px);
+    font-size: 18px;
+    font-weight: 300;
   }
 
   .playlist-action-icon {
@@ -1944,5 +1950,46 @@ body {
   .playlist-action-icon svg {
     width: 23px;
     height: 23px;
+  }
+}
+
+/* =========================================================
+   CGO Music — tipografía uniforme de la lista v12
+   ========================================================= */
+.song-row,
+.song-index,
+.song-copy strong,
+.song-copy span,
+.song-year,
+.peak {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.song-copy strong,
+.song-copy span,
+.song-index,
+.song-year,
+.peak {
+  line-height: 1.2;
+}
+
+.song-copy span {
+  margin-top: 5px;
+}
+
+.peak {
+  min-width: 78px;
+}
+
+@media (max-width: 760px) {
+  .song-row,
+  .song-index,
+  .song-copy strong,
+  .song-copy span,
+  .song-year,
+  .peak {
+    font-size: 18px;
+    font-weight: 300;
   }
 }

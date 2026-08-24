@@ -10,3 +10,6 @@ Cambios:
 Para GitHub Pages:
 Reemplaza index.html, css/styles.css, js/app.js y sw.js. Los demás archivos pueden subirse también sin problema.
 No reemplaces data/ ni js/config.js.
+
+
+V12: La lista de canciones usa font-size: 18px y font-weight: 300 para título, artista, índice, año y ranking.
