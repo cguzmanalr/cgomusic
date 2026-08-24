@@ -1621,7 +1621,7 @@ async function loadCatalog() {
       verifiedCount: result.songs.filter(song => song.verified).length
     }));
 
-    $("catalogTotal").textContent = catalog.length.toLocaleString("es-CL");
+    if ($("catalogTotal")) $("catalogTotal").textContent = catalog.length.toLocaleString("es-CL");
     updateCatalogProgress();
     applyFilters();
 

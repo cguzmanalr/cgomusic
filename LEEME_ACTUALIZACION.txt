@@ -1,22 +1,10 @@
-CGO Music — Ajuste visual v10
+CGO Music v15 — interfaz compacta
 
 Cambios:
-- Se elimina el texto "Todas las décadas" cuando está seleccionada la vista general.
-- Los botones Aleatorio y Lista ocupan todo el ancho disponible en dos columnas iguales.
-- Los textos de Aleatorio y Lista aumentan notablemente de tamaño.
-- El icono de Aleatorio ahora es SVG blanco y sin fondo propio.
-- Service Worker actualizado a v10 para forzar la renovación de caché.
+- Se eliminó por completo el bloque superior “Explora tu catálogo…” para ganar espacio vertical.
+- Los botones Anterior y Siguiente ahora comparten el mismo tamaño, gradiente y estilo visual que Play/Pausa.
+- Service Worker actualizado a v15 para forzar la renovación de caché.
 
 Para GitHub Pages:
-Reemplaza index.html, css/styles.css, js/app.js y sw.js. Los demás archivos pueden subirse también sin problema.
-No reemplaces data/ ni js/config.js.
-
-
-V12: La lista de canciones usa font-size: 18px y font-weight: 300 para título, artista, índice, año y ranking.
-
-
-V14 - LLAVE DE TUERCAS + MEDIA SESSION
-- El acceso Importar/Exportar usa ahora el icono de llave de tuercas (🔧).
-- Media Session registra Anterior y Siguiente mediante handlers dedicados.
-- Con audioUrl (<audio>) pueden usarse desde la pantalla bloqueada en iPhone/Android cuando el sistema lo permita.
-- YouTube IFrame sigue sujeto a la suspensión de iOS al bloquear la pantalla.
+- Reemplaza los archivos de este ZIP.
+- Conserva tus carpetas/archivos actuales data/ y js/config.js.
