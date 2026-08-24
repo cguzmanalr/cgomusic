@@ -37,9 +37,12 @@
     </div>
 
     <div class="header-actions">
-      <button id="installAppBtn" class="install-app-btn" type="button" title="Agregar CGO Music a la pantalla de inicio">
+      <button id="installAppBtn" class="install-app-btn" type="button" title="Agregar CGO Music a la pantalla de inicio" aria-label="Agregar CGO Music a la pantalla de inicio">
         <span class="install-app-icon" aria-hidden="true">⇩</span>
         <span>Agregar a inicio</span>
+      </button>
+      <button id="dataToolsBtn" class="header-tool-btn" type="button" title="Importar / Exportar" aria-label="Importar o exportar personalización">
+        <span aria-hidden="true">🔑</span>
       </button>
     </div>
   </header>
@@ -86,10 +89,8 @@
           </div>
           <div class="toolbar-actions">
             <button id="addSongBtn" class="secondary-btn add-song-btn" type="button">＋ Agregar canción</button>
-            <button id="importSongsBtn" class="secondary-btn personal-only-action" type="button" hidden>Importar JSON</button>
-            <button id="exportSongsBtn" class="secondary-btn personal-only-action" type="button" hidden>Exportar JSON</button>
-            <button id="shuffleAllBtn" class="secondary-btn" type="button">🔀 Aleatorio</button>
-            <button id="playAllBtn" class="primary-btn" type="button">▶ Reproducir lista</button>
+            <button id="shuffleAllBtn" class="primary-btn playlist-action-btn" type="button"><span aria-hidden="true">🔀</span><span>Aleatorio</span></button>
+            <button id="playAllBtn" class="primary-btn playlist-action-btn" type="button"><span aria-hidden="true">▶</span><span>Lista</span></button>
           </div>
         </div>
 
@@ -276,6 +277,26 @@
       </div>
       <button id="nativeInstallBtn" class="primary-btn install-native-btn" type="button" hidden>Instalar CGO Music</button>
       <p id="installStatus" class="install-status" aria-live="polite"></p>
+    </div>
+  </dialog>
+
+  <dialog id="dataToolsDialog" class="install-dialog data-tools-dialog">
+    <div class="install-dialog-card data-tools-card">
+      <button id="closeDataToolsDialogBtn" class="dialog-close install-dialog-close" type="button" aria-label="Cerrar">×</button>
+      <div class="data-tools-key" aria-hidden="true">🔑</div>
+      <span class="eyebrow">CGO MUSIC</span>
+      <h2>Respaldo y sincronización</h2>
+      <p>Exporta Mi Música y Favoritos o importa tu archivo <strong>personalizacion.json</strong>.</p>
+      <div class="data-tools-actions">
+        <button id="exportSongsBtn" class="data-tool-action" type="button">
+          <span class="data-tool-action-icon" aria-hidden="true">⇩</span>
+          <span><strong>Exportar</strong><small>Descarga tu personalización en JSON.</small></span>
+        </button>
+        <button id="importSongsBtn" class="data-tool-action" type="button">
+          <span class="data-tool-action-icon" aria-hidden="true">⇧</span>
+          <span><strong>Importar</strong><small>Carga un JSON guardado anteriormente.</small></span>
+        </button>
+      </div>
     </div>
   </dialog>
 

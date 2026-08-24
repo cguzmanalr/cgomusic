@@ -1,31 +1,25 @@
-CGO MUSIC — ACTUALIZACIÓN DISEÑO PROFESIONAL / PWA v8
+CGO MUSIC — REFINAMIENTO RESPONSIVE + MENÚ DE DATOS v9
 
-SUBIR / REEMPLAZAR EN GITHUB:
+Cambios incluidos:
+- El bloque superior usa todo el ancho disponible en móvil.
+- Importar / Exportar se movió a un menú con icono de llave en el encabezado.
+- El menú de la llave permite exportar personalizacion.json o importar un respaldo.
+- El botón Aleatorio ahora usa el mismo estilo principal que Lista.
+- “Reproducir lista” ahora se muestra como “▶ Lista”.
+- Se mantiene el icono de acceso directo / instalación junto al nuevo icono de llave.
+- Service Worker actualizado a v9 para forzar la renovación de la interfaz.
+
+PARA ACTUALIZAR GITHUB
+Sube y reemplaza:
 - index.html
 - manifest.webmanifest
 - sw.js
 - css/styles.css
 - js/app.js
-- carpeta icons completa
+- icons/*
 
-IMPORTANTE:
-- NO reemplazar data/ (conserva tus 1.200 canciones y URLs de YouTube).
-- NO reemplazar js/config.js (conserva tu YouTube API Key actual).
+NO reemplaces:
+- data/
+- js/config.js
 
-NOVEDADES:
-- Nuevo icono CGO Music para iPhone, Android, PWA y favicon.
-- Botón "Agregar a inicio".
-- iPhone: instrucciones Safari > Compartir > Agregar a pantalla de inicio.
-- Android/Chrome: usa el instalador PWA cuando está disponible.
-- Nueva identidad visual oscuro + magenta/púrpura/azul.
-- Header, tarjetas, listas y botones modernizados.
-- Navegación inferior móvil: Inicio, Buscar, Mi Música, Favoritos.
-- Reproductor móvil rediseñado.
-- Anterior, Play/Pausa, Detener y Siguiente ahora tienen el mismo lenguaje visual y mayor tamaño.
-- Shuffle y Repetir se mantienen como controles secundarios.
-- Service Worker actualizado a v8 para forzar renovación de interfaz.
-
-DESPUÉS DEL COMMIT:
-1. Espera 1-3 minutos a GitHub Pages.
-2. En iPhone/Android cierra completamente CGO Music y vuelve a abrirla.
-3. Si ya la tenías agregada a Inicio, ábrela, espera unos segundos y vuelve a abrir para tomar el nuevo Service Worker.
+Así conservas los 1.200 temas, personalizacion.json y tu API key.

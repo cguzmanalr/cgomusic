@@ -1201,9 +1201,8 @@ function updateCustomTabCount() {
 }
 
 function updateCustomToolbarVisibility() {
-  const personalView = (selectedLanguage === "custom" || selectedLanguage === "favorites") && !globalSearchActive;
-  $("importSongsBtn")?.toggleAttribute("hidden", !personalView);
-  $("exportSongsBtn")?.toggleAttribute("hidden", !personalView);
+  // Importar / Exportar ahora vive en el menú de la llave del encabezado
+  // y está disponible desde cualquier colección.
 }
 
 function selectCollection(value) {
@@ -1414,6 +1413,7 @@ function exportCustomSongs() {
   };
 
   downloadJson("personalizacion.json", payload);
+  closeDataToolsDialog();
   setStatus(
     `Exportado personalizacion.json · ${customSongs.length} de Mi Música · ` +
     `${favoriteSongKeys.size} favorito${favoriteSongKeys.size === 1 ? "" : "s"}. ` +
@@ -1458,6 +1458,7 @@ async function importCustomSongs(file) {
     alert(`No se pudo importar el archivo: ${error.message || error}`);
   } finally {
     $("importSongsInput").value = "";
+    closeDataToolsDialog();
   }
 }
 
@@ -2468,6 +2469,20 @@ function closeInstallDialog() {
   else dialog.removeAttribute("open");
 }
 
+function openDataToolsDialog() {
+  const dialog = $("dataToolsDialog");
+  if (!dialog) return;
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+}
+
+function closeDataToolsDialog() {
+  const dialog = $("dataToolsDialog");
+  if (!dialog) return;
+  if (typeof dialog.close === "function") dialog.close();
+  else dialog.removeAttribute("open");
+}
+
 async function triggerNativeInstall() {
   if (!deferredInstallPrompt) {
     setInstallStatus("Usa el menú de tu navegador para agregar CGO Music a la pantalla de inicio.");
@@ -2539,6 +2554,12 @@ document.addEventListener("DOMContentLoaded", () => {
   $("nativeInstallBtn")?.addEventListener("click", triggerNativeInstall);
   $("installDialog")?.addEventListener("click", event => {
     if (event.target === $("installDialog")) closeInstallDialog();
+  });
+
+  $("dataToolsBtn")?.addEventListener("click", openDataToolsDialog);
+  $("closeDataToolsDialogBtn")?.addEventListener("click", closeDataToolsDialog);
+  $("dataToolsDialog")?.addEventListener("click", event => {
+    if (event.target === $("dataToolsDialog")) closeDataToolsDialog();
   });
 
   document.querySelectorAll(".mobile-nav-btn").forEach(button => {
