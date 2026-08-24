@@ -1,0 +1,30 @@
+CGO Music - Auditoria de catalogos
+======================================================================================
+english  50s     canciones=100  ranking=100/100  youtube=100/100
+english  60s     canciones=100  ranking=100/100  youtube=100/100
+english  70s     canciones=100  ranking=100/100  youtube=  0/100
+english  80s     canciones=100  ranking=100/100  youtube=  2/100
+english  90s     canciones=100  ranking=100/100  youtube=  1/100
+english  2000s   canciones=100  ranking=100/100  youtube=  0/100
+spanish  50s     canciones=100  ranking=  0/100  youtube=  0/100
+spanish  60s     canciones=100  ranking= 20/100  youtube=  0/100
+spanish  70s     canciones=100  ranking=  0/100  youtube=  0/100
+spanish  80s     canciones=100  ranking=  1/100  youtube=  0/100
+spanish  90s     canciones=100  ranking=  1/100  youtube=  0/100
+spanish  2000s   canciones=100  ranking= 16/100  youtube=  0/100
+--------------------------------------------------------------------------------------
+TOTAL        canciones=1200  ranking= 638/1200  youtube= 203/1200
+
+OK: ninguna entrada verified carece de chartSource/Top10.
+
+YOUTUBE: faltan 997 canciones por resolver con ACTUALIZAR_URLS_YOUTUBE.bat.
+
+NOTA DE EMPAQUETADO
+===================
+Este paquete ya tiene 203 youtubeId/youtubeUrl heredados y normalizados.
+Las 997 canciones restantes se completan en un equipo con acceso a Internet ejecutando:
+
+  ACTUALIZAR_URLS_YOUTUBE.bat
+
+El actualizador escribe los IDs/URLs directamente en los 12 JSON y conserva el avance.
+La aplicación web NO realiza búsquedas en tiempo de reproducción.

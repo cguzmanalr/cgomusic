@@ -1,0 +1,18 @@
+{
+  "id": "en-80s-002",
+  "position": 2,
+  "title": "Nombre de la canción",
+  "artist": "Nombre del artista",
+  "year": 1980,
+  "decade": "80s",
+  "language": "english",
+  "youtubeId": "ID11CARACT",
+  "youtubeUrl": "https://www.youtube.com/watch?v=ID11CARACT",
+  "youtubeAlternatives": [],
+  "youtubeQuery": "Artista - Canción official audio",
+  "chart": "UK",
+  "chartPeak": 10,
+  "chartYear": 1980,
+  "chartSource": "URL_DE_LA_FUENTE",
+  "verified": false
+}

@@ -1,0 +1,68 @@
+{
+  "project": "CGO Music",
+  "version": 6,
+  "catalogs": [
+    {
+      "language": "english",
+      "decade": "50s",
+      "path": "data/ingles/50s.json"
+    },
+    {
+      "language": "english",
+      "decade": "60s",
+      "path": "data/ingles/60s.json"
+    },
+    {
+      "language": "english",
+      "decade": "70s",
+      "path": "data/ingles/70s.json"
+    },
+    {
+      "language": "english",
+      "decade": "80s",
+      "path": "data/ingles/80s.json"
+    },
+    {
+      "language": "english",
+      "decade": "90s",
+      "path": "data/ingles/90s.json"
+    },
+    {
+      "language": "english",
+      "decade": "2000s",
+      "path": "data/ingles/2000s.json"
+    },
+    {
+      "language": "spanish",
+      "decade": "50s",
+      "path": "data/espanol/50s.json"
+    },
+    {
+      "language": "spanish",
+      "decade": "60s",
+      "path": "data/espanol/60s.json"
+    },
+    {
+      "language": "spanish",
+      "decade": "70s",
+      "path": "data/espanol/70s.json"
+    },
+    {
+      "language": "spanish",
+      "decade": "80s",
+      "path": "data/espanol/80s.json"
+    },
+    {
+      "language": "spanish",
+      "decade": "90s",
+      "path": "data/espanol/90s.json"
+    },
+    {
+      "language": "spanish",
+      "decade": "2000s",
+      "path": "data/espanol/2000s.json"
+    }
+  ],
+  "catalogTarget": 1200,
+  "notes": "12 listas de 100. Reproductor estático: youtubeId/youtubeUrl se almacenan en cada JSON; youtubeQuery queda solo como pista de mantenimiento."
+}

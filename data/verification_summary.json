@@ -1,0 +1,94 @@
+{
+  "project": "CGO Music",
+  "totalSongs": 1200,
+  "verifiedSongs": 638,
+  "pendingSongs": 562,
+  "rule": "Top 10 Chile or UK",
+  "lists": [
+    {
+      "language": "english",
+      "decade": "50s",
+      "songs": 100,
+      "verified": 100,
+      "pending": 0
+    },
+    {
+      "language": "english",
+      "decade": "60s",
+      "songs": 100,
+      "verified": 100,
+      "pending": 0
+    },
+    {
+      "language": "english",
+      "decade": "70s",
+      "songs": 100,
+      "verified": 100,
+      "pending": 0
+    },
+    {
+      "language": "english",
+      "decade": "80s",
+      "songs": 100,
+      "verified": 100,
+      "pending": 0
+    },
+    {
+      "language": "english",
+      "decade": "90s",
+      "songs": 100,
+      "verified": 100,
+      "pending": 0
+    },
+    {
+      "language": "english",
+      "decade": "2000s",
+      "songs": 100,
+      "verified": 100,
+      "pending": 0
+    },
+    {
+      "language": "spanish",
+      "decade": "50s",
+      "songs": 100,
+      "verified": 0,
+      "pending": 100
+    },
+    {
+      "language": "spanish",
+      "decade": "60s",
+      "songs": 100,
+      "verified": 20,
+      "pending": 80
+    },
+    {
+      "language": "spanish",
+      "decade": "70s",
+      "songs": 100,
+      "verified": 0,
+      "pending": 100
+    },
+    {
+      "language": "spanish",
+      "decade": "80s",
+      "songs": 100,
+      "verified": 1,
+      "pending": 99
+    },
+    {
+      "language": "spanish",
+      "decade": "90s",
+      "songs": 100,
+      "verified": 1,
+      "pending": 99
+    },
+    {
+      "language": "spanish",
+      "decade": "2000s",
+      "songs": 100,
+      "verified": 16,
+      "pending": 84
+    }
+  ],
+  "note": "verified=true only when the record has a concrete chart source stored in chartSource."
+}

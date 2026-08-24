@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="theme-color" content="#0b0b0e">
+  <title>CGO Music</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <a class="brand" href="#" aria-label="CGO Music">
+      <span class="brand-mark">C</span>
+      <span>
+        <strong>CGO Music</strong>
+        <small>Top 10 Chile & UK</small>
+      </span>
+    </a>
+
+    <div class="search-wrap">
+      <span class="search-icon">⌕</span>
+      <input id="searchInput" type="search"
+             placeholder="Buscar en todo CGO Music..."
+             autocomplete="off" aria-label="Buscar canción o artista">
+      <button id="clearSearchBtn" class="clear-search" type="button" title="Limpiar búsqueda">×</button>
+    </div>
+
+    <div class="header-badge">50s → 2000s</div>
+  </header>
+
+  <main class="app-main">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">COLECCIONES</span>
+        <h1>Grandes canciones de seis décadas.</h1>
+        <p>Catálogo Top 10 Chile/UK con verificación documental visible por canción.</p>
+      </div>
+      <div class="hero-stats">
+        <div><strong id="catalogTotal">0</strong><span>canciones cargadas</span></div>
+        <div><strong id="catalogLists">0/12</strong><span>listas de 100</span></div>
+        <div><strong id="verifiedTotal">0</strong><span>rankings verificados</span></div>
+      </div>
+    </section>
+
+    <nav class="collection-tabs" aria-label="Colecciones por idioma">
+      <button class="collection-tab active" data-language="english">
+        <span class="flag">🇬🇧</span>
+        <span><strong>Inglés</strong><small>600 verificadas · UK Top 10</small></span>
+      </button>
+      <button class="collection-tab" data-language="spanish">
+        <span class="flag">🇨🇱</span>
+        <span><strong>Español</strong><small>600 canciones</small></span>
+      </button>
+    </nav>
+
+    <section class="content-grid">
+      <div class="library-card">
+        <div class="library-toolbar">
+          <div>
+            <span class="eyebrow" id="collectionEyebrow">COLECCIÓN EN INGLÉS</span>
+            <h2 id="libraryTitle">Todas las décadas</h2>
+            <p id="songCount">0 canciones</p>
+          </div>
+          <div class="toolbar-actions">
+            <button id="shuffleAllBtn" class="secondary-btn" type="button">🔀 Aleatorio</button>
+            <button id="playAllBtn" class="primary-btn" type="button">▶ Reproducir lista</button>
+          </div>
+        </div>
+
+        <div class="decade-tabs" id="decadeTabs">
+          <button class="decade active" data-decade="all">Todas</button>
+          <button class="decade" data-decade="50s">50s</button>
+          <button class="decade" data-decade="60s">60s</button>
+          <button class="decade" data-decade="70s">70s</button>
+          <button class="decade" data-decade="80s">80s</button>
+          <button class="decade" data-decade="90s">90s</button>
+          <button class="decade" data-decade="2000s">2000s</button>
+        </div>
+
+        <div class="list-head">
+          <span>#</span><span>Título</span><span>Año</span><span>Ranking</span>
+        </div>
+        <div id="songList" class="song-list"></div>
+
+        <div id="emptyState" class="empty-state" hidden>
+          <div class="empty-icon">♫</div>
+          <h3>No encontramos canciones</h3>
+          <p>Prueba otra década, colección o búsqueda.</p>
+        </div>
+      </div>
+
+      <aside class="video-card">
+        <div class="video-card-head">
+          <div>
+            <span class="eyebrow">AHORA REPRODUCIENDO</span>
+            <strong id="sideTrackTitle">Selecciona una canción</strong>
+          </div>
+          <button id="toggleVideoBtn" class="icon-btn" type="button" title="Mostrar u ocultar video">▾</button>
+        </div>
+
+        <div id="videoArea" class="video-area">
+          <div class="video-shell">
+            <div id="player"></div>
+          </div>
+        </div>
+
+        <div class="side-track-meta">
+          <div class="side-thumb" id="sideThumb"><span>♪</span></div>
+          <div>
+            <strong id="sideTitle">CGO Music</strong>
+            <span id="sideArtist">Elige un tema para comenzar</span>
+          </div>
+        </div>
+
+        <div class="verification-box">
+          <span id="verificationIcon" class="verified-dot">✓</span>
+          <div class="verification-copy">
+            <strong id="verificationTitle">Catálogo verificable</strong>
+            <span id="verificationText">Cada canción guarda su ranking y fuente.</span>
+            <a id="verificationLink" class="verification-link" href="#" target="_blank" rel="noopener noreferrer" style="display:none">
+              Ver fuente del ranking ↗
+            </a>
+          </div>
+        </div>
+
+        <p id="status" class="status">Cargando catálogo...</p>
+      </aside>
+    </section>
+  </main>
+
+  <section class="player-dock" aria-label="Reproductor">
+    <div class="dock-track">
+      <div class="dock-thumb" id="dockThumb"><span>♪</span></div>
+      <div class="dock-track-text">
+        <strong id="nowTitle">Selecciona una canción</strong>
+        <span id="nowArtist">CGO Music</span>
+      </div>
+      <span id="trackBadge" class="rank-badge">Top 10</span>
+    </div>
+
+    <div class="dock-center">
+      <div class="dock-controls">
+        <button id="shuffleBtn" class="dock-icon-btn" type="button" title="Aleatorio">🔀</button>
+        <button id="prevBtn" class="dock-icon-btn" type="button" title="Anterior">⏮</button>
+        <button id="playPauseBtn" class="dock-play-btn" type="button" title="Play / Pausa">▶</button>
+        <button id="stopBtn" class="dock-icon-btn" type="button" title="Stop">⏹</button>
+        <button id="nextBtn" class="dock-icon-btn" type="button" title="Siguiente">⏭</button>
+        <button id="repeatBtn" class="dock-icon-btn" type="button" title="Repetir lista">↻</button>
+      </div>
+
+      <div class="progress-row">
+        <span id="currentTime">0:00</span>
+        <input id="progress" type="range" min="0" max="100" value="0" aria-label="Progreso">
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+
+    <div class="dock-volume">
+      <span class="volume-label">Volumen</span>
+      <span aria-hidden="true">🔊</span>
+      <input id="volume" type="range" min="0" max="100" value="70" aria-label="Volumen">
+      <span id="volumeValue" class="volume-value">70%</span>
+    </div>
+  </section>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
