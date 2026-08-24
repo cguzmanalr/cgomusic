@@ -221,8 +221,8 @@ function setupMediaSession() {
   setMediaAction("play", playActiveMedia);
   setMediaAction("pause", pauseActiveMedia);
   setMediaAction("stop", stopPlayback);
-  setMediaAction("previoustrack", previousSong);
-  setMediaAction("nexttrack", () => nextSong(false));
+  setMediaAction("previoustrack", mediaSessionPreviousTrack);
+  setMediaAction("nexttrack", mediaSessionNextTrack);
 
   setMediaAction("seekbackward", details => {
     if (!currentSong) return;
@@ -241,6 +241,21 @@ function setupMediaSession() {
     if (!currentSong || !Number.isFinite(details.seekTime)) return;
     seekActiveMedia(details.seekTime);
   });
+}
+
+function mediaSessionPreviousTrack() {
+  if (!currentSong) return;
+  previousSong();
+  // playCurrent() actualiza metadata y, si la nueva canción usa <audio>,
+  // mantiene la sesión multimedia activa aun con la pantalla bloqueada.
+  setMediaSessionPlaybackState("playing");
+}
+
+function mediaSessionNextTrack() {
+  if (!currentSong) return;
+  nextSong(false);
+  // En audio directo, iOS/Android pueden continuar desde la pantalla bloqueada.
+  setMediaSessionPlaybackState("playing");
 }
 
 function updateMediaSessionMetadata() {

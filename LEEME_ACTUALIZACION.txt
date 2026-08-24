@@ -13,3 +13,10 @@ No reemplaces data/ ni js/config.js.
 
 
 V12: La lista de canciones usa font-size: 18px y font-weight: 300 para título, artista, índice, año y ranking.
+
+
+V14 - LLAVE DE TUERCAS + MEDIA SESSION
+- El acceso Importar/Exportar usa ahora el icono de llave de tuercas (🔧).
+- Media Session registra Anterior y Siguiente mediante handlers dedicados.
+- Con audioUrl (<audio>) pueden usarse desde la pantalla bloqueada en iPhone/Android cuando el sistema lo permita.
+- YouTube IFrame sigue sujeto a la suspensión de iOS al bloquear la pantalla.
