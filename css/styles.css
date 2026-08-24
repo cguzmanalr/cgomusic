@@ -1993,3 +1993,88 @@ body {
     font-weight: 300;
   }
 }
+
+/* =========================================================
+   CGO Music — corrección de ancho de acciones móvil v13
+   Evita que Aleatorio/Lista expandan la tarjeta fuera del viewport.
+   ========================================================= */
+.content-grid,
+.library-card,
+.library-toolbar,
+.toolbar-actions,
+.song-list,
+.list-head,
+.song-row {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.content-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 760px) {
+  .content-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    overflow: hidden;
+  }
+
+  .library-card {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .library-toolbar,
+  .toolbar-actions {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .toolbar-actions {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 8px;
+    overflow: hidden;
+  }
+
+  .toolbar-actions .add-song-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .toolbar-actions .playlist-action-btn {
+    width: 100% !important;
+    max-width: 100%;
+    min-width: 0 !important;
+    margin: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow: hidden;
+  }
+
+  .toolbar-actions .playlist-action-btn > span:last-child {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .playlist-action-icon {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .playlist-action-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 390px) {
+  .toolbar-actions { gap: 6px; }
+  .toolbar-actions .playlist-action-btn { padding-inline: 6px; }
+}
