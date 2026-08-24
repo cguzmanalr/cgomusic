@@ -26,6 +26,10 @@ let metadataLookupReject = null;
 let autoAddTimer = null;
 let autoAddInProgress = false;
 let lastAutoAddedVideoId = "";
+let youtubeSearchResults = [];
+let selectedSearchVideoIds = new Set();
+let youtubeSearchAbortController = null;
+const YOUTUBE_API_KEY_STORAGE_KEY = "cgoMusicYouTubeApiKeyV1";
 const CUSTOM_SONGS_STORAGE_KEY = "cgoMusicCustomSongsV1";
 const PERSONALIZATION_STORAGE_KEY = "cgoMusicPersonalizationV2";
 const PERSONALIZATION_REMOTE_PATH = "data/personalizacion.json";
@@ -505,6 +509,235 @@ function inferDecadeFromYear(year) {
 }
 
 
+function getStoredYouTubeApiKey() {
+  try {
+    return String(localStorage.getItem(YOUTUBE_API_KEY_STORAGE_KEY) || "").trim();
+  } catch (error) {
+    return "";
+  }
+}
+
+function storeYouTubeApiKey() {
+  const input = $("youtubeApiKey");
+  const status = $("youtubeApiKeyStatus");
+  const key = String(input?.value || "").trim();
+  if (!key) {
+    if (status) status.textContent = "Pega una clave antes de guardar.";
+    return;
+  }
+  try {
+    localStorage.setItem(YOUTUBE_API_KEY_STORAGE_KEY, key);
+    if (status) status.textContent = "Clave guardada sólo en este dispositivo.";
+    if ($("youtubeApiDetails")) $("youtubeApiDetails").open = false;
+  } catch (error) {
+    if (status) status.textContent = "El navegador no permitió guardar la clave.";
+  }
+}
+
+function clearYouTubeApiKey() {
+  try { localStorage.removeItem(YOUTUBE_API_KEY_STORAGE_KEY); } catch (error) {}
+  if ($("youtubeApiKey")) $("youtubeApiKey").value = "";
+  if ($("youtubeApiKeyStatus")) $("youtubeApiKeyStatus").textContent = "Clave borrada de este dispositivo.";
+  if ($("youtubeApiDetails")) $("youtubeApiDetails").open = true;
+}
+
+function decodeYouTubeText(value) {
+  const textarea = document.createElement("textarea");
+  textarea.innerHTML = String(value || "");
+  return textarea.value;
+}
+
+function youtubeSearchItemFromApi(item) {
+  const videoId = String(item?.id?.videoId || "").trim();
+  const snippet = item?.snippet || {};
+  return {
+    videoId,
+    title: decodeYouTubeText(snippet.title || ""),
+    channelTitle: decodeYouTubeText(snippet.channelTitle || ""),
+    publishedAt: String(snippet.publishedAt || ""),
+    thumbnail: String(snippet?.thumbnails?.medium?.url || snippet?.thumbnails?.high?.url || snippet?.thumbnails?.default?.url || (videoId ? `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg` : ""))
+  };
+}
+
+function updateSearchSelectionButton() {
+  const button = $("saveSongBtn");
+  if (!button || editingCustomSongId) return;
+  const count = selectedSearchVideoIds.size;
+  button.disabled = count === 0;
+  button.textContent = count === 0
+    ? "Agregar seleccionadas"
+    : `Agregar seleccionada${count === 1 ? "" : "s"} (${count})`;
+}
+
+function toggleSearchVideoSelection(videoId, checked) {
+  if (checked) selectedSearchVideoIds.add(videoId);
+  else selectedSearchVideoIds.delete(videoId);
+  updateSearchSelectionButton();
+}
+
+function renderYouTubeSearchResults() {
+  const container = $("youtubeSearchResults");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!youtubeSearchResults.length) return;
+
+  youtubeSearchResults.forEach((result, index) => {
+    const existing = findExistingSongByVideoId(result.videoId);
+    const card = document.createElement("label");
+    card.className = `youtube-result-card${existing ? " already-added" : ""}`;
+    card.innerHTML = `
+      <input class="youtube-result-check" type="checkbox" value="${escapeHtml(result.videoId)}" ${existing ? "disabled" : ""}>
+      <img src="${escapeHtml(result.thumbnail)}" alt="" loading="lazy">
+      <span class="youtube-result-copy">
+        <strong>${escapeHtml(result.title)}</strong>
+        <span>${escapeHtml(result.channelTitle)}</span>
+        <small>${existing ? `Ya está en CGO Music como “${escapeHtml(existing.title)}”` : `Alternativa ${index + 1}`}</small>
+      </span>
+    `;
+
+    const checkbox = card.querySelector(".youtube-result-check");
+    checkbox?.addEventListener("change", event => {
+      toggleSearchVideoSelection(result.videoId, event.target.checked);
+      card.classList.toggle("selected", event.target.checked);
+    });
+    container.appendChild(card);
+  });
+}
+
+async function searchYouTubeCandidates() {
+  if (editingCustomSongId) return;
+  const query = String($("youtubeSearchQuery")?.value || "").trim();
+  const status = $("customSongFormStatus");
+  const button = $("youtubeSearchBtn");
+  const apiKey = getStoredYouTubeApiKey();
+
+  if (!query) {
+    status.textContent = "Escribe el nombre de una canción o artista.";
+    $("youtubeSearchQuery")?.focus();
+    return;
+  }
+
+  if (!apiKey) {
+    status.textContent = "Para buscar dentro de CGO Music configura una API key de YouTube Data API v3 una sola vez.";
+    if ($("youtubeApiDetails")) $("youtubeApiDetails").open = true;
+    $("youtubeApiKey")?.focus();
+    return;
+  }
+
+  youtubeSearchAbortController?.abort();
+  youtubeSearchAbortController = new AbortController();
+  youtubeSearchResults = [];
+  selectedSearchVideoIds.clear();
+  renderYouTubeSearchResults();
+  updateSearchSelectionButton();
+  button.disabled = true;
+  button.textContent = "Buscando…";
+  status.textContent = "Buscando 5 alternativas reproducibles en YouTube…";
+
+  try {
+    const params = new URLSearchParams({
+      part: "snippet",
+      type: "video",
+      maxResults: "5",
+      videoEmbeddable: "true",
+      videoSyndicated: "true",
+      safeSearch: "moderate",
+      q: query,
+      key: apiKey
+    });
+    const response = await fetch(`https://www.googleapis.com/youtube/v3/search?${params.toString()}`, {
+      signal: youtubeSearchAbortController.signal
+    });
+    const payload = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      const apiMessage = payload?.error?.message || `HTTP ${response.status}`;
+      throw new Error(apiMessage);
+    }
+
+    youtubeSearchResults = (Array.isArray(payload?.items) ? payload.items : [])
+      .map(youtubeSearchItemFromApi)
+      .filter(item => /^[A-Za-z0-9_-]{11}$/.test(item.videoId));
+
+    renderYouTubeSearchResults();
+    if (youtubeSearchResults.length) {
+      const available = youtubeSearchResults.filter(item => !findExistingSongByVideoId(item.videoId)).length;
+      status.textContent = available
+        ? `Encontré ${youtubeSearchResults.length} alternativas. Marca una o varias para agregarlas.`
+        : "Los 5 resultados encontrados ya existen en CGO Music.";
+    } else {
+      status.textContent = "YouTube no devolvió videos para esa búsqueda.";
+    }
+  } catch (error) {
+    if (error?.name === "AbortError") return;
+    console.warn("Búsqueda YouTube Data API:", error);
+    status.textContent = `No pude buscar en YouTube: ${error.message || error}. Revisa la API key y su configuración.`;
+    if ($("youtubeApiDetails")) $("youtubeApiDetails").open = true;
+  } finally {
+    button.disabled = false;
+    button.textContent = "Buscar";
+  }
+}
+
+function customSongFromSearchResult(result) {
+  const parsed = splitYouTubeArtistAndTitle(result.title, result.channelTitle);
+  const year = inferYearFromVideoTitle(result.title);
+  return normalizeCustomSong({
+    id: makeCustomSongId(),
+    title: parsed.title,
+    artist: parsed.artist,
+    year,
+    language: languageForAutomaticSong(`${parsed.title} ${parsed.artist}`),
+    decade: inferDecadeFromYear(year),
+    youtubeId: result.videoId,
+    youtubeUrl: `https://www.youtube.com/watch?v=${result.videoId}`,
+    artworkUrl: result.thumbnail || `https://i.ytimg.com/vi/${result.videoId}/hqdefault.jpg`,
+    addedAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  });
+}
+
+function addSelectedYouTubeResults() {
+  if (editingCustomSongId) return;
+  const status = $("customSongFormStatus");
+  const selected = youtubeSearchResults.filter(item => selectedSearchVideoIds.has(item.videoId));
+  if (!selected.length) {
+    status.textContent = "Selecciona al menos una alternativa.";
+    return;
+  }
+
+  const added = [];
+  const skipped = [];
+  selected.forEach(result => {
+    const existing = findExistingSongByVideoId(result.videoId);
+    if (existing) {
+      skipped.push(existing);
+      return;
+    }
+    const song = customSongFromSearchResult(result);
+    if (song.title && song.artist) {
+      customSongs.push(song);
+      added.push(song);
+    }
+  });
+
+  if (!added.length) {
+    status.textContent = skipped.length ? "Las alternativas seleccionadas ya estaban registradas." : "No pude agregar las alternativas seleccionadas.";
+    return;
+  }
+
+  saveCustomSongs();
+  rebuildCatalogWithCustomSongs();
+  closeCustomSongDialog();
+  $("searchInput").value = "";
+  globalSearchActive = false;
+  selectCollection("custom");
+  selectDecade("all");
+  applyFilters();
+  setStatus(`${added.length} canción${added.length === 1 ? "" : "es"} agregada${added.length === 1 ? "" : "s"} a Mi Música${skipped.length ? ` · ${skipped.length} ya existía${skipped.length === 1 ? "" : "n"}` : ""}.`);
+}
+
 function cleanYouTubeChannelName(value) {
   return String(value || "")
     .replace(/\s*-\s*Topic$/i, "")
@@ -729,15 +962,18 @@ async function autoAddSongFromYouTubeUrl() {
     setStatus(`“${song.title}” de ${song.artist} fue agregada automáticamente a Mi Música.`);
   } catch (error) {
     console.warn("No se pudo completar el alta automática:", error);
-    status.textContent = `${error.message || error} Puedes abrir “Revisar o editar datos” y completarla manualmente.`;
-    $("manualSongDetails").open = true;
+    status.textContent = `${error.message || error} Prueba buscar la canción por nombre o revisa que la URL sea reproducible.`;
     $("customTitle").value ||= "";
     $("customArtist").value ||= "";
     $("customArtworkUrl").value ||= `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
   } finally {
     autoAddInProgress = false;
-    $("saveSongBtn").disabled = false;
-    $("saveSongBtn").textContent = editingCustomSongId ? "Guardar cambios" : "Agregar automáticamente";
+    if (editingCustomSongId) {
+      $("saveSongBtn").disabled = false;
+      $("saveSongBtn").textContent = "Guardar cambios";
+    } else {
+      updateSearchSelectionButton();
+    }
   }
 }
 
@@ -1013,16 +1249,33 @@ function openCustomSongDialog(song = null, initialQuery = "") {
   editingCustomSongId = song?.id || null;
   lastAutoAddedVideoId = "";
   clearTimeout(autoAddTimer);
+  youtubeSearchAbortController?.abort();
+  youtubeSearchResults = [];
+  selectedSearchVideoIds.clear();
   $("customSongForm").reset();
   $("customSongFormStatus").textContent = "";
-  $("customSongDialogTitle").textContent = song ? "Editar canción" : "Agregar canción";
+  $("youtubeSearchResults").innerHTML = "";
+  $("youtubeApiKey").value = getStoredYouTubeApiKey();
+  $("youtubeApiKeyStatus").textContent = getStoredYouTubeApiKey()
+    ? "La clave ya está configurada en este dispositivo."
+    : "";
+
+  const searchMode = $("youtubeSearchMode");
+  const manualDetails = $("manualSongDetails");
+  $("customSongDialogTitle").textContent = song ? "Editar canción" : "Buscar y agregar canción";
   $("customSongDialogHelp").textContent = song
     ? "Puedes corregir los datos de esta canción y guardar los cambios."
-    : "Pega el enlace de YouTube. CGO Music leerá el video y lo registrará automáticamente en Mi Música.";
-  $("saveSongBtn").textContent = song ? "Guardar cambios" : "Agregar automáticamente";
-  $("manualSongDetails").open = Boolean(song);
+    : "Escribe el nombre de la canción o artista. CGO Music mostrará 5 alternativas de YouTube y podrás agregar una o varias.";
+
+  if (searchMode) searchMode.hidden = Boolean(song);
+  if (manualDetails) {
+    manualDetails.hidden = !song;
+    manualDetails.open = Boolean(song);
+  }
 
   if (song) {
+    $("saveSongBtn").disabled = false;
+    $("saveSongBtn").textContent = "Guardar cambios";
     $("customTitle").value = song.title || "";
     $("customArtist").value = song.artist || "";
     $("customYear").value = song.year || "";
@@ -1032,47 +1285,34 @@ function openCustomSongDialog(song = null, initialQuery = "") {
     $("customAudioUrl").value = song.audioUrl || "";
     $("customArtworkUrl").value = song.artworkUrl || "";
   } else {
-    $("customTitle").value = initialQuery || "";
+    $("saveSongBtn").disabled = true;
+    $("saveSongBtn").textContent = "Agregar seleccionadas";
+    $("youtubeSearchQuery").value = initialQuery || "";
     $("customLanguage").value = selectedLanguage === "spanish" ? "spanish" : "english";
     $("customDecade").value = "other";
   }
 
   if (typeof dialog.showModal === "function") dialog.showModal();
   else dialog.setAttribute("open", "");
-  setTimeout(() => $("customYoutubeUrl")?.focus(), 50);
+  setTimeout(() => (song ? $("customTitle") : $("youtubeSearchQuery"))?.focus(), 50);
 }
 
 function closeCustomSongDialog() {
   clearTimeout(autoAddTimer);
+  youtubeSearchAbortController?.abort();
   const dialog = $("customSongDialog");
   if (!dialog) return;
   editingCustomSongId = null;
+  youtubeSearchResults = [];
+  selectedSearchVideoIds.clear();
   if (typeof dialog.close === "function") dialog.close();
   else dialog.removeAttribute("open");
 }
 
-function buildYouTubeSearchQuery() {
-  const title = $("customTitle")?.value.trim() || "";
-  const artist = $("customArtist")?.value.trim() || "";
-  return [artist, title, "official audio"].filter(Boolean).join(" ").trim();
-}
-
-function searchSongOnYouTube() {
-  const query = buildYouTubeSearchQuery();
-  if (!query) {
-    $("customSongFormStatus").textContent = "Escribe al menos el título o artista antes de buscar.";
-    return;
-  }
-  window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`, "_blank", "noopener,noreferrer");
-}
-
 function handleCustomSongFormSubmit(event) {
   event.preventDefault();
-  if (editingCustomSongId) {
-    saveCustomSongFromForm(event);
-  } else {
-    autoAddSongFromYouTubeUrl();
-  }
+  if (editingCustomSongId) saveCustomSongFromForm(event);
+  else addSelectedYouTubeResults();
 }
 
 function saveCustomSongFromForm(event) {
@@ -2107,6 +2347,15 @@ document.addEventListener("DOMContentLoaded", () => {
   $("closeSongDialogBtn").addEventListener("click", closeCustomSongDialog);
   $("cancelSongBtn").addEventListener("click", closeCustomSongDialog);
   $("customSongForm").addEventListener("submit", handleCustomSongFormSubmit);
+  $("youtubeSearchBtn").addEventListener("click", searchYouTubeCandidates);
+  $("youtubeSearchQuery").addEventListener("keydown", event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      searchYouTubeCandidates();
+    }
+  });
+  $("saveYoutubeApiKeyBtn").addEventListener("click", storeYouTubeApiKey);
+  $("clearYoutubeApiKeyBtn").addEventListener("click", clearYouTubeApiKey);
   $("customYoutubeUrl").addEventListener("input", scheduleAutomaticAddFromUrl);
   $("customYear").addEventListener("change", event => {
     if (event.target.value) $("customDecade").value = inferDecadeFromYear(event.target.value);

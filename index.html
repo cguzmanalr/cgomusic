@@ -159,23 +159,54 @@
       <div class="song-dialog-head">
         <div>
           <span class="eyebrow">MI MÚSICA</span>
-          <h2 id="customSongDialogTitle">Agregar canción</h2>
+          <h2 id="customSongDialogTitle">Buscar y agregar canción</h2>
         </div>
         <button id="closeSongDialogBtn" class="dialog-close" type="button" aria-label="Cerrar">×</button>
       </div>
 
       <p id="customSongDialogHelp" class="song-dialog-help">
-        Pega el enlace de YouTube. CGO Music leerá el video y registrará automáticamente el título, artista, carátula y URL.
+        Escribe el nombre de la canción o artista. CGO Music buscará 5 videos reproducibles y podrás agregar uno o varios sin salir de la aplicación.
       </p>
 
-      <div class="field youtube-field auto-youtube-field">
-        <span>URL de YouTube *</span>
-        <input id="customYoutubeUrl" name="youtubeUrl" type="url" inputmode="url"
-               placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
-        <small id="youtubeAutoHint">Sólo pega la URL. No necesitas escribir el título ni el artista.</small>
-      </div>
+      <section id="youtubeSearchMode" class="youtube-search-mode">
+        <div class="youtube-search-row">
+          <label class="field youtube-search-field">
+            <span>Buscar en YouTube</span>
+            <input id="youtubeSearchQuery" type="search" maxlength="180" autocomplete="off"
+                   placeholder="Ej.: Depeche Mode Enjoy the Silence">
+          </label>
+          <button id="youtubeSearchBtn" class="primary-btn" type="button">Buscar</button>
+        </div>
 
-      <details id="manualSongDetails" class="manual-song-details">
+        <div id="youtubeSearchResults" class="youtube-search-results" aria-live="polite"></div>
+
+        <details id="youtubeApiDetails" class="api-key-details">
+          <summary>Configurar búsqueda de YouTube</summary>
+          <div class="api-key-body">
+            <p>La búsqueda usa YouTube Data API v3. La clave se guarda sólo en este dispositivo y no se incluye al exportar tus canciones o favoritos.</p>
+            <div class="api-key-row">
+              <input id="youtubeApiKey" type="password" autocomplete="off" placeholder="Pega tu API key de YouTube Data API v3">
+              <button id="saveYoutubeApiKeyBtn" class="secondary-btn" type="button">Guardar clave</button>
+              <button id="clearYoutubeApiKeyBtn" class="secondary-btn" type="button">Borrar</button>
+            </div>
+            <small id="youtubeApiKeyStatus"></small>
+          </div>
+        </details>
+
+        <details id="directUrlDetails" class="manual-song-details compact-details">
+          <summary>También puedo agregar pegando una URL</summary>
+          <div class="direct-url-body">
+            <label class="field youtube-field auto-youtube-field">
+              <span>URL de YouTube</span>
+              <input id="customYoutubeUrl" name="youtubeUrl" type="url" inputmode="url"
+                     placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+              <small id="youtubeAutoHint">Si ya tienes una URL, pégala aquí y CGO Music la registrará automáticamente.</small>
+            </label>
+          </div>
+        </details>
+      </section>
+
+      <details id="manualSongDetails" class="manual-song-details edit-song-details">
         <summary>Revisar o editar datos</summary>
         <div class="song-form-grid manual-song-grid">
           <label class="field field-wide">
@@ -227,7 +258,7 @@
 
       <div class="song-dialog-actions">
         <button id="cancelSongBtn" class="secondary-btn" type="button">Cancelar</button>
-        <button id="saveSongBtn" class="primary-btn" type="submit">Agregar automáticamente</button>
+        <button id="saveSongBtn" class="primary-btn" type="submit" disabled>Agregar seleccionadas</button>
       </div>
     </form>
   </dialog>

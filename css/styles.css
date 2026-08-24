@@ -1109,3 +1109,95 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
   .collection-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .favorite-btn { width: 30px; height: 30px; font-size: 19px; }
 }
+
+
+/* Búsqueda integrada de YouTube · 5 alternativas */
+.youtube-search-mode { display: grid; gap: 14px; }
+.youtube-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+.youtube-search-row .primary-btn { min-height: 44px; }
+.youtube-search-results { display: grid; gap: 9px; }
+.youtube-result-card {
+  display: grid;
+  grid-template-columns: 22px 116px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #303039;
+  border-radius: 14px;
+  background: #1d1d22;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, transform .15s ease;
+}
+.youtube-result-card:hover { border-color: #4a4a55; transform: translateY(-1px); }
+.youtube-result-card.selected {
+  border-color: rgba(255,41,71,.72);
+  background: rgba(255,41,71,.08);
+}
+.youtube-result-card.already-added { opacity: .58; cursor: default; }
+.youtube-result-card > input { width: 18px; height: 18px; accent-color: #ff2947; }
+.youtube-result-card > img {
+  width: 116px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 9px;
+  background: #0d0d10;
+}
+.youtube-result-copy { min-width: 0; display: grid; gap: 4px; }
+.youtube-result-copy strong {
+  color: #f7f7fa;
+  font-size: 13px;
+  line-height: 1.28;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.youtube-result-copy span { color: #b2b2bb; font-size: 11px; }
+.youtube-result-copy small { color: #777782; font-size: 10px; }
+.api-key-details {
+  border: 1px solid #2e2e37;
+  border-radius: 13px;
+  background: #19191e;
+  overflow: hidden;
+}
+.api-key-details summary {
+  padding: 11px 13px;
+  cursor: pointer;
+  color: #aaaab4;
+  font-size: 11px;
+  font-weight: 700;
+}
+.api-key-body { padding: 0 13px 13px; display: grid; gap: 9px; }
+.api-key-body p { margin: 0; color: #8f8f99; font-size: 10px; line-height: 1.45; }
+.api-key-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 7px;
+}
+.api-key-row input {
+  min-width: 0;
+  height: 40px;
+  padding: 0 11px;
+  border: 1px solid #34343d;
+  border-radius: 10px;
+  background: #202026;
+  color: var(--text);
+}
+.api-key-body small { color: #9c9ca5; font-size: 10px; }
+.compact-details { margin-top: 0; }
+.direct-url-body { padding: 0 14px 14px; }
+.edit-song-details[hidden], .youtube-search-mode[hidden] { display: none !important; }
+
+@media (max-width: 620px) {
+  .youtube-search-row { grid-template-columns: 1fr; }
+  .youtube-search-row .primary-btn { width: 100%; }
+  .youtube-result-card { grid-template-columns: 20px 92px minmax(0, 1fr); gap: 9px; padding: 8px; }
+  .youtube-result-card > img { width: 92px; }
+  .api-key-row { grid-template-columns: 1fr 1fr; }
+  .api-key-row input { grid-column: 1 / -1; }
+}

@@ -1,0 +1,54 @@
+CGO MUSIC — BÚSQUEDA DE 5 ALTERNATIVAS EN YOUTUBE
+==================================================
+
+QUÉ CAMBIA
+----------
+En “+ Agregar canción” ahora puedes escribir, por ejemplo:
+
+  Depeche Mode Enjoy the Silence
+
+CGO Music consulta YouTube Data API v3 y muestra 5 videos reproducibles.
+Puedes marcar uno o varios y pulsar “Agregar seleccionadas”.
+Las canciones se incorporan a “Mi Música”, participan en búsqueda,
+aleatorio, Favoritos y en personalizacion.json.
+
+CONFIGURACIÓN ÚNICA DE LA BÚSQUEDA
+----------------------------------
+GitHub Pages es una web estática y no puede ejecutar el BAT ni ocultar una
+clave en un servidor. Por eso la búsqueda oficial de YouTube necesita una API
+key configurada una vez en cada dispositivo.
+
+1. En Google Cloud crea o selecciona un proyecto.
+2. Habilita “YouTube Data API v3”.
+3. Ve a APIs y servicios > Credenciales > Crear credenciales > Clave de API.
+4. Recomendado: restringe la clave.
+   - Restricción de aplicación: sitios web / HTTP referrers.
+   - Agrega el dominio de tu GitHub Pages, por ejemplo:
+       https://TU_USUARIO.github.io/*
+   - Restricción de API: YouTube Data API v3.
+5. En CGO Music abre:
+      + Agregar canción > Configurar búsqueda de YouTube
+   pega la clave y pulsa “Guardar clave”.
+
+SEGURIDAD
+---------
+La API key se guarda sólo en localStorage del dispositivo.
+NO se agrega al repositorio.
+NO se exporta en personalizacion.json.
+
+FUNCIONAMIENTO
+--------------
+- Búsqueda: máximo 5 resultados.
+- Filtra resultados a videos embebibles/reproducibles fuera de YouTube.
+- Muestra miniatura, título y canal.
+- Puedes seleccionar una o varias canciones en una sola búsqueda.
+- Evita agregar un video si ese mismo YouTube ID ya está en CGO Music.
+- Intenta obtener automáticamente artista, título, carátula, idioma y año si
+  el año aparece en el título del video.
+- Si el año no puede inferirse de forma segura, queda sin año / década “Otra”
+  y puedes corregirlo después con “Editar”.
+
+ALTERNATIVA
+-----------
+Se mantiene la opción “También puedo agregar pegando una URL” por si alguna
+vez quieres registrar un video específico directamente.
