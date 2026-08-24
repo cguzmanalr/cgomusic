@@ -810,3 +810,28 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
     display: flex !important;
   }
 }
+
+/* =========================================================
+   CGO Music PWA / instalación móvil
+   ========================================================= */
+.install-app-btn {
+  border-color: rgba(255,255,255,.14);
+  white-space: nowrap;
+}
+
+.install-app-btn:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 760px) {
+  .toolbar-actions {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-actions .install-app-btn {
+    flex: 0 0 auto;
+    min-width: 92px;
+  }
+}

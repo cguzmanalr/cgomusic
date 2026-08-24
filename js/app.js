@@ -25,6 +25,215 @@ let playbackWatchdogCandidate = null;
 
 const $ = (id) => document.getElementById(id);
 
+
+// =========================================================
+// PWA + Media Session (iPhone / Android)
+// =========================================================
+let deferredInstallPrompt = null;
+
+function isIosDevice() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function isAndroidDevice() {
+  return /Android/i.test(navigator.userAgent);
+}
+
+function isStandaloneMode() {
+  return window.matchMedia?.("(display-mode: standalone)").matches ||
+    window.navigator.standalone === true;
+}
+
+function setInstallButtonVisible(visible) {
+  const button = $("installAppBtn");
+  if (button) button.hidden = !visible;
+}
+
+async function registerServiceWorker() {
+  if (!("serviceWorker" in navigator) || isFileProtocol()) return;
+
+  try {
+    await navigator.serviceWorker.register("./sw.js");
+  } catch (error) {
+    console.warn("No se pudo registrar el Service Worker:", error);
+  }
+}
+
+function setupInstallExperience() {
+  if (isStandaloneMode()) {
+    setInstallButtonVisible(false);
+    return;
+  }
+
+  // iOS no entrega beforeinstallprompt: mostramos nuestro botón con instrucciones.
+  if (isIosDevice()) {
+    setInstallButtonVisible(true);
+  }
+
+  // Android puede tardar unos segundos en considerar la PWA instalable.
+  if (isAndroidDevice()) {
+    setInstallButtonVisible(true);
+  }
+
+  window.addEventListener("beforeinstallprompt", event => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    setInstallButtonVisible(true);
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredInstallPrompt = null;
+    setInstallButtonVisible(false);
+    setStatus("CGO Music quedó instalada como aplicación.");
+  });
+
+  $("installAppBtn")?.addEventListener("click", async () => {
+    if (isStandaloneMode()) {
+      setInstallButtonVisible(false);
+      return;
+    }
+
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      try {
+        await deferredInstallPrompt.userChoice;
+      } finally {
+        deferredInstallPrompt = null;
+      }
+      return;
+    }
+
+    if (isIosDevice()) {
+      alert(
+        "Para instalar CGO Music en iPhone:\n\n" +
+        "1. Ábrela en Safari.\n" +
+        "2. Pulsa Compartir (cuadrado con flecha hacia arriba).\n" +
+        "3. Elige ‘Añadir a pantalla de inicio’.\n" +
+        "4. Abre CGO Music desde el nuevo icono."
+      );
+      return;
+    }
+
+    alert(
+      "En Android abre el menú del navegador y elige ‘Instalar aplicación’ o " +
+      "‘Añadir a pantalla principal’. Si esa opción todavía no aparece, recarga la página."
+    );
+  });
+}
+
+function setMediaAction(action, handler) {
+  if (!("mediaSession" in navigator)) return;
+  try {
+    navigator.mediaSession.setActionHandler(action, handler);
+  } catch (error) {
+    // Algunos navegadores no implementan todos los botones de Media Session.
+    console.debug(`Media Session no soporta ${action}:`, error);
+  }
+}
+
+function setupMediaSession() {
+  if (!("mediaSession" in navigator)) return;
+
+  setMediaAction("play", () => {
+    if (!currentSong) {
+      startUserPlayback();
+      setQueueFromVisible();
+      playCurrent();
+      return;
+    }
+    startUserPlayback();
+    if (playerReady) player.playVideo();
+  });
+
+  setMediaAction("pause", () => {
+    if (playerReady) player.pauseVideo();
+  });
+
+  setMediaAction("stop", stopPlayback);
+  setMediaAction("previoustrack", previousSong);
+  setMediaAction("nexttrack", () => nextSong(false));
+
+  setMediaAction("seekbackward", details => {
+    if (!playerReady || !currentSong) return;
+    const current = Number(player.getCurrentTime?.() || 0);
+    const amount = Number(details.seekOffset || 10);
+    player.seekTo(Math.max(0, current - amount), true);
+    syncMediaSessionPosition();
+  });
+
+  setMediaAction("seekforward", details => {
+    if (!playerReady || !currentSong) return;
+    const current = Number(player.getCurrentTime?.() || 0);
+    const duration = Number(player.getDuration?.() || 0);
+    const amount = Number(details.seekOffset || 10);
+    player.seekTo(duration > 0 ? Math.min(duration, current + amount) : current + amount, true);
+    syncMediaSessionPosition();
+  });
+
+  setMediaAction("seekto", details => {
+    if (!playerReady || !currentSong || !Number.isFinite(details.seekTime)) return;
+    player.seekTo(details.seekTime, true);
+    syncMediaSessionPosition();
+  });
+}
+
+function updateMediaSessionMetadata() {
+  if (!("mediaSession" in navigator) || !currentSong || !("MediaMetadata" in window)) return;
+
+  const thumb = youtubeThumb(currentSong);
+  const artwork = thumb
+    ? [
+        { src: thumb, sizes: "320x180", type: "image/jpeg" },
+        { src: thumb.replace("mqdefault.jpg", "hqdefault.jpg"), sizes: "480x360", type: "image/jpeg" }
+      ]
+    : [
+        { src: new URL("icons/icon-192.png", document.baseURI).href, sizes: "192x192", type: "image/png" },
+        { src: new URL("icons/icon-512.png", document.baseURI).href, sizes: "512x512", type: "image/png" }
+      ];
+
+  try {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: currentSong.title,
+      artist: currentSong.artist,
+      album: `CGO Music · ${currentSong.decade || "Grandes canciones"}`,
+      artwork
+    });
+  } catch (error) {
+    console.debug("No se pudo actualizar Media Session metadata:", error);
+  }
+}
+
+function setMediaSessionPlaybackState(state) {
+  if (!("mediaSession" in navigator)) return;
+  try {
+    navigator.mediaSession.playbackState = state;
+  } catch (error) {
+    console.debug("No se pudo actualizar playbackState:", error);
+  }
+}
+
+function syncMediaSessionPosition() {
+  if (!("mediaSession" in navigator) || !playerReady || !currentSong) return;
+  if (typeof navigator.mediaSession.setPositionState !== "function") return;
+
+  try {
+    const duration = Number(player.getDuration?.() || 0);
+    const current = Number(player.getCurrentTime?.() || 0);
+    const rate = Number(player.getPlaybackRate?.() || 1);
+
+    if (duration > 0) {
+      navigator.mediaSession.setPositionState({
+        duration,
+        playbackRate: rate > 0 ? rate : 1,
+        position: Math.min(Math.max(0, current), duration)
+      });
+    }
+  } catch (error) {
+    console.debug("No se pudo sincronizar la posición con el sistema:", error);
+  }
+}
+
 function clearPendingAdvance() {
   if (pendingAdvanceTimer) {
     clearTimeout(pendingAdvanceTimer);
@@ -319,6 +528,8 @@ function onYouTubeIframeAPIReady() {
 function handlePlayerState(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     stoppedByUser = false;
+    setMediaSessionPlaybackState("playing");
+    syncMediaSessionPosition();
     clearPendingAdvance();
     clearPlaybackWatchdog();
     $("playPauseBtn").textContent = "❚❚";
@@ -327,10 +538,13 @@ function handlePlayerState(event) {
     // El iframe está respondiendo; evita declararlo muerto demasiado pronto.
     clearPlaybackWatchdog();
   } else if (event.data === YT.PlayerState.PAUSED) {
+    setMediaSessionPlaybackState("paused");
+    syncMediaSessionPosition();
     clearPlaybackWatchdog();
     $("playPauseBtn").textContent = "▶";
     stopProgressTimer();
   } else if (event.data === YT.PlayerState.ENDED) {
+    setMediaSessionPlaybackState("none");
     clearPlaybackWatchdog();
     $("playPauseBtn").textContent = "▶";
     stopProgressTimer();
@@ -675,6 +889,7 @@ function stopPlayback() {
   }
 
   $("playPauseBtn").textContent = "▶";
+  setMediaSessionPlaybackState("none");
   $("progress").value = 0;
   $("currentTime").textContent = "0:00";
   $("duration").textContent = "0:00";
@@ -769,6 +984,8 @@ function updateNowPlaying() {
     ? `<img src="${thumb}" alt="">`
     : `<span>♪</span>`;
 
+  updateMediaSessionMetadata();
+  syncMediaSessionPosition();
   renderSongList();
 }
 
@@ -786,8 +1003,9 @@ function startProgressTimer() {
 
     if (total > 0) {
       $("progress").value = Math.min(100, (current / total) * 100);
+      syncMediaSessionPosition();
     }
-  }, 500);
+  }, 1000);
 }
 
 function stopProgressTimer() {
@@ -833,6 +1051,9 @@ function clearSearch() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  registerServiceWorker();
+  setupInstallExperience();
+  setupMediaSession();
   loadCatalog();
   updateVolumeLabel();
 
@@ -896,6 +1117,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const total = player.getDuration?.() || 0;
     if (total > 0) {
       player.seekTo((Number(event.target.value) / 100) * total, true);
+      syncMediaSessionPosition();
     }
   });
 

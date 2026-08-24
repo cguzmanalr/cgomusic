@@ -1,0 +1,21 @@
+CGO MUSIC - ACTUALIZACION PWA PARA GITHUB PAGES
+
+Sube/reemplaza estos archivos en tu repositorio cgomusic:
+- index.html
+- manifest.webmanifest
+- sw.js
+- css/styles.css
+- js/app.js
+- icons/*
+
+NO reemplaces la carpeta data/ con una copia antigua si ya ejecutaste
+ACTUALIZAR_URLS_YOUTUBE.bat, porque tus JSON pueden contener URLs nuevas.
+
+Después de subir:
+1) Espera 1-3 minutos a GitHub Pages.
+2) Abre la web y recarga.
+3) iPhone: Safari > Compartir > Añadir a pantalla de inicio.
+4) Android: usa el botón Instalar o menú del navegador > Instalar aplicación.
+
+La PWA y Media Session mejoran controles de pantalla bloqueada, pero YouTube
+IFrame/iOS/Android pueden igualmente suspender la reproducción en segundo plano.
