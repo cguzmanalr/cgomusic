@@ -64,6 +64,10 @@
         <span class="flag">♥</span>
         <span><strong>Mi Música</strong><small id="customTabCount">0 canciones agregadas</small></span>
       </button>
+      <button class="collection-tab" data-language="favorites">
+        <span class="flag">★</span>
+        <span><strong>Favoritos</strong><small id="favoritesTabCount">0 favoritas</small></span>
+      </button>
     </nav>
 
     <section class="content-grid">
@@ -76,8 +80,8 @@
           </div>
           <div class="toolbar-actions">
             <button id="addSongBtn" class="secondary-btn add-song-btn" type="button">＋ Agregar canción</button>
-            <button id="importSongsBtn" class="secondary-btn custom-only-action" type="button" hidden>Importar</button>
-            <button id="exportSongsBtn" class="secondary-btn custom-only-action" type="button" hidden>Exportar</button>
+            <button id="importSongsBtn" class="secondary-btn personal-only-action" type="button" hidden>Importar JSON</button>
+            <button id="exportSongsBtn" class="secondary-btn personal-only-action" type="button" hidden>Exportar JSON</button>
             <button id="shuffleAllBtn" class="secondary-btn" type="button">🔀 Aleatorio</button>
             <button id="playAllBtn" class="primary-btn" type="button">▶ Reproducir lista</button>
           </div>

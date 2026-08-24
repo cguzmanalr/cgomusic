@@ -1,0 +1,26 @@
+CGO MUSIC · FAVORITOS + PERSONALIZACION EN GITHUB
+
+NOVEDADES
+- Nueva colección ★ Favoritos.
+- Cada canción tiene una estrella ☆ / ★.
+- Favoritos funciona con canciones del catálogo y de Mi Música.
+- Exportar JSON genera un único archivo: personalizacion.json.
+- Ese archivo contiene:
+  * canciones de Mi Música
+  * IDs de Favoritos
+  * resumen legible de las canciones favoritas
+
+COMO DEJARLO PERMANENTE EN GITHUB
+1. En CGO Music entra a Mi Música o Favoritos.
+2. Pulsa Exportar JSON.
+3. Se descargará personalizacion.json.
+4. En GitHub abre el repositorio cgomusic.
+5. Entra a la carpeta data/.
+6. Sube/reemplaza personalizacion.json.
+7. Haz Commit changes.
+
+Desde ese momento CGO Music puede cargar Mi Música y Favoritos desde GitHub.
+localStorage se mantiene sólo como copia local rápida y para cambios todavía no exportados.
+
+IMPORTANTE
+Esta actualización NO incluye ni reemplaza los 12 JSON de catálogo existentes.

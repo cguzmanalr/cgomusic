@@ -16,6 +16,8 @@ let selectedDecade = "all";
 let selectedLanguage = "english";
 let globalSearchActive = false;
 let customSongs = [];
+let favoriteSongKeys = new Set();
+let personalizationUpdatedAt = null;
 let editingCustomSongId = null;
 let metadataPlayer = null;
 let metadataPlayerReady = false;
@@ -25,6 +27,8 @@ let autoAddTimer = null;
 let autoAddInProgress = false;
 let lastAutoAddedVideoId = "";
 const CUSTOM_SONGS_STORAGE_KEY = "cgoMusicCustomSongsV1";
+const PERSONALIZATION_STORAGE_KEY = "cgoMusicPersonalizationV2";
+const PERSONALIZATION_REMOTE_PATH = "data/personalizacion.json";
 
 // Reproductor estático: usa únicamente IDs guardados en los JSON.
 let stoppedByUser = true;
@@ -787,6 +791,166 @@ function normalizeCustomSong(song) {
   };
 }
 
+
+function favoriteKey(song) {
+  if (!song) return "";
+  if (song.id) return String(song.id);
+  if (song.youtubeId) return `youtube:${song.youtubeId}`;
+  return `${song.language || ""}|${song.decade || ""}|${song.artist || ""}|${song.title || ""}`.toLowerCase();
+}
+
+function isFavorite(song) {
+  const key = favoriteKey(song);
+  return Boolean(key && favoriteSongKeys.has(key));
+}
+
+function normalizeFavoriteKeys(items) {
+  if (!Array.isArray(items)) return [];
+  return [...new Set(items.map(item => {
+    if (typeof item === "string") return item.trim();
+    if (item && typeof item === "object") return String(item.key || item.id || "").trim();
+    return "";
+  }).filter(Boolean))];
+}
+
+function parseDateMs(value) {
+  const ms = Date.parse(String(value || ""));
+  return Number.isFinite(ms) ? ms : 0;
+}
+
+function loadLocalPersonalization() {
+  try {
+    const raw = localStorage.getItem(PERSONALIZATION_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      return {
+        exists: true,
+        updatedAt: parsed?.updatedAt || null,
+        songs: Array.isArray(parsed?.songs) ? parsed.songs : [],
+        favorites: normalizeFavoriteKeys(parsed?.favorites)
+      };
+    }
+
+    // Migración transparente desde la versión anterior de Mi Música.
+    const legacyRaw = localStorage.getItem(CUSTOM_SONGS_STORAGE_KEY);
+    if (legacyRaw) {
+      const legacyParsed = JSON.parse(legacyRaw);
+      const legacySongs = Array.isArray(legacyParsed) ? legacyParsed : legacyParsed?.songs;
+      return {
+        exists: true,
+        updatedAt: null,
+        songs: Array.isArray(legacySongs) ? legacySongs : [],
+        favorites: []
+      };
+    }
+  } catch (error) {
+    console.warn("No se pudo leer la personalización local:", error);
+  }
+
+  return { exists: false, updatedAt: null, songs: [], favorites: [] };
+}
+
+async function loadRemotePersonalization() {
+  if (isFileProtocol()) return { exists: false, updatedAt: null, songs: [], favorites: [] };
+
+  try {
+    const response = await fetch(`${PERSONALIZATION_REMOTE_PATH}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) {
+      if (response.status !== 404) console.warn("No se pudo cargar personalizacion.json:", response.status);
+      return { exists: false, updatedAt: null, songs: [], favorites: [] };
+    }
+
+    const parsed = await response.json();
+    return {
+      exists: true,
+      updatedAt: parsed?.updatedAt || parsed?.exportedAt || null,
+      songs: Array.isArray(parsed?.songs) ? parsed.songs : [],
+      favorites: normalizeFavoriteKeys(parsed?.favorites)
+    };
+  } catch (error) {
+    console.debug("No existe una personalización publicada todavía:", error);
+    return { exists: false, updatedAt: null, songs: [], favorites: [] };
+  }
+}
+
+function choosePersonalization(localState, remoteState) {
+  if (!localState.exists && !remoteState.exists) return { songs: [], favorites: [], updatedAt: null, source: "none" };
+  if (!localState.exists) return { ...remoteState, source: "github" };
+  if (!remoteState.exists) return { ...localState, source: "local" };
+
+  const localTime = parseDateMs(localState.updatedAt);
+  const remoteTime = parseDateMs(remoteState.updatedAt);
+
+  // Si ambos son antiguos y no tienen fecha, preservamos el dispositivo actual.
+  if (remoteTime > localTime) return { ...remoteState, source: "github" };
+  return { ...localState, source: "local" };
+}
+
+function personalStatePayload() {
+  const favoriteSongs = catalog
+    .filter(song => isFavorite(song))
+    .map(song => ({
+      key: favoriteKey(song),
+      id: song.id || null,
+      title: song.title,
+      artist: song.artist,
+      year: song.year ?? null,
+      language: song.language || null,
+      decade: song.decade || null,
+      youtubeId: song.youtubeId || null,
+      custom: Boolean(song.custom)
+    }));
+
+  return {
+    app: "CGO Music",
+    version: 2,
+    updatedAt: personalizationUpdatedAt || new Date().toISOString(),
+    songs: customSongs,
+    favorites: [...favoriteSongKeys],
+    favoriteSongs
+  };
+}
+
+function savePersonalization({ touch = true } = {}) {
+  try {
+    if (touch || !personalizationUpdatedAt) personalizationUpdatedAt = new Date().toISOString();
+    const payload = personalStatePayload();
+    payload.updatedAt = personalizationUpdatedAt;
+    localStorage.setItem(PERSONALIZATION_STORAGE_KEY, JSON.stringify(payload));
+    // Mantener compatibilidad con versiones anteriores de CGO Music.
+    localStorage.setItem(CUSTOM_SONGS_STORAGE_KEY, JSON.stringify(customSongs));
+  } catch (error) {
+    console.error("No se pudo guardar la personalización:", error);
+    alert("El navegador no pudo guardar tus cambios. Revisa el espacio disponible o la configuración de privacidad.");
+  }
+}
+
+function updateFavoritesTabCount() {
+  const count = catalog.filter(song => isFavorite(song)).length;
+  if ($("favoritesTabCount")) {
+    $("favoritesTabCount").textContent = `${count} favorita${count === 1 ? "" : "s"}`;
+  }
+}
+
+function toggleFavorite(songId) {
+  const song = catalog.find(item => String(item.id) === String(songId));
+  if (!song) return;
+
+  const key = favoriteKey(song);
+  if (!key) return;
+
+  const wasFavorite = favoriteSongKeys.has(key);
+  if (wasFavorite) favoriteSongKeys.delete(key);
+  else favoriteSongKeys.add(key);
+
+  savePersonalization();
+  updateFavoritesTabCount();
+  applyFilters();
+  setStatus(wasFavorite
+    ? `“${song.title}” fue quitada de Favoritos.`
+    : `★ “${song.title}” fue agregada a Favoritos.`);
+}
+
 function loadCustomSongs() {
   try {
     const raw = localStorage.getItem(CUSTOM_SONGS_STORAGE_KEY);
@@ -804,12 +968,7 @@ function loadCustomSongs() {
 }
 
 function saveCustomSongs() {
-  try {
-    localStorage.setItem(CUSTOM_SONGS_STORAGE_KEY, JSON.stringify(customSongs));
-  } catch (error) {
-    console.error("No se pudo guardar Mi Música:", error);
-    alert("El navegador no pudo guardar la canción. Revisa el espacio disponible o la configuración de privacidad.");
-  }
+  savePersonalization();
 }
 
 function rebuildCatalogWithCustomSongs() {
@@ -817,6 +976,7 @@ function rebuildCatalogWithCustomSongs() {
   catalog = [...baseSongs, ...customSongs];
   updateCatalogProgress();
   updateCustomTabCount();
+  updateFavoritesTabCount();
 }
 
 function updateCustomTabCount() {
@@ -827,9 +987,9 @@ function updateCustomTabCount() {
 }
 
 function updateCustomToolbarVisibility() {
-  const customView = selectedLanguage === "custom" && !globalSearchActive;
-  $("importSongsBtn")?.toggleAttribute("hidden", !customView);
-  $("exportSongsBtn")?.toggleAttribute("hidden", !customView);
+  const personalView = (selectedLanguage === "custom" || selectedLanguage === "favorites") && !globalSearchActive;
+  $("importSongsBtn")?.toggleAttribute("hidden", !personalView);
+  $("exportSongsBtn")?.toggleAttribute("hidden", !personalView);
 }
 
 function selectCollection(value) {
@@ -1008,6 +1168,7 @@ function deleteCustomSong(songId) {
   if (!confirm(`¿Eliminar “${song.title}” de Mi Música?`)) return;
 
   resetNowPlayingIfSong(songId);
+  favoriteSongKeys.delete(favoriteKey(song));
   customSongs = customSongs.filter(item => item.id !== songId);
   saveCustomSongs();
   rebuildCatalogWithCustomSongs();
@@ -1015,24 +1176,35 @@ function deleteCustomSong(songId) {
   setStatus(`“${song.title}” fue eliminada de Mi Música.`);
 }
 
-function exportCustomSongs() {
-  const payload = {
-    app: "CGO Music",
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    songs: customSongs
-  };
+function downloadJson(filename, payload) {
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
-  const stamp = new Date().toISOString().slice(0, 10);
   link.href = url;
-  link.download = `cgo-music-personal-${stamp}.json`;
+  link.download = filename;
   document.body.appendChild(link);
   link.click();
   link.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  setStatus(`${customSongs.length} canción${customSongs.length === 1 ? "" : "es"} exportada${customSongs.length === 1 ? "" : "s"}.`);
+}
+
+function exportCustomSongs() {
+  // Un solo archivo mantiene Mi Música + Favoritos. Al subirlo a
+  // data/personalizacion.json, GitHub pasa a ser una copia persistente.
+  personalizationUpdatedAt = new Date().toISOString();
+  savePersonalization({ touch: false });
+  const payload = {
+    ...personalStatePayload(),
+    updatedAt: personalizationUpdatedAt,
+    exportedAt: new Date().toISOString()
+  };
+
+  downloadJson("personalizacion.json", payload);
+  setStatus(
+    `Exportado personalizacion.json · ${customSongs.length} de Mi Música · ` +
+    `${favoriteSongKeys.size} favorito${favoriteSongKeys.size === 1 ? "" : "s"}. ` +
+    `Súbelo a la carpeta data/ de GitHub.`
+  );
 }
 
 async function importCustomSongs(file) {
@@ -1049,15 +1221,26 @@ async function importCustomSongs(file) {
     const byId = new Map(customSongs.map(song => [song.id, song]));
     imported.forEach(song => byId.set(song.id, song));
     customSongs = [...byId.values()];
-    saveCustomSongs();
+
+    if (Array.isArray(parsed?.favorites)) {
+      favoriteSongKeys = new Set(normalizeFavoriteKeys(parsed.favorites));
+    }
+
+    personalizationUpdatedAt = parsed?.updatedAt || parsed?.exportedAt || new Date().toISOString();
     rebuildCatalogWithCustomSongs();
-    selectCollection("custom");
+    savePersonalization({ touch: false });
+    updateFavoritesTabCount();
+
+    if (selectedLanguage !== "favorites") selectCollection("custom");
     selectDecade("all");
     $("searchInput").value = "";
     applyFilters();
-    setStatus(`${imported.length} canción${imported.length === 1 ? "" : "es"} importada${imported.length === 1 ? "" : "s"} a Mi Música.`);
+    setStatus(
+      `Personalización importada · ${imported.length} canción${imported.length === 1 ? "" : "es"} · ` +
+      `${favoriteSongKeys.size} favorito${favoriteSongKeys.size === 1 ? "" : "s"}.`
+    );
   } catch (error) {
-    console.error("Error importando Mi Música:", error);
+    console.error("Error importando personalización:", error);
     alert(`No se pudo importar el archivo: ${error.message || error}`);
   } finally {
     $("importSongsInput").value = "";
@@ -1184,9 +1367,22 @@ async function loadCatalog() {
     );
 
     catalog = catalogResponses.flatMap(result => result.songs);
-    customSongs = loadCustomSongs();
+
+    const [remotePersonalization, localPersonalization] = await Promise.all([
+      loadRemotePersonalization(),
+      Promise.resolve(loadLocalPersonalization())
+    ]);
+    const personal = choosePersonalization(localPersonalization, remotePersonalization);
+    customSongs = (personal.songs || [])
+      .map(normalizeCustomSong)
+      .filter(song => song.title && song.artist && (song.audioUrl || staticVideoCandidates(song).length));
+    favoriteSongKeys = new Set(normalizeFavoriteKeys(personal.favorites));
+    personalizationUpdatedAt = personal.updatedAt || null;
+
     catalog = [...catalog, ...customSongs];
     updateCustomTabCount();
+    updateFavoritesTabCount();
+    if (personal.source !== "none") savePersonalization({ touch: false });
     catalogMeta = catalogResponses.map(result => ({
       ...result.meta,
       path: result.entry.path,
@@ -1354,7 +1550,9 @@ function applyFilters() {
 
     const matchesCollection = selectedLanguage === "custom"
       ? song.custom === true
-      : song.language === selectedLanguage;
+      : selectedLanguage === "favorites"
+        ? isFavorite(song)
+        : song.language === selectedLanguage;
     const matchesDecade = selectedDecade === "all" || song.decade === selectedDecade;
     return matchesCollection && matchesDecade;
   });
@@ -1388,7 +1586,7 @@ function decadeOrder(decade) {
 }
 
 function getCurrentCatalogMeta() {
-  if (globalSearchActive || selectedLanguage === "custom" || selectedDecade === "all") return null;
+  if (globalSearchActive || selectedLanguage === "custom" || selectedLanguage === "favorites" || selectedDecade === "all") return null;
   return catalogMeta.find(item =>
     item.language === selectedLanguage &&
     item.decade === selectedDecade
@@ -1403,6 +1601,17 @@ function updateLibraryHeader(query) {
     $("libraryTitle").textContent = `“${$("searchInput").value.trim()}”`;
     $("songCount").textContent =
       `${visibleSongs.length} resultado${visibleSongs.length === 1 ? "" : "s"} en todo CGO Music`;
+    return;
+  }
+
+  if (selectedLanguage === "favorites") {
+    $("collectionEyebrow").textContent = "FAVORITOS";
+    $("libraryTitle").textContent = selectedDecade === "all"
+      ? "Tus canciones favoritas"
+      : selectedDecade === "other"
+        ? "Favoritos · Otras décadas"
+        : `Favoritos · ${selectedDecade === "2000s" ? "2000" : selectedDecade.replace("s", "")}s`;
+    $("songCount").textContent = `${visibleSongs.length} favorita${visibleSongs.length === 1 ? "" : "s"}`;
     return;
   }
 
@@ -1502,6 +1711,10 @@ function renderSongList() {
           <span>${escapeHtml(song.artist)} · ${languageLabel(song.language)}${song.custom ? " · Mi Música" : ""}</span>
           ${customActions}
         </span>
+        <button class="favorite-btn ${isFavorite(song) ? "active" : ""}" type="button"
+                title="${isFavorite(song) ? "Quitar de Favoritos" : "Agregar a Favoritos"}"
+                aria-label="${isFavorite(song) ? "Quitar de Favoritos" : "Agregar a Favoritos"}"
+                aria-pressed="${isFavorite(song) ? "true" : "false"}">${isFavorite(song) ? "★" : "☆"}</button>
       </span>
       <span class="song-year">${song.year ?? "—"}</span>
       <span class="peak ${(!song.verified && song.language !== "spanish" && !song.custom) ? "pending" : ""}">${chartBadge(song)}</span>
@@ -1514,11 +1727,11 @@ function renderSongList() {
     };
 
     row.addEventListener("click", event => {
-      if (event.target.closest(".custom-song-actions")) return;
+      if (event.target.closest(".custom-song-actions") || event.target.closest(".favorite-btn")) return;
       playRow();
     });
     row.addEventListener("keydown", event => {
-      if (event.target.closest(".custom-song-actions")) return;
+      if (event.target.closest(".custom-song-actions") || event.target.closest(".favorite-btn")) return;
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         playRow();
@@ -1532,6 +1745,10 @@ function renderSongList() {
     row.querySelector(".delete-custom-song")?.addEventListener("click", event => {
       event.stopPropagation();
       deleteCustomSong(song.id);
+    });
+    row.querySelector(".favorite-btn")?.addEventListener("click", event => {
+      event.stopPropagation();
+      toggleFavorite(song.id);
     });
 
     list.appendChild(row);

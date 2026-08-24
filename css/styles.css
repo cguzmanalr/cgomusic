@@ -168,7 +168,7 @@ button:focus-visible, input:focus-visible { outline: 2px solid #fff; outline-off
 
 .collection-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 260px));
+  grid-template-columns: repeat(4, minmax(0, 260px));
   gap: 10px;
   margin-bottom: 18px;
 }
@@ -561,7 +561,7 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
   .hero { min-height: 0; padding: 30px 0 21px; }
   .hero-stats { display: none; }
   .hero h1 { font-size: 38px; }
-  .collection-tabs { grid-template-columns: repeat(3, 1fr); }
+  .collection-tabs { grid-template-columns: repeat(4, 1fr); }
   .collection-tab { padding: 11px; }
   .collection-tab small { display: none; }
   .library-card { padding: 16px; }
@@ -873,11 +873,42 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
   font-weight: 800;
 }
 
+.collection-tab[data-language="favorites"] .flag {
+  color: #ffd35c;
+  font-weight: 900;
+}
+
+.favorite-btn {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  margin-left: auto;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: #8d8d98;
+  font-size: 21px;
+  line-height: 1;
+  cursor: pointer;
+}
+.favorite-btn:hover {
+  background: #292930;
+  color: #ffd35c;
+}
+.favorite-btn.active {
+  color: #ffd35c;
+  text-shadow: 0 0 12px rgba(255, 211, 92, .28);
+}
+.favorite-btn:focus-visible {
+  outline: 2px solid #ffd35c;
+  outline-offset: 2px;
+}
+
 .add-song-btn {
   border-color: rgba(255, 41, 71, .35);
 }
 
-.custom-only-action[hidden] { display: none !important; }
+.custom-only-action[hidden], .personal-only-action[hidden] { display: none !important; }
 
 .empty-add-btn {
   margin-top: 18px;
@@ -1070,4 +1101,11 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
 .primary-btn:disabled {
   opacity: .62;
   cursor: wait;
+}
+
+
+/* Favoritos · responsive */
+@media (max-width: 680px) {
+  .collection-tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .favorite-btn { width: 30px; height: 30px; font-size: 19px; }
 }
