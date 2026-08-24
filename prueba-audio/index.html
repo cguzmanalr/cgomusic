@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CGO Audio Test">
+  <meta name="application-name" content="CGO Audio Test">
+  <meta name="description" content="Prueba de reproducción en segundo plano para CGO Music en iPhone y Android.">
+  <title>CGO Music · Prueba de bloqueo</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png" sizes="192x192">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">C</span>
+        <div><strong>CGO Music</strong><small>Prueba de audio en segundo plano</small></div>
+      </div>
+      <span id="modeBadge" class="badge">Web</span>
+    </header>
+
+    <section class="hero card">
+      <span class="eyebrow">PRUEBA CONTROLADA</span>
+      <h1>¿Sigue sonando con el teléfono bloqueado?</h1>
+      <p>Esta versión no usa YouTube. Reproduce audio HTML5 real desde GitHub Pages para comprobar qué permite iOS y Android.</p>
+    </section>
+
+    <section class="player card">
+      <div class="art" aria-hidden="true">♪</div>
+      <div class="track-copy">
+        <span class="eyebrow">AHORA REPRODUCIENDO</span>
+        <h2 id="title">Prueba 1 · Aurora</h2>
+        <p id="artist">CGO Music · Audio original de prueba</p>
+      </div>
+
+      <audio id="audio" preload="metadata" playsinline></audio>
+
+      <div class="controls">
+        <button id="prevBtn" type="button" aria-label="Anterior">⏮</button>
+        <button id="playBtn" class="play" type="button" aria-label="Reproducir">▶</button>
+        <button id="nextBtn" type="button" aria-label="Siguiente">⏭</button>
+      </div>
+
+      <div class="progress-row">
+        <span id="current">0:00</span>
+        <input id="progress" type="range" min="0" max="1000" value="0" aria-label="Progreso">
+        <span id="duration">0:00</span>
+      </div>
+
+      <div class="volume-row">
+        <span>Volumen</span>
+        <input id="volume" type="range" min="0" max="100" value="75" aria-label="Volumen">
+        <strong id="volumeValue">75%</strong>
+      </div>
+    </section>
+
+    <section class="card test-card">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">DIAGNÓSTICO</span>
+          <h2>Prueba automática</h2>
+        </div>
+        <span id="resultPill" class="result neutral">Sin probar</span>
+      </div>
+
+      <ol class="steps">
+        <li>Pulsa <strong>Iniciar prueba</strong> y verifica que escuches música.</li>
+        <li>Espera unos 5 segundos y <strong>bloquea el teléfono por 20–30 segundos</strong>.</li>
+        <li>Durante el bloqueo, prueba Pausa/Play desde la pantalla bloqueada.</li>
+        <li>Desbloquea y vuelve aquí. La página comparará el tiempo real con el avance del audio.</li>
+      </ol>
+
+      <div class="actions">
+        <button id="startTestBtn" class="primary" type="button">▶ Iniciar prueba</button>
+        <button id="resetBtn" class="secondary" type="button">Reiniciar resultado</button>
+      </div>
+
+      <div id="diagnostic" class="diagnostic">Todavía no se ha iniciado una prueba.</div>
+    </section>
+
+    <section class="card compatibility">
+      <span class="eyebrow">COMPATIBILIDAD DETECTADA</span>
+      <div class="grid">
+        <div><span>Media Session</span><strong id="mediaSupport">—</strong></div>
+        <div><span>Service Worker</span><strong id="swSupport">—</strong></div>
+        <div><span>Modo instalado</span><strong id="standaloneSupport">—</strong></div>
+        <div><span>Estado página</span><strong id="visibilityState">—</strong></div>
+      </div>
+    </section>
+
+    <section class="card log-card">
+      <div class="section-head">
+        <div><span class="eyebrow">REGISTRO</span><h2>Eventos de la prueba</h2></div>
+        <button id="clearLogBtn" class="text-btn" type="button">Limpiar</button>
+      </div>
+      <pre id="log">Listo para comenzar.</pre>
+    </section>
+
+    <p class="footnote">Los tres audios incluidos fueron generados específicamente para esta prueba y no provienen de YouTube.</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

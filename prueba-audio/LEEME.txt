@@ -1,0 +1,36 @@
+CGO MUSIC - PRUEBA DE AUDIO CON PANTALLA BLOQUEADA
+==================================================
+
+Esta carpeta es una prueba independiente. NO reemplaza tu CGO Music actual.
+
+Forma recomendada de publicarla en GitHub:
+
+1) En tu repositorio cgomusic crea/sube esta carpeta completa con el nombre:
+   prueba-audio
+
+2) La estructura debe quedar:
+   cgomusic/
+     index.html                 <- tu CGO Music normal
+     ...
+     prueba-audio/
+       index.html
+       app.js
+       styles.css
+       sw.js
+       manifest.webmanifest
+       audio/
+       icons/
+
+3) Luego abre:
+   https://TU-USUARIO.github.io/cgomusic/prueba-audio/
+
+Para la prueba:
+- Pulsa "Iniciar prueba".
+- Espera 5 segundos.
+- Bloquea el teléfono 20 a 30 segundos.
+- Prueba Play/Pausa desde la pantalla bloqueada.
+- Desbloquea y vuelve a la página.
+- La app mostrará si el tiempo del audio siguió avanzando.
+
+Los audios incluidos son sintéticos y fueron generados específicamente para esta prueba.
+No provienen de YouTube ni de canciones comerciales.
