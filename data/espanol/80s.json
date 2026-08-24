@@ -29,7 +29,17 @@
       "chartSource": "https://www.officialcharts.com/songs/los-lobos-la-bamba/",
       "chartType": "Official Singles Chart",
       "verified": true,
-      "eligibilityStatus": "verified"
+      "eligibilityStatus": "verified",
+      "youtubeId": "qD-kxaiYQqU",
+      "youtubeUrl": "https://www.youtube.com/watch?v=qD-kxaiYQqU",
+      "youtubeAlternatives": [
+        "8VB96Yl7jxk",
+        "YicJPLT1dWU",
+        "Nz_6N8PzZTg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:02+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-002",
@@ -46,7 +56,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "3IloSnGxBpY",
+      "youtubeUrl": "https://www.youtube.com/watch?v=3IloSnGxBpY",
+      "youtubeAlternatives": [
+        "NqIh4n8g5jI",
+        "jAX37OpWMsw",
+        "yQPU5MmZA1o"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:03+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-003",
@@ -80,7 +100,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "GHaWz2exW1M",
+      "youtubeUrl": "https://www.youtube.com/watch?v=GHaWz2exW1M",
+      "youtubeAlternatives": [
+        "DzLeC3tLe2Y",
+        "Sriys2iD5N0",
+        "ERSt9jxKTKE"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:06+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 98.5
     },
     {
       "id": "es-80s-005",
@@ -97,7 +127,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "6Pi3ANA-Yvc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=6Pi3ANA-Yvc",
+      "youtubeAlternatives": [
+        "-mZKfQrrp_g",
+        "BqSxAihNIsM",
+        "v1-TtVWe5Bs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:07+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.5
     },
     {
       "id": "es-80s-006",
@@ -114,7 +154,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "-ZhFmyhONew",
+      "youtubeUrl": "https://www.youtube.com/watch?v=-ZhFmyhONew",
+      "youtubeAlternatives": [
+        "8jIVq1C4OLU",
+        "umFnjD44FqQ",
+        "GptME0EcXjM"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:08+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-007",
@@ -131,7 +181,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "OG2VEI0yPW8",
+      "youtubeUrl": "https://www.youtube.com/watch?v=OG2VEI0yPW8",
+      "youtubeAlternatives": [
+        "0R8LwyAVmJE",
+        "IyOcJgg_LeQ",
+        "uPJrZFBiy-A"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:09+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 94.0
     },
     {
       "id": "es-80s-008",
@@ -148,7 +208,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "5HRlaqFM0XI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=5HRlaqFM0XI",
+      "youtubeAlternatives": [
+        "Q0A8OlZp-4Q",
+        "pA5WypCTvK8",
+        "hbt70G-dPMg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:09+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-009",
@@ -165,7 +235,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "xOKMHxQFIWE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=xOKMHxQFIWE",
+      "youtubeAlternatives": [
+        "b63_K6yo2hE",
+        "oPb2UHCe9_k",
+        "DejT0oSseHg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:10+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.5
     },
     {
       "id": "es-80s-010",
@@ -182,7 +262,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "y0HwXyuZaWk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=y0HwXyuZaWk",
+      "youtubeAlternatives": [
+        "gINmOatL7_Q",
+        "PUCBgzoZjF8",
+        "ROfvcw1Sy6g"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:11+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-011",
@@ -199,7 +289,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "yQPU5MmZA1o",
+      "youtubeUrl": "https://www.youtube.com/watch?v=yQPU5MmZA1o",
+      "youtubeAlternatives": [
+        "L4SIq9sktGs",
+        "mEmUE_9r2Xw",
+        "w7jxvpQcPhs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:12+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-012",
@@ -216,7 +316,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "UPVfQKUHTSc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=UPVfQKUHTSc",
+      "youtubeAlternatives": [
+        "2m4spfYfuEg",
+        "xXD_IEcZbMI",
+        "SKr6wy54Lic"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:12+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 105.0
     },
     {
       "id": "es-80s-013",
@@ -233,7 +343,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "UEchfRz0D8Q",
+      "youtubeUrl": "https://www.youtube.com/watch?v=UEchfRz0D8Q",
+      "youtubeAlternatives": [
+        "ZNzYr4U7Zs8",
+        "PrkrQL7K7cE",
+        "OH4OSdTa7Pg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:13+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 109.5
     },
     {
       "id": "es-80s-014",
@@ -250,7 +370,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ko24BZXdK8c",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ko24BZXdK8c",
+      "youtubeAlternatives": [
+        "aoalkHJMkI4",
+        "LB6_e2uA7rE",
+        "z-CdtgJNiTA"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:14+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 105.0
     },
     {
       "id": "es-80s-015",
@@ -267,7 +397,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "Pk06GUU2-nU",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Pk06GUU2-nU",
+      "youtubeAlternatives": [
+        "cX4URi64zeg",
+        "jWb2o8mWqjs",
+        "1WKN8uwct74"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:15+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 105.0
     },
     {
       "id": "es-80s-016",
@@ -284,7 +424,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "LalPz4lIZYk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LalPz4lIZYk",
+      "youtubeAlternatives": [
+        "MsAGx4L1CAg",
+        "Z3L5M7GHAkw",
+        "9ViQ9A0ddkk"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:16+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 105.0
     },
     {
       "id": "es-80s-017",
@@ -301,7 +451,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "CEb99v79yRM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=CEb99v79yRM",
+      "youtubeAlternatives": [
+        "uxKjvJ4iA_Y",
+        "vNKUDiA2YQE",
+        "ufbqZQXELTo"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:16+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 100.5
     },
     {
       "id": "es-80s-018",
@@ -318,7 +478,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "lGptyREttJ4",
+      "youtubeUrl": "https://www.youtube.com/watch?v=lGptyREttJ4",
+      "youtubeAlternatives": [
+        "MOL5NQ4Sdu0",
+        "36ZIg14V_v0",
+        "nUXZe6hOm8c"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:17+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 100.5
     },
     {
       "id": "es-80s-019",
@@ -335,7 +505,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "_GZiCe00zVY",
+      "youtubeUrl": "https://www.youtube.com/watch?v=_GZiCe00zVY",
+      "youtubeAlternatives": [
+        "6zD65azDjR8",
+        "AVEDgT_lG60",
+        "vo7jBHB66q4"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:18+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 105.0
     },
     {
       "id": "es-80s-020",
@@ -352,7 +532,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "Y-RQQds52qs",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Y-RQQds52qs",
+      "youtubeAlternatives": [
+        "xwgi1iMM5ms",
+        "AJawNVQ-7sg",
+        "Ba_M7Y9GxHw"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:19+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 109.5
     },
     {
       "id": "es-80s-021",
@@ -369,7 +559,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "xeN9EYnsES8",
+      "youtubeUrl": "https://www.youtube.com/watch?v=xeN9EYnsES8",
+      "youtubeAlternatives": [
+        "lpqgm7oOoGs",
+        "3OWihXDQXg8",
+        "TzJQRxMscE4"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:20+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 62.0
     },
     {
       "id": "es-80s-022",
@@ -386,7 +586,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "zStE005_IwQ",
+      "youtubeUrl": "https://www.youtube.com/watch?v=zStE005_IwQ",
+      "youtubeAlternatives": [
+        "t9uHt3VUH4c",
+        "tcx5g0VLeG0",
+        "PKgY3UeIbxs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:20+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 84.5
     },
     {
       "id": "es-80s-023",
@@ -403,7 +613,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "GUh7PjiZDSg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=GUh7PjiZDSg",
+      "youtubeAlternatives": [
+        "FvVoBFxtHC8",
+        "wxSEYyeNeZU",
+        "ev1sh1GHYWA"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:21+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 84.5
     },
     {
       "id": "es-80s-024",
@@ -420,7 +640,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "a0OseoS3rBE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=a0OseoS3rBE",
+      "youtubeAlternatives": [
+        "Ucx_l99Yl6s",
+        "4DG2F5nmPFo",
+        "L3aX9Ag9THk"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:22+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-025",
@@ -437,7 +667,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "M8BeXnWu_Yk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=M8BeXnWu_Yk",
+      "youtubeAlternatives": [
+        "eWJ6Bwg4ei0",
+        "bhPsg2lRr5Y",
+        "aGliz3AJ7DU"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:23+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-026",
@@ -454,7 +694,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "sZMK38c-yMI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=sZMK38c-yMI",
+      "youtubeAlternatives": [
+        "RGpqeWBJMwY",
+        "h5liEv-hcvg",
+        "1DVd65LvagE"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:23+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-027",
@@ -471,7 +721,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "tbMWFlVoQsg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=tbMWFlVoQsg",
+      "youtubeAlternatives": [
+        "gWeSawpUdTw",
+        "U3lZJuvaX9E",
+        "atgkHjg_soU"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:24+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-028",
@@ -488,7 +748,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ywdM-v6UUpM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ywdM-v6UUpM",
+      "youtubeAlternatives": [
+        "6jvwjQ-5wJ4",
+        "K-lKsxM2ROE",
+        "TeZybltkQjs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:25+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-029",
@@ -505,7 +775,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "NV0X1iIshFE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=NV0X1iIshFE",
+      "youtubeAlternatives": [
+        "QXVu4piSNoQ",
+        "2-HWcpiA8t0",
+        "qKSgP3N44DI"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:26+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 100.0
     },
     {
       "id": "es-80s-030",
@@ -522,7 +802,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "1PN8m6aemRE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=1PN8m6aemRE",
+      "youtubeAlternatives": [
+        "8f2Vyb014D0",
+        "D01cWHvxVmI",
+        "WFAc6u9gaqw"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:27+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 92.5
     },
     {
       "id": "es-80s-031",
@@ -539,7 +829,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "uu1n_Vf431U",
+      "youtubeUrl": "https://www.youtube.com/watch?v=uu1n_Vf431U",
+      "youtubeAlternatives": [
+        "wVSA2CEIQ7U",
+        "QgQxt7dwnrk",
+        "zvPTFuKklRc"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:27+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 84.5
     },
     {
       "id": "es-80s-032",
@@ -556,7 +856,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ezyILQUz9sQ",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ezyILQUz9sQ",
+      "youtubeAlternatives": [
+        "6DGbD8BZnzs",
+        "Xwd59wcXvSU",
+        "lBk5GbEdOfg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:28+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-033",
@@ -573,7 +883,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ILDvGCHnBrY",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ILDvGCHnBrY",
+      "youtubeAlternatives": [
+        "YLkWjPXVtGc",
+        "TnGlNrjsVSQ",
+        "VQsBljEoOSE"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:29+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-034",
@@ -590,7 +910,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "PtUBA873n2E",
+      "youtubeUrl": "https://www.youtube.com/watch?v=PtUBA873n2E",
+      "youtubeAlternatives": [
+        "xAAG3EBKt3A",
+        "yZT3P9Xdksk",
+        "V3q4Yt0HRAY"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:30+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-035",
@@ -607,7 +937,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "r7VwQmF6zVM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=r7VwQmF6zVM",
+      "youtubeAlternatives": [
+        "7hcgRRKx7Is",
+        "shK0SHJCtsU",
+        "0iQfAfoNnc0"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:30+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-036",
@@ -624,7 +964,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "iOwiRREwdl0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=iOwiRREwdl0",
+      "youtubeAlternatives": [
+        "1bn3NkMUjrU",
+        "yG7MPEQm1-w",
+        "3Ozk2njoQPc"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:31+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.5
     },
     {
       "id": "es-80s-037",
@@ -641,7 +991,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "4TIQAlXgcm4",
+      "youtubeUrl": "https://www.youtube.com/watch?v=4TIQAlXgcm4",
+      "youtubeAlternatives": [
+        "gTkJ-nP6pXY",
+        "gOUJOU2zK4w",
+        "oOEwfsa-gxg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:32+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 84.5
     },
     {
       "id": "es-80s-038",
@@ -658,7 +1018,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "Yo93ISkqmVg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Yo93ISkqmVg",
+      "youtubeAlternatives": [
+        "rhP_uhHZYpA",
+        "ZBstQswdoeY",
+        "rKrShIawT70"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:33+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.0
     },
     {
       "id": "es-80s-039",
@@ -675,7 +1045,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "bFyNwlwMMfE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=bFyNwlwMMfE",
+      "youtubeAlternatives": [
+        "sI6NJggKK8E",
+        "wOjzo02Tmck",
+        "suTX8AdeLlM"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:34+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-040",
@@ -692,7 +1072,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "6V7bq1C2AqI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=6V7bq1C2AqI",
+      "youtubeAlternatives": [
+        "D79-FN99dRI",
+        "hLFiD4zBCIo",
+        "smjtzWFoYEU"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:35+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 84.5
     },
     {
       "id": "es-80s-041",
@@ -709,7 +1099,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "oqBE5d7G2cA",
+      "youtubeUrl": "https://www.youtube.com/watch?v=oqBE5d7G2cA",
+      "youtubeAlternatives": [
+        "CDssh2VuGJM",
+        "AwX1_kWEXMg",
+        "SNeAEI0kLrs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:35+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-042",
@@ -726,7 +1126,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "EIXW2YojSRA",
+      "youtubeUrl": "https://www.youtube.com/watch?v=EIXW2YojSRA",
+      "youtubeAlternatives": [
+        "ddbBHcTySeE",
+        "gYuSDrDsH3A",
+        "-U2Nc6FpN-k"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:36+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-043",
@@ -743,7 +1153,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "X3ZhM0Qiq2o",
+      "youtubeUrl": "https://www.youtube.com/watch?v=X3ZhM0Qiq2o",
+      "youtubeAlternatives": [
+        "f6SeKiK0p64",
+        "1H_mGxkulEI",
+        "f1H5w-yrsHM"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:37+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-044",
@@ -760,7 +1180,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "GSbQZVbQEfc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=GSbQZVbQEfc",
+      "youtubeAlternatives": [
+        "gAd2gU0VdJU",
+        "5iMmRCesxiA",
+        "TJ0m9VUTT-A"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:38+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-045",
@@ -777,7 +1207,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "Q7IVjcgfYRg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Q7IVjcgfYRg",
+      "youtubeAlternatives": [
+        "p8hNfICgIg0",
+        "iUOL_3K51g4",
+        "iG3TZpUJxyg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:39+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-046",
@@ -794,7 +1234,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "Iisa-PLpG9A",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Iisa-PLpG9A",
+      "youtubeAlternatives": [
+        "2Th13oMvpZQ",
+        "CpBvjrkRKN4",
+        "9tBsobnceYo"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:39+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 97.5
     },
     {
       "id": "es-80s-047",
@@ -811,7 +1261,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "jLM8k0NQtLo",
+      "youtubeUrl": "https://www.youtube.com/watch?v=jLM8k0NQtLo",
+      "youtubeAlternatives": [
+        "KzkSszAttf8",
+        "BdxoSwKt8wc",
+        "wHf6816Wssw"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:40+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 86.0
     },
     {
       "id": "es-80s-048",
@@ -828,7 +1288,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "uHm8psz6_fg",
+      "youtubeUrl": "https://www.youtube.com/watch?v=uHm8psz6_fg",
+      "youtubeAlternatives": [
+        "hI0bDY9vIWI",
+        "b4Y0j5YAH9M",
+        "mQ24d0CML2w"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:41+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-049",
@@ -845,7 +1315,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "aBSk8eNxVr8",
+      "youtubeUrl": "https://www.youtube.com/watch?v=aBSk8eNxVr8",
+      "youtubeAlternatives": [
+        "y5e9o60WJU8",
+        "xPBoRlvz4Go",
+        "ZaCbKfyFpLE"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:42+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 81.5
     },
     {
       "id": "es-80s-050",
@@ -862,7 +1342,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "xfEojlMY2nE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=xfEojlMY2nE",
+      "youtubeAlternatives": [
+        "m89KMftUVjI",
+        "R0mvzvZ9ICA",
+        "dfGmGxIRN44"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:43+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 90.5
     },
     {
       "id": "es-80s-051",
@@ -879,7 +1369,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "4dno927hGbU",
+      "youtubeUrl": "https://www.youtube.com/watch?v=4dno927hGbU",
+      "youtubeAlternatives": [
+        "za_TQu3oaE4",
+        "1Cler6PrRbg",
+        "UXgO9B1SyIU"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:43+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 81.5
     },
     {
       "id": "es-80s-052",
@@ -896,7 +1396,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "mmt4EO3oXSI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=mmt4EO3oXSI",
+      "youtubeAlternatives": [
+        "XcTkOFsoMI8",
+        "26usgld2hm4",
+        "jdjBYp24fN8"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:44+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 81.5
     },
     {
       "id": "es-80s-053",
@@ -913,7 +1423,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "L4-5uWCcTWA",
+      "youtubeUrl": "https://www.youtube.com/watch?v=L4-5uWCcTWA",
+      "youtubeAlternatives": [
+        "vjh_J1ZXObE",
+        "UnN-yUCSzXo",
+        "AjF5kRZPRtg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:45+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 90.5
     },
     {
       "id": "es-80s-054",
@@ -930,7 +1450,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ApXZ4IVkQY0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ApXZ4IVkQY0",
+      "youtubeAlternatives": [
+        "eF41Pz61eaQ",
+        "OlA6pA43V8U",
+        "2u_dCYzJcpc"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:46+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.5
     },
     {
       "id": "es-80s-055",
@@ -947,7 +1477,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "q9zbBmmO7JM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=q9zbBmmO7JM",
+      "youtubeAlternatives": [
+        "4q4mvZLvMec",
+        "UipBlZ3gYsg",
+        "Y-KlD0z7uZ4"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:47+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 81.5
     },
     {
       "id": "es-80s-056",
@@ -964,7 +1504,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "A-CD3shjxA0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=A-CD3shjxA0",
+      "youtubeAlternatives": [
+        "wKTt1sMZR6k",
+        "kqqsZ8bLVXI",
+        "YvB1o0bZnu8"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:48+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 86.0
     },
     {
       "id": "es-80s-057",
@@ -981,7 +1531,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "q_nQBnkfUFI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=q_nQBnkfUFI",
+      "youtubeAlternatives": [
+        "DyADoyMsnxQ",
+        "du8XJeWMzMA",
+        "6IvshNfpT68"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:48+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-058",
@@ -998,7 +1558,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "QPC41JxOvkU",
+      "youtubeUrl": "https://www.youtube.com/watch?v=QPC41JxOvkU",
+      "youtubeAlternatives": [
+        "0tkn7N7EZOg",
+        "T253K5xyiy0",
+        "GIJYKb60k28"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:49+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.5
     },
     {
       "id": "es-80s-059",
@@ -1015,7 +1585,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "GzM0Org4jo4",
+      "youtubeUrl": "https://www.youtube.com/watch?v=GzM0Org4jo4",
+      "youtubeAlternatives": [
+        "bGjm4a9_QJI",
+        "-oDiQzOeEbA",
+        "2ofY9fEQ6OY"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:50+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-060",
@@ -1032,7 +1612,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "NhvynT84BlQ",
+      "youtubeUrl": "https://www.youtube.com/watch?v=NhvynT84BlQ",
+      "youtubeAlternatives": [
+        "colvOFMOY9M",
+        "5vL4Eb6n45k",
+        "T1s9b8ojcx0"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:51+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 86.0
     },
     {
       "id": "es-80s-061",
@@ -1049,7 +1639,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "WaqDraYJ4SY",
+      "youtubeUrl": "https://www.youtube.com/watch?v=WaqDraYJ4SY",
+      "youtubeAlternatives": [
+        "E4jzjcyIXaE",
+        "GX0F2KppOuU",
+        "H4yc2yABEJQ"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:52+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-062",
@@ -1066,7 +1666,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "HaC4JUi9w2c",
+      "youtubeUrl": "https://www.youtube.com/watch?v=HaC4JUi9w2c",
+      "youtubeAlternatives": [
+        "DZOWrLBEh3E",
+        "WXkGaooRw6w",
+        "0WoeWOEBPB0"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:53+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-063",
@@ -1083,7 +1693,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "3ksRXBAiVpA",
+      "youtubeUrl": "https://www.youtube.com/watch?v=3ksRXBAiVpA",
+      "youtubeAlternatives": [
+        "2eUqZNFBfN0",
+        "X4irWBAk42g",
+        "rN0ZJeg_HPg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:53+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-064",
@@ -1100,7 +1720,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "v_e1Yr7f6B0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=v_e1Yr7f6B0",
+      "youtubeAlternatives": [
+        "V7xX1UobPJ0",
+        "51sEUajykcg",
+        "FkaW79lotiE"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:54+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-065",
@@ -1117,7 +1747,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "O6xjnCXprhM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=O6xjnCXprhM",
+      "youtubeAlternatives": [
+        "gXsy13w7Blg",
+        "Os43C3xVTvU",
+        "ay4zfMCE2jg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:55+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.0
     },
     {
       "id": "es-80s-066",
@@ -1134,7 +1774,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "q_1e_wY3C7g",
+      "youtubeUrl": "https://www.youtube.com/watch?v=q_1e_wY3C7g",
+      "youtubeAlternatives": [
+        "4nk4jgjMuvk",
+        "kIIeT2Attdw",
+        "Yz6AlS7-ZzI"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:56+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-067",
@@ -1151,7 +1801,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "Vzk9DoKdbrc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=Vzk9DoKdbrc",
+      "youtubeAlternatives": [
+        "LGcP8kFlCFc",
+        "gt9N5THL3wA",
+        "7oKZeo779Xg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:57+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 82.0
     },
     {
       "id": "es-80s-068",
@@ -1168,7 +1828,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "yDibxsV3HdI",
+      "youtubeUrl": "https://www.youtube.com/watch?v=yDibxsV3HdI",
+      "youtubeAlternatives": [
+        "VHSyb56pM3M",
+        "st3lZauY_wY",
+        "W2gvyVnWgOc"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:57+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-069",
@@ -1185,7 +1855,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "O7xf1anVjzw",
+      "youtubeUrl": "https://www.youtube.com/watch?v=O7xf1anVjzw",
+      "youtubeAlternatives": [
+        "O2bZl7yfM5k",
+        "ZPsRTP2DL1I",
+        "R59ymtfkBSY"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:58+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-070",
@@ -1202,7 +1882,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "zsxf54yTdx4",
+      "youtubeUrl": "https://www.youtube.com/watch?v=zsxf54yTdx4",
+      "youtubeAlternatives": [
+        "fUtDCNKE7jQ",
+        "q9JzAYMfFcg",
+        "_3cTwdDGOMo"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:54:59+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-071",
@@ -1219,7 +1909,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "WPbP2GWTtBk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=WPbP2GWTtBk",
+      "youtubeAlternatives": [
+        "Lr_tc_NSc9M",
+        "cbsfXzRHPGE",
+        "5dqwN2o_5ns"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:00+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-072",
@@ -1236,7 +1936,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "yWvuMVr9-WE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=yWvuMVr9-WE",
+      "youtubeAlternatives": [
+        "hpcI1i-YNhk",
+        "6Xry-An7Yt4",
+        "ViPFy9s4fts"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:01+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-073",
@@ -1253,7 +1963,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "hNDtsPMX7p0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=hNDtsPMX7p0",
+      "youtubeAlternatives": [
+        "YX70vSZs3BE",
+        "95uWHwnBaOw",
+        "9oB6fgpaFTs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:01+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-074",
@@ -1270,7 +1990,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "kN--yWPHxmo",
+      "youtubeUrl": "https://www.youtube.com/watch?v=kN--yWPHxmo",
+      "youtubeAlternatives": [
+        "GxZOEtFdZXc",
+        "zUmWWpXEn7A",
+        "y6VlVAeqv2M"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:02+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-075",
@@ -1287,7 +2017,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "T0MOvyvZfSk",
+      "youtubeUrl": "https://www.youtube.com/watch?v=T0MOvyvZfSk",
+      "youtubeAlternatives": [
+        "Bzz1z7x0oHA",
+        "HNxSsnjKLvY",
+        "IF1yrsgmQxY"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:03+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-076",
@@ -1304,7 +2044,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "6Tqv6gDO5UE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=6Tqv6gDO5UE",
+      "youtubeAlternatives": [
+        "gdFCqXSB3ws",
+        "8stJurl8Xjc",
+        "5D_e3RKjN9o"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:04+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-077",
@@ -1321,7 +2071,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "LukJkTiBgEQ",
+      "youtubeUrl": "https://www.youtube.com/watch?v=LukJkTiBgEQ",
+      "youtubeAlternatives": [
+        "w5jm28PTopY",
+        "4ItXCjHxuCo",
+        "oRxAOlshkCY"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:05+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-078",
@@ -1338,7 +2098,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "VDXBDbSTs5Y",
+      "youtubeUrl": "https://www.youtube.com/watch?v=VDXBDbSTs5Y",
+      "youtubeAlternatives": [
+        "mDVcyy7S6Kc",
+        "hsOrSoaOTik",
+        "di8hMSktEX4"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:05+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 89.0
     },
     {
       "id": "es-80s-079",
@@ -1355,7 +2125,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "p30wrDgT-kc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=p30wrDgT-kc",
+      "youtubeAlternatives": [
+        "D8sXBni21eg",
+        "rmYqj_zL-p0",
+        "GxZOEtFdZXc"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:06+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 62.0
     },
     {
       "id": "es-80s-080",
@@ -1372,7 +2152,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "8GnEGzMiQFQ",
+      "youtubeUrl": "https://www.youtube.com/watch?v=8GnEGzMiQFQ",
+      "youtubeAlternatives": [
+        "-CVljuqlSyE",
+        "glpBLJfFb6A",
+        "EHJZ2VPBGEs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:07+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-081",
@@ -1389,7 +2179,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "-LxM7aDlMzU",
+      "youtubeUrl": "https://www.youtube.com/watch?v=-LxM7aDlMzU",
+      "youtubeAlternatives": [
+        "guGINQpiwpg",
+        "uQQVrrvn0Eo",
+        "NYjgrSHAj7o"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:08+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-082",
@@ -1406,7 +2206,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "BJy1cBlNMbc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=BJy1cBlNMbc",
+      "youtubeAlternatives": [
+        "smfo5w7sKMY",
+        "jaYNkQAOR9U",
+        "vQwqLoZ28KU"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:09+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-083",
@@ -1423,7 +2233,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "mNIuVRgnOWc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=mNIuVRgnOWc",
+      "youtubeAlternatives": [
+        "zu86lMBat0k",
+        "nsMqxJTc6So",
+        "kSFM5l-kKQA"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:09+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 87.5
     },
     {
       "id": "es-80s-084",
@@ -1440,7 +2260,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "45eNR8qQj2c",
+      "youtubeUrl": "https://www.youtube.com/watch?v=45eNR8qQj2c",
+      "youtubeAlternatives": [
+        "e8-onsrhBBo",
+        "8VJWi6UfxU4",
+        "lA041ndP2BE"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:10+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-085",
@@ -1457,7 +2287,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "X-mKniQX3GM",
+      "youtubeUrl": "https://www.youtube.com/watch?v=X-mKniQX3GM",
+      "youtubeAlternatives": [
+        "iCNWU9-0eoo",
+        "s13NZx3Ey_M",
+        "7I9i40tvymc"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:11+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-086",
@@ -1474,7 +2314,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "UCODqwgKO1w",
+      "youtubeUrl": "https://www.youtube.com/watch?v=UCODqwgKO1w",
+      "youtubeAlternatives": [
+        "6gVKpFJl9MM",
+        "V--McSQ8oz4",
+        "UeHA7Ytkzw0"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:12+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-087",
@@ -1491,7 +2341,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ro1a__bp8qc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ro1a__bp8qc",
+      "youtubeAlternatives": [
+        "RPXohVWgjnk",
+        "s4wpJlPfd9Q",
+        "lHbEtrzf3u8"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:13+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-088",
@@ -1508,7 +2368,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "3Jiek6yY0kw",
+      "youtubeUrl": "https://www.youtube.com/watch?v=3Jiek6yY0kw",
+      "youtubeAlternatives": [
+        "hnCQlCqjvqo",
+        "bFjIzMK3jXo",
+        "Sf_k452fIs8"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:13+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-089",
@@ -1525,7 +2395,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "FECK82FNccU",
+      "youtubeUrl": "https://www.youtube.com/watch?v=FECK82FNccU",
+      "youtubeAlternatives": [
+        "HauwX1C-lPU",
+        "HpLxlrQ0baY",
+        "QECb-0s6YWQ"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:14+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-090",
@@ -1542,7 +2422,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "xf3G5AJhf5k",
+      "youtubeUrl": "https://www.youtube.com/watch?v=xf3G5AJhf5k",
+      "youtubeAlternatives": [
+        "NoEZX6wCFGg",
+        "bkNlhh9Jzik",
+        "_4eaSbpdd8E"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:15+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 85.0
     },
     {
       "id": "es-80s-091",
@@ -1559,7 +2449,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "2vo_BzD9gu0",
+      "youtubeUrl": "https://www.youtube.com/watch?v=2vo_BzD9gu0",
+      "youtubeAlternatives": [
+        "LTRwC6G0mgU",
+        "xSNW9CCA4Ks",
+        "n70iAC2mWPg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:16+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.5
     },
     {
       "id": "es-80s-092",
@@ -1576,7 +2476,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "2A9AlQV4xq8",
+      "youtubeUrl": "https://www.youtube.com/watch?v=2A9AlQV4xq8",
+      "youtubeAlternatives": [
+        "vBE9v7eU9ig",
+        "-Jxpybi-N78",
+        "wmY_f9i9bbM"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:16+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-093",
@@ -1593,7 +2503,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "CCAXr45pJKE",
+      "youtubeUrl": "https://www.youtube.com/watch?v=CCAXr45pJKE",
+      "youtubeAlternatives": [
+        "OGUCbH6k5UE",
+        "019HhfHxUjU",
+        "lYom1IU33d4"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:17+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     },
     {
       "id": "es-80s-094",
@@ -1610,7 +2530,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "UPyqXQyvlek",
+      "youtubeUrl": "https://www.youtube.com/watch?v=UPyqXQyvlek",
+      "youtubeAlternatives": [
+        "gCHOzg5NdMQ",
+        "sMwd7r7WRQY",
+        "r0qhEOUia1I"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:18+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 93.5
     },
     {
       "id": "es-80s-095",
@@ -1627,7 +2557,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "4cceydMyzRs",
+      "youtubeUrl": "https://www.youtube.com/watch?v=4cceydMyzRs",
+      "youtubeAlternatives": [
+        "OGXDKBNFclA",
+        "Z_cuHu42UbM",
+        "jOOY8eK4-tg"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:19+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 75.5
     },
     {
       "id": "es-80s-096",
@@ -1644,7 +2584,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "3RbFyHJgqlY",
+      "youtubeUrl": "https://www.youtube.com/watch?v=3RbFyHJgqlY",
+      "youtubeAlternatives": [
+        "bgpD7g8KO8Q",
+        "hNtzQHIOQ24",
+        "SHjoX-1Ci3U"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:20+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 86.5
     },
     {
       "id": "es-80s-097",
@@ -1661,7 +2611,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "GdWXVo7B84Y",
+      "youtubeUrl": "https://www.youtube.com/watch?v=GdWXVo7B84Y",
+      "youtubeAlternatives": [
+        "BXWd_m0WRdg",
+        "QGprFwWnBm0",
+        "KLDcSJKNT68"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:21+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 82.0
     },
     {
       "id": "es-80s-098",
@@ -1678,7 +2638,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "x2h4J24092s",
+      "youtubeUrl": "https://www.youtube.com/watch?v=x2h4J24092s",
+      "youtubeAlternatives": [
+        "Qy4J0azwft4",
+        "250FboZE3n0",
+        "vMZpmHk9bkA"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:21+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 84.5
     },
     {
       "id": "es-80s-099",
@@ -1695,7 +2665,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "ujOXE5DaWuc",
+      "youtubeUrl": "https://www.youtube.com/watch?v=ujOXE5DaWuc",
+      "youtubeAlternatives": [
+        "uy32Wg5u1iw",
+        "oU5hKrriick",
+        "7Xjh279UT6E"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:22+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 82.0
     },
     {
       "id": "es-80s-100",
@@ -1712,7 +2692,17 @@
       "chartSource": null,
       "verified": false,
       "eligibilityStatus": "pending",
-      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK."
+      "verificationNote": "Candidata curatorial pendiente de comprobación documental Top 10 Chile/UK.",
+      "youtubeId": "L8Jd4ozm6-I",
+      "youtubeUrl": "https://www.youtube.com/watch?v=L8Jd4ozm6-I",
+      "youtubeAlternatives": [
+        "3jMVbR_t-DI",
+        "LfOEJw9Ep8E",
+        "lsbtdhO6pAs"
+      ],
+      "youtubeResolvedAt": "2026-08-24T16:55:23+00:00",
+      "youtubeResolution": "yt-dlp static catalog",
+      "youtubeResolutionScore": 80.0
     }
   ]
 }
