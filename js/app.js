@@ -2398,3 +2398,161 @@ document.addEventListener("DOMContentLoaded", () => {
     $("toggleVideoBtn").textContent = hidden ? "▸" : "▾";
   });
 });
+
+/* =========================================================
+   CGO Music — instalación PWA y navegación móvil v8
+   ========================================================= */
+let deferredInstallPrompt = null;
+
+function isRunningStandalone() {
+  return window.matchMedia?.("(display-mode: standalone)")?.matches || window.navigator.standalone === true;
+}
+
+function isIOSDevice() {
+  const ua = navigator.userAgent || "";
+  return /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+}
+
+function setInstallStatus(message = "") {
+  const status = $("installStatus");
+  if (status) status.textContent = message;
+}
+
+function refreshInstallButton() {
+  const button = $("installAppBtn");
+  if (!button) return;
+  if (isRunningStandalone()) {
+    button.hidden = true;
+    return;
+  }
+  button.hidden = false;
+  button.classList.toggle("install-ready", Boolean(deferredInstallPrompt));
+}
+
+function openInstallDialog() {
+  const dialog = $("installDialog");
+  if (!dialog) return;
+
+  const iosSteps = $("iosInstallSteps");
+  const genericSteps = $("genericInstallSteps");
+  const nativeButton = $("nativeInstallBtn");
+  const copy = $("installDialogText");
+
+  iosSteps.hidden = true;
+  genericSteps.hidden = true;
+  nativeButton.hidden = true;
+  setInstallStatus("");
+
+  if (isRunningStandalone()) {
+    copy.textContent = "CGO Music ya está abierta como aplicación en este dispositivo.";
+    setInstallStatus("Ya está instalada.");
+  } else if (deferredInstallPrompt) {
+    copy.textContent = "Instala CGO Music para abrirla desde tu pantalla de inicio como una aplicación.";
+    nativeButton.hidden = false;
+  } else if (isIOSDevice()) {
+    copy.textContent = "En iPhone y iPad, Apple permite agregar la app desde el menú Compartir de Safari.";
+    iosSteps.hidden = false;
+  } else {
+    copy.textContent = "Puedes crear un acceso directo o instalar CGO Music desde las opciones de tu navegador.";
+    genericSteps.hidden = false;
+  }
+
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+}
+
+function closeInstallDialog() {
+  const dialog = $("installDialog");
+  if (!dialog) return;
+  if (typeof dialog.close === "function") dialog.close();
+  else dialog.removeAttribute("open");
+}
+
+async function triggerNativeInstall() {
+  if (!deferredInstallPrompt) {
+    setInstallStatus("Usa el menú de tu navegador para agregar CGO Music a la pantalla de inicio.");
+    return;
+  }
+
+  try {
+    deferredInstallPrompt.prompt();
+    const choice = await deferredInstallPrompt.userChoice;
+    if (choice?.outcome === "accepted") {
+      setInstallStatus("Instalación aceptada. CGO Music aparecerá en tu pantalla de inicio.");
+    } else {
+      setInstallStatus("Instalación cancelada.");
+    }
+  } catch (error) {
+    console.warn("No se pudo abrir el diálogo de instalación:", error);
+    setInstallStatus("No se pudo iniciar la instalación. Intenta desde el menú del navegador.");
+  } finally {
+    deferredInstallPrompt = null;
+    refreshInstallButton();
+  }
+}
+
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  refreshInstallButton();
+});
+
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  refreshInstallButton();
+  closeInstallDialog();
+});
+
+function setMobileNavActive(name) {
+  document.querySelectorAll(".mobile-nav-btn").forEach(button => {
+    button.classList.toggle("active", button.dataset.mobileNav === name);
+  });
+}
+
+function mobileNavigate(name) {
+  if (name === "search") {
+    setMobileNavActive("search");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setTimeout(() => $("searchInput")?.focus(), 280);
+    return;
+  }
+
+  if (name === "custom" || name === "favorites") {
+    if ($("searchInput")) $("searchInput").value = "";
+    selectCollection(name);
+    selectDecade("all");
+    applyFilters();
+    setMobileNavActive(name);
+    document.querySelector(".collection-tabs")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+
+  setMobileNavActive("home");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  refreshInstallButton();
+
+  $("installAppBtn")?.addEventListener("click", openInstallDialog);
+  $("closeInstallDialogBtn")?.addEventListener("click", closeInstallDialog);
+  $("nativeInstallBtn")?.addEventListener("click", triggerNativeInstall);
+  $("installDialog")?.addEventListener("click", event => {
+    if (event.target === $("installDialog")) closeInstallDialog();
+  });
+
+  document.querySelectorAll(".mobile-nav-btn").forEach(button => {
+    button.addEventListener("click", () => mobileNavigate(button.dataset.mobileNav));
+  });
+
+  document.querySelectorAll(".collection-tab").forEach(button => {
+    button.addEventListener("click", () => {
+      const language = button.dataset.language;
+      setMobileNavActive(language === "custom" || language === "favorites" ? language : "home");
+    });
+  });
+
+  $("searchInput")?.addEventListener("focus", () => {
+    if (window.matchMedia("(max-width: 760px)").matches) setMobileNavActive("search");
+  });
+});

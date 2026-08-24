@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="referrer" content="strict-origin-when-cross-origin">
-  <meta name="theme-color" content="#0b0b0e">
+  <meta name="theme-color" content="#090b12">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -14,16 +14,17 @@
   <title>CGO Music</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="app-header">
     <a class="brand" href="#" aria-label="CGO Music">
-      <span class="brand-mark">C</span>
+      <span class="brand-mark"><img src="icons/icon-192.png" alt="" width="42" height="42"></span>
       <span>
-        <strong>CGO Music</strong>
-        <small>Top 10 Chile & UK</small>
+        <strong>CGO <em>MUSIC</em></strong>
+        <small>Tu música. Todas las épocas.</small>
       </span>
     </a>
 
@@ -35,14 +36,19 @@
       <button id="clearSearchBtn" class="clear-search" type="button" title="Limpiar búsqueda">×</button>
     </div>
 
-    <div class="header-badge">Catálogo + Mi Música</div>
+    <div class="header-actions">
+      <button id="installAppBtn" class="install-app-btn" type="button" title="Agregar CGO Music a la pantalla de inicio">
+        <span class="install-app-icon" aria-hidden="true">⇩</span>
+        <span>Agregar a inicio</span>
+      </button>
+    </div>
   </header>
 
   <main class="app-main">
     <section class="hero">
       <div class="hero-copy">
-        <span class="eyebrow">COLECCIONES</span>
-        <p>Catálogo Top 10 Chile/UK y canciones agregadas por ti.</p>
+        <span class="eyebrow">CGO MUSIC</span>
+        <p>Explora tu catálogo, descubre nuevas canciones y reúne tus favoritas en un solo lugar.</p>
       </div>
       <div class="hero-stats">
         <div><strong id="catalogTotal">0</strong><span>canciones cargadas</span></div>
@@ -252,6 +258,34 @@
 
   <input id="importSongsInput" type="file" accept="application/json,.json" hidden>
 
+  <dialog id="installDialog" class="install-dialog">
+    <div class="install-dialog-card">
+      <button id="closeInstallDialogBtn" class="dialog-close install-dialog-close" type="button" aria-label="Cerrar">×</button>
+      <img class="install-dialog-icon" src="icons/icon-192.png" alt="Icono de CGO Music" width="88" height="88">
+      <span class="eyebrow">CGO MUSIC</span>
+      <h2>Agregar a tu pantalla de inicio</h2>
+      <p id="installDialogText">Accede a CGO Music como una app, sin tener que buscarla en el navegador.</p>
+      <div id="iosInstallSteps" class="install-steps" hidden>
+        <div><span>1</span><p>Abre CGO Music en <strong>Safari</strong>.</p></div>
+        <div><span>2</span><p>Toca <strong>Compartir</strong> <span aria-hidden="true">⇧</span>.</p></div>
+        <div><span>3</span><p>Elige <strong>Agregar a pantalla de inicio</strong>.</p></div>
+      </div>
+      <div id="genericInstallSteps" class="install-steps" hidden>
+        <div><span>1</span><p>Abre el menú de tu navegador.</p></div>
+        <div><span>2</span><p>Elige <strong>Instalar aplicación</strong> o <strong>Agregar a pantalla principal</strong>.</p></div>
+      </div>
+      <button id="nativeInstallBtn" class="primary-btn install-native-btn" type="button" hidden>Instalar CGO Music</button>
+      <p id="installStatus" class="install-status" aria-live="polite"></p>
+    </div>
+  </dialog>
+
+  <nav class="mobile-nav" aria-label="Navegación principal">
+    <button class="mobile-nav-btn active" type="button" data-mobile-nav="home"><span>⌂</span><small>Inicio</small></button>
+    <button class="mobile-nav-btn" type="button" data-mobile-nav="search"><span>⌕</span><small>Buscar</small></button>
+    <button class="mobile-nav-btn" type="button" data-mobile-nav="custom"><span>♫</span><small>Mi Música</small></button>
+    <button class="mobile-nav-btn" type="button" data-mobile-nav="favorites"><span>☆</span><small>Favoritos</small></button>
+  </nav>
+
   <section class="player-dock" aria-label="Reproductor">
     <div class="dock-track">
       <div class="dock-thumb" id="dockThumb"><span>♪</span></div>
@@ -264,12 +298,12 @@
 
     <div class="dock-center">
       <div class="dock-controls">
-        <button id="shuffleBtn" class="dock-icon-btn" type="button" title="Aleatorio">🔀</button>
-        <button id="prevBtn" class="dock-icon-btn" type="button" title="Anterior">⏮</button>
-        <button id="playPauseBtn" class="dock-play-btn" type="button" title="Play / Pausa">▶</button>
-        <button id="stopBtn" class="dock-icon-btn" type="button" title="Stop">⏹</button>
-        <button id="nextBtn" class="dock-icon-btn" type="button" title="Siguiente">⏭</button>
-        <button id="repeatBtn" class="dock-icon-btn" type="button" title="Repetir lista">↻</button>
+        <button id="shuffleBtn" class="dock-icon-btn utility-control" type="button" title="Aleatorio" aria-label="Aleatorio">↝</button>
+        <button id="prevBtn" class="dock-icon-btn transport-control" type="button" title="Canción anterior" aria-label="Canción anterior" data-label="Anterior">⏮</button>
+        <button id="playPauseBtn" class="dock-play-btn transport-control transport-primary" type="button" title="Reproducir / Pausar" aria-label="Reproducir / Pausar" data-label="Reproducir">▶</button>
+        <button id="stopBtn" class="dock-icon-btn transport-control" type="button" title="Detener" aria-label="Detener" data-label="Detener">■</button>
+        <button id="nextBtn" class="dock-icon-btn transport-control" type="button" title="Canción siguiente" aria-label="Canción siguiente" data-label="Siguiente">⏭</button>
+        <button id="repeatBtn" class="dock-icon-btn utility-control" type="button" title="Repetir lista" aria-label="Repetir lista">↻</button>
       </div>
 
       <div class="progress-row">
