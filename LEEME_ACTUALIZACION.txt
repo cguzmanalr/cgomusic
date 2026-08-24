@@ -8,3 +8,6 @@ Cambios:
 Para GitHub Pages:
 - Reemplaza los archivos de este ZIP.
 - Conserva tus carpetas/archivos actuales data/ y js/config.js.
+
+
+v17: Anterior y Siguiente usan SVG blanco y el mismo tratamiento visual de Play. Service Worker actualizado a v17.

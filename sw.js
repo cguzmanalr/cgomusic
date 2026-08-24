@@ -1,4 +1,4 @@
-const CACHE_NAME = "cgo-music-pwa-v15-compact-transport";
+const CACHE_NAME = "cgo-music-pwa-v17-white-transport-icons";
 
 const PRECACHE_URLS = [
   "./",
