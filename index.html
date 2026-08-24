@@ -10,7 +10,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="CGO Music">
   <meta name="application-name" content="CGO Music">
-  <meta name="description" content="CGO Music: grandes canciones por décadas con reproductor YouTube.">
+  <meta name="description" content="CGO Music: grandes canciones por décadas con reproductor híbrido de audio y YouTube.">
   <title>CGO Music</title>
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -120,6 +120,7 @@
           <div>
             <strong id="sideTitle">CGO Music</strong>
             <span id="sideArtist">Elige un tema para comenzar</span>
+            <span id="playbackSourceBadge" class="playback-source-badge" hidden></span>
           </div>
         </div>
 
@@ -174,6 +175,7 @@
     </div>
   </section>
 
+  <audio id="audioPlayer" preload="metadata" playsinline></audio>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="js/app.js"></script>
 </body>

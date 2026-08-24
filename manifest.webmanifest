@@ -1,14 +1,17 @@
 {
   "name": "CGO Music",
   "short_name": "CGO Music",
-  "description": "Grandes canciones por décadas con reproductor YouTube.",
+  "description": "CGO Music: catálogo musical con reproducción híbrida, PWA y controles multimedia.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#09090b",
   "theme_color": "#0b0b0e",
   "orientation": "any",
-  "categories": ["music", "entertainment"],
+  "categories": [
+    "music",
+    "entertainment"
+  ],
   "icons": [
     {
       "src": "icons/icon-192.png",

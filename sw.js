@@ -1,4 +1,4 @@
-const CACHE_NAME = "cgo-music-pwa-v1";
+const CACHE_NAME = "cgo-music-pwa-v2-hybrid";
 
 const PRECACHE_URLS = [
   "./",
@@ -47,6 +47,18 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  // No guardamos archivos de audio en Cache Storage. Pueden ser muy grandes y
+  // los navegadores móviles suelen solicitar audio mediante peticiones Range.
+  const isAudioRequest =
+    request.destination === "audio" ||
+    /\.(mp3|m4a|aac|ogg|oga|wav|flac|opus)(?:$|\?)/i.test(url.pathname) ||
+    request.headers.has("range");
+
+  if (isAudioRequest) {
+    event.respondWith(fetch(request));
+    return;
+  }
 
   event.respondWith((async () => {
     const cache = await caches.open(CACHE_NAME);

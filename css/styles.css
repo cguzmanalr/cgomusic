@@ -835,3 +835,56 @@ input[type="range"] { accent-color: var(--accent); cursor: pointer; }
     min-width: 92px;
   }
 }
+
+/* =========================================================
+   Reproductor híbrido: audio directo + YouTube
+   ========================================================= */
+#audioPlayer {
+  display: none;
+}
+
+.playback-source-badge {
+  width: fit-content;
+  margin-top: 6px !important;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 10px !important;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.playback-source-badge.audio-source {
+  background: rgba(62, 199, 117, .12);
+  color: #71e6a2;
+}
+
+.playback-source-badge.youtube-source {
+  background: rgba(255, 76, 76, .10);
+  color: #ff8a8a;
+}
+
+.video-shell {
+  position: relative;
+}
+
+.video-area.audio-mode .video-shell iframe {
+  opacity: .18;
+  filter: grayscale(1);
+}
+
+.video-area.audio-mode .video-shell::after {
+  content: "♫  Audio en segundo plano";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: radial-gradient(circle at center, rgba(25, 25, 31, .72), rgba(0, 0, 0, .88));
+  color: #f4f4f6;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .01em;
+  text-align: center;
+  pointer-events: none;
+}

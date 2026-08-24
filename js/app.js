@@ -1,4 +1,7 @@
 let player;
+let audioPlayer = null;
+let playbackEngine = "none"; // none | youtube | audio
+let audioFallbackAttempted = false;
 let catalog = [];
 let catalogMeta = [];
 let visibleSongs = [];
@@ -132,65 +135,194 @@ function setMediaAction(action, handler) {
   }
 }
 
+function directAudioUrl(song) {
+  return String(song?.audioUrl || "").trim();
+}
+
+function activeMediaElement() {
+  if (playbackEngine === "audio") return audioPlayer;
+  return null;
+}
+
+function updatePlaybackSourceBadge() {
+  const badge = $("playbackSourceBadge");
+  const videoArea = $("videoArea");
+  if (videoArea) videoArea.classList.toggle("audio-mode", playbackEngine === "audio");
+  if (!badge) return;
+
+  if (!currentSong || playbackEngine === "none") {
+    badge.hidden = true;
+    return;
+  }
+
+  badge.hidden = false;
+  if (playbackEngine === "audio") {
+    badge.textContent = "Audio · segundo plano";
+    badge.classList.add("audio-source");
+    badge.classList.remove("youtube-source");
+  } else {
+    badge.textContent = "YouTube · primer plano";
+    badge.classList.add("youtube-source");
+    badge.classList.remove("audio-source");
+  }
+}
+
+function setupAudioPlayer() {
+  audioPlayer = $("audioPlayer");
+  if (!audioPlayer) return;
+
+  audioPlayer.volume = Number($("volume")?.value || 70) / 100;
+
+  audioPlayer.addEventListener("play", () => {
+    if (playbackEngine !== "audio" || !currentSong) return;
+    stoppedByUser = false;
+    setMediaSessionPlaybackState("playing");
+    $("playPauseBtn").textContent = "❚❚";
+    startProgressTimer();
+    updatePlaybackSourceBadge();
+    syncMediaSessionPosition();
+    setStatus("Audio directo · la reproducción en segundo plano está disponible.");
+  });
+
+  audioPlayer.addEventListener("pause", () => {
+    if (playbackEngine !== "audio" || !currentSong || stoppedByUser) return;
+    setMediaSessionPlaybackState("paused");
+    $("playPauseBtn").textContent = "▶";
+    stopProgressTimer();
+    syncMediaSessionPosition();
+  });
+
+  audioPlayer.addEventListener("loadedmetadata", () => {
+    if (playbackEngine === "audio") syncMediaSessionPosition();
+  });
+
+  audioPlayer.addEventListener("ended", () => {
+    if (playbackEngine !== "audio") return;
+    setMediaSessionPlaybackState("none");
+    $("playPauseBtn").textContent = "▶";
+    stopProgressTimer();
+    if (!stoppedByUser) nextSong(true);
+  });
+
+  audioPlayer.addEventListener("error", () => {
+    if (playbackEngine !== "audio" || stoppedByUser || !currentSong) return;
+    fallbackCurrentSongToYouTube("El audio directo no pudo reproducirse.");
+  });
+}
+
+async function playActiveMedia() {
+  if (!currentSong) {
+    startUserPlayback();
+    setQueueFromVisible();
+    playCurrent();
+    return;
+  }
+
+  startUserPlayback();
+
+  if (playbackEngine === "audio" && audioPlayer) {
+    try {
+      await audioPlayer.play();
+    } catch (error) {
+      console.warn("No se pudo reanudar el audio:", error);
+      setStatus("El sistema no permitió reanudar el audio todavía.");
+    }
+    return;
+  }
+
+  if (playbackEngine === "youtube" && playerReady) {
+    player.playVideo();
+    return;
+  }
+
+  playCurrent();
+}
+
+function pauseActiveMedia() {
+  if (playbackEngine === "audio" && audioPlayer) {
+    audioPlayer.pause();
+  } else if (playbackEngine === "youtube" && playerReady) {
+    player.pauseVideo();
+  }
+}
+
+function activeMediaPosition() {
+  if (playbackEngine === "audio" && audioPlayer) {
+    return {
+      current: Number(audioPlayer.currentTime || 0),
+      duration: Number(audioPlayer.duration || 0),
+      rate: Number(audioPlayer.playbackRate || 1)
+    };
+  }
+
+  if (playbackEngine === "youtube" && playerReady) {
+    return {
+      current: Number(player.getCurrentTime?.() || 0),
+      duration: Number(player.getDuration?.() || 0),
+      rate: Number(player.getPlaybackRate?.() || 1)
+    };
+  }
+
+  return { current: 0, duration: 0, rate: 1 };
+}
+
+function seekActiveMedia(seconds) {
+  const target = Math.max(0, Number(seconds || 0));
+
+  if (playbackEngine === "audio" && audioPlayer) {
+    const duration = Number(audioPlayer.duration || 0);
+    audioPlayer.currentTime = duration > 0 ? Math.min(duration, target) : target;
+  } else if (playbackEngine === "youtube" && playerReady) {
+    player.seekTo(target, true);
+  }
+
+  syncMediaSessionPosition();
+}
+
 function setupMediaSession() {
   if (!("mediaSession" in navigator)) return;
 
-  setMediaAction("play", () => {
-    if (!currentSong) {
-      startUserPlayback();
-      setQueueFromVisible();
-      playCurrent();
-      return;
-    }
-    startUserPlayback();
-    if (playerReady) player.playVideo();
-  });
-
-  setMediaAction("pause", () => {
-    if (playerReady) player.pauseVideo();
-  });
-
+  setMediaAction("play", playActiveMedia);
+  setMediaAction("pause", pauseActiveMedia);
   setMediaAction("stop", stopPlayback);
   setMediaAction("previoustrack", previousSong);
   setMediaAction("nexttrack", () => nextSong(false));
 
   setMediaAction("seekbackward", details => {
-    if (!playerReady || !currentSong) return;
-    const current = Number(player.getCurrentTime?.() || 0);
-    const amount = Number(details.seekOffset || 10);
-    player.seekTo(Math.max(0, current - amount), true);
-    syncMediaSessionPosition();
+    if (!currentSong) return;
+    const { current } = activeMediaPosition();
+    seekActiveMedia(current - Number(details.seekOffset || 10));
   });
 
   setMediaAction("seekforward", details => {
-    if (!playerReady || !currentSong) return;
-    const current = Number(player.getCurrentTime?.() || 0);
-    const duration = Number(player.getDuration?.() || 0);
-    const amount = Number(details.seekOffset || 10);
-    player.seekTo(duration > 0 ? Math.min(duration, current + amount) : current + amount, true);
-    syncMediaSessionPosition();
+    if (!currentSong) return;
+    const { current, duration } = activeMediaPosition();
+    const target = current + Number(details.seekOffset || 10);
+    seekActiveMedia(duration > 0 ? Math.min(duration, target) : target);
   });
 
   setMediaAction("seekto", details => {
-    if (!playerReady || !currentSong || !Number.isFinite(details.seekTime)) return;
-    player.seekTo(details.seekTime, true);
-    syncMediaSessionPosition();
+    if (!currentSong || !Number.isFinite(details.seekTime)) return;
+    seekActiveMedia(details.seekTime);
   });
 }
 
 function updateMediaSessionMetadata() {
   if (!("mediaSession" in navigator) || !currentSong || !("MediaMetadata" in window)) return;
 
+  const customArtwork = customArtworkUrl(currentSong);
   const thumb = youtubeThumb(currentSong);
-  const artwork = thumb
-    ? [
-        { src: thumb, sizes: "320x180", type: "image/jpeg" },
-        { src: thumb.replace("mqdefault.jpg", "hqdefault.jpg"), sizes: "480x360", type: "image/jpeg" }
-      ]
-    : [
-        { src: new URL("icons/icon-192.png", document.baseURI).href, sizes: "192x192", type: "image/png" },
-        { src: new URL("icons/icon-512.png", document.baseURI).href, sizes: "512x512", type: "image/png" }
-      ];
+  const artwork = customArtwork
+    ? [{ src: customArtwork }]
+    : thumb
+      ? [
+          { src: thumb, sizes: "320x180", type: "image/jpeg" },
+          { src: thumb.replace("mqdefault.jpg", "hqdefault.jpg"), sizes: "480x360", type: "image/jpeg" }
+        ]
+      : [
+          { src: new URL("icons/icon-192.png", document.baseURI).href, sizes: "192x192", type: "image/png" },
+          { src: new URL("icons/icon-512.png", document.baseURI).href, sizes: "512x512", type: "image/png" }
+        ];
 
   try {
     navigator.mediaSession.metadata = new MediaMetadata({
@@ -214,14 +346,11 @@ function setMediaSessionPlaybackState(state) {
 }
 
 function syncMediaSessionPosition() {
-  if (!("mediaSession" in navigator) || !playerReady || !currentSong) return;
+  if (!("mediaSession" in navigator) || !currentSong) return;
   if (typeof navigator.mediaSession.setPositionState !== "function") return;
 
   try {
-    const duration = Number(player.getDuration?.() || 0);
-    const current = Number(player.getCurrentTime?.() || 0);
-    const rate = Number(player.getPlaybackRate?.() || 1);
-
+    const { duration, current, rate } = activeMediaPosition();
     if (duration > 0) {
       navigator.mediaSession.setPositionState({
         duration,
@@ -249,6 +378,69 @@ function clearPlaybackWatchdog() {
   playbackWatchdogCandidate = null;
 }
 
+async function playAudioForCurrentSong(audioUrl) {
+  if (!audioPlayer || !currentSong || stoppedByUser) return;
+
+  playbackEngine = "audio";
+  audioFallbackAttempted = false;
+  clearPlaybackWatchdog();
+  clearPendingAdvance();
+
+  // Si veníamos desde YouTube, detenemos el iframe para evitar dos fuentes sonando.
+  if (playerReady) {
+    try { player.stopVideo(); } catch {}
+  }
+
+  const resolvedUrl = new URL(audioUrl, document.baseURI).href;
+  if (audioPlayer.src !== resolvedUrl) {
+    audioPlayer.src = resolvedUrl;
+    audioPlayer.load();
+  }
+
+  audioPlayer.volume = Number($("volume")?.value || 70) / 100;
+  updatePlaybackSourceBadge();
+
+  try {
+    await audioPlayer.play();
+  } catch (error) {
+    console.warn("No se pudo iniciar audio directo:", error);
+    if (error?.name === "NotAllowedError") {
+      setStatus("El navegador requiere tocar Play para continuar con el audio.");
+      setMediaSessionPlaybackState("paused");
+      $("playPauseBtn").textContent = "▶";
+      return;
+    }
+    fallbackCurrentSongToYouTube("El audio directo no pudo iniciarse.");
+  }
+}
+
+function fallbackCurrentSongToYouTube(reason) {
+  if (stoppedByUser || !currentSong || audioFallbackAttempted) return;
+  audioFallbackAttempted = true;
+
+  if (audioPlayer) {
+    try { audioPlayer.pause(); } catch {}
+  }
+
+  if (!playerReady) {
+    markCurrentSongFailed(`${reason} YouTube todavía no está listo.`);
+    return;
+  }
+
+  playbackEngine = "youtube";
+  currentVideoCandidateIndex = 0;
+  currentVideoCandidates = staticVideoCandidates(currentSong);
+  updatePlaybackSourceBadge();
+
+  if (!currentVideoCandidates.length) {
+    markCurrentSongFailed(`${reason} Tampoco hay un youtubeId disponible.`);
+    return;
+  }
+
+  setStatus(`${reason} Probando YouTube como respaldo…`);
+  loadCurrentVideoCandidate();
+}
+
 function loadCurrentVideoCandidate() {
   if (
     stoppedByUser ||
@@ -259,6 +451,12 @@ function loadCurrentVideoCandidate() {
   ) {
     return;
   }
+
+  playbackEngine = "youtube";
+  if (audioPlayer && !audioPlayer.paused) {
+    try { audioPlayer.pause(); } catch {}
+  }
+  updatePlaybackSourceBadge();
 
   const candidateId = currentVideoCandidates[currentVideoCandidateIndex];
   const token = playRequestToken;
@@ -398,6 +596,20 @@ function youtubeThumb(song) {
   return id ? `https://i.ytimg.com/vi/${id}/mqdefault.jpg` : "";
 }
 
+function customArtworkUrl(song) {
+  const value = String(song?.artworkUrl || "").trim();
+  if (!value) return "";
+  try {
+    return new URL(value, document.baseURI).href;
+  } catch {
+    return "";
+  }
+}
+
+function displayArtwork(song) {
+  return customArtworkUrl(song) || youtubeThumb(song);
+}
+
 function uniqueVideoIds(ids) {
   return [...new Set((ids || []).filter(id => /^[A-Za-z0-9_-]{11}$/.test(id)))];
 }
@@ -515,9 +727,11 @@ function onYouTubeIframeAPIReady() {
         playerReady = true;
         player.setVolume(Number($("volume").value));
         updateVolumeLabel();
-        setStatus(isFileProtocol()
-          ? "⚠ Abierto con file://. Ejecuta INICIAR_CGO_MUSIC.bat."
-          : "Reproductor listo.");
+        if (playbackEngine !== "audio") {
+          setStatus(isFileProtocol()
+            ? "⚠ Abierto con file://. Ejecuta INICIAR_CGO_MUSIC.bat."
+            : "Reproductor híbrido listo.");
+        }
       },
       onStateChange: handlePlayerState,
       onError: handlePlayerError
@@ -526,6 +740,8 @@ function onYouTubeIframeAPIReady() {
 }
 
 function handlePlayerState(event) {
+  if (playbackEngine !== "youtube") return;
+
   if (event.data === YT.PlayerState.PLAYING) {
     stoppedByUser = false;
     setMediaSessionPlaybackState("playing");
@@ -535,7 +751,6 @@ function handlePlayerState(event) {
     $("playPauseBtn").textContent = "❚❚";
     startProgressTimer();
   } else if (event.data === YT.PlayerState.BUFFERING) {
-    // El iframe está respondiendo; evita declararlo muerto demasiado pronto.
     clearPlaybackWatchdog();
   } else if (event.data === YT.PlayerState.PAUSED) {
     setMediaSessionPlaybackState("paused");
@@ -565,7 +780,7 @@ function errorDescription(code) {
 }
 
 function handlePlayerError(event) {
-  if (stoppedByUser) return;
+  if (playbackEngine !== "youtube" || stoppedByUser) return;
 
   console.warn(
     "YouTube error:",
@@ -711,7 +926,7 @@ function chartBadge(song) {
 }
 
 function thumbMarkup(song) {
-  const thumb = youtubeThumb(song);
+  const thumb = displayArtwork(song);
   return thumb
     ? `<img src="${thumb}" alt="" loading="lazy">`
     : `<span class="song-note" aria-hidden="true">♪</span>`;
@@ -790,29 +1005,47 @@ function startUserPlayback() {
 function playCurrent() {
   if (stoppedByUser) return;
 
-  if (!playerReady || !playQueue.length || currentQueueIndex < 0) {
-    setStatus("El reproductor todavía no está listo.");
+  if (!playQueue.length || currentQueueIndex < 0) {
+    setStatus("No hay canciones en la cola.");
     return;
   }
 
   ++playRequestToken;
   currentSong = playQueue[currentQueueIndex];
   currentVideoCandidateIndex = 0;
+  currentVideoCandidates = [];
+  audioFallbackAttempted = false;
 
   updateNowPlaying();
 
+  const audioUrl = directAudioUrl(currentSong);
+  if (audioUrl) {
+    playAudioForCurrentSong(audioUrl);
+    renderSongList();
+    return;
+  }
+
+  if (!playerReady) {
+    playbackEngine = "none";
+    updatePlaybackSourceBadge();
+    setStatus("YouTube todavía no está listo. Espera un momento y vuelve a intentar.");
+    return;
+  }
+
+  playbackEngine = "youtube";
+  updatePlaybackSourceBadge();
   currentVideoCandidates = staticVideoCandidates(currentSong);
 
   if (!currentVideoCandidates.length) {
     markCurrentSongFailed(
-      `No hay un youtubeId estático para ${currentSong.title}. ` +
-      `Ejecuta ACTUALIZAR_URLS_YOUTUBE.bat para completar o reparar el catálogo.`
+      `No hay audioUrl ni youtubeId estático para ${currentSong.title}. ` +
+      `Agrega una fuente de audio o ejecuta ACTUALIZAR_URLS_YOUTUBE.bat.`
     );
     return;
   }
 
   loadCurrentVideoCandidate();
-  setStatus(shuffleEnabled ? "Reproducción aleatoria." : "Reproducción en orden.");
+  setStatus(shuffleEnabled ? "Reproducción aleatoria con YouTube." : "Reproducción en orden con YouTube.");
   renderSongList();
 }
 
@@ -853,8 +1086,6 @@ function previousSong() {
 }
 
 function togglePlayPause() {
-  if (!playerReady) return;
-
   if (!currentSong) {
     startUserPlayback();
     setQueueFromVisible();
@@ -862,14 +1093,28 @@ function togglePlayPause() {
     return;
   }
 
-  const state = player.getPlayerState();
-
-  if (state === YT.PlayerState.PLAYING) {
-    player.pauseVideo();
-  } else {
-    startUserPlayback();
-    player.playVideo();
+  if (playbackEngine === "audio" && audioPlayer) {
+    if (audioPlayer.paused) {
+      playActiveMedia();
+    } else {
+      audioPlayer.pause();
+    }
+    return;
   }
+
+  if (playbackEngine === "youtube" && playerReady) {
+    const state = player.getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+      player.pauseVideo();
+    } else {
+      startUserPlayback();
+      player.playVideo();
+    }
+    return;
+  }
+
+  startUserPlayback();
+  playCurrent();
 }
 
 function stopPlayback() {
@@ -880,14 +1125,25 @@ function stopPlayback() {
   failedSongIds.clear();
   stopProgressTimer();
 
+  if (audioPlayer) {
+    try {
+      audioPlayer.pause();
+      audioPlayer.currentTime = 0;
+    } catch (error) {
+      console.warn("No se pudo detener audio directo:", error);
+    }
+  }
+
   if (playerReady) {
     try {
       player.stopVideo();
     } catch (error) {
-      console.warn("No se pudo detener:", error);
+      console.warn("No se pudo detener YouTube:", error);
     }
   }
 
+  playbackEngine = "none";
+  updatePlaybackSourceBadge();
   $("playPauseBtn").textContent = "▶";
   setMediaSessionPlaybackState("none");
   $("progress").value = 0;
@@ -938,7 +1194,7 @@ function toggleRepeat() {
 }
 
 function updateNowPlaying() {
-  const thumb = youtubeThumb(currentSong);
+  const thumb = displayArtwork(currentSong);
   const verified = Boolean(currentSong.verified);
 
   $("nowTitle").textContent = currentSong.title;
@@ -985,7 +1241,6 @@ function updateNowPlaying() {
     : `<span>♪</span>`;
 
   updateMediaSessionMetadata();
-  syncMediaSessionPosition();
   renderSongList();
 }
 
@@ -993,10 +1248,9 @@ function startProgressTimer() {
   stopProgressTimer();
 
   progressTimer = setInterval(() => {
-    if (!playerReady || !currentSong || stoppedByUser) return;
+    if (!currentSong || stoppedByUser) return;
 
-    const current = player.getCurrentTime?.() || 0;
-    const total = player.getDuration?.() || 0;
+    const { current, duration: total } = activeMediaPosition();
 
     $("currentTime").textContent = formatTime(current);
     $("duration").textContent = formatTime(total);
@@ -1053,6 +1307,7 @@ function clearSearch() {
 document.addEventListener("DOMContentLoaded", () => {
   registerServiceWorker();
   setupInstallExperience();
+  setupAudioPlayer();
   setupMediaSession();
   loadCatalog();
   updateVolumeLabel();
@@ -1109,15 +1364,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $("volume").addEventListener("input", event => {
     updateVolumeLabel();
-    if (playerReady) player.setVolume(Number(event.target.value));
+    const value = Number(event.target.value);
+    if (playerReady) player.setVolume(value);
+    if (audioPlayer) audioPlayer.volume = value / 100;
   });
 
   $("progress").addEventListener("input", event => {
-    if (!playerReady || !currentSong) return;
-    const total = player.getDuration?.() || 0;
+    if (!currentSong) return;
+    const { duration: total } = activeMediaPosition();
     if (total > 0) {
-      player.seekTo((Number(event.target.value) / 100) * total, true);
-      syncMediaSessionPosition();
+      seekActiveMedia((Number(event.target.value) / 100) * total);
     }
   });
 
