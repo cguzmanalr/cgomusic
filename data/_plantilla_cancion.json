@@ -6,6 +6,8 @@
   "year": 1980,
   "decade": "80s",
   "language": "english",
+  "audioUrl": "https://tu-servidor.example/audio/cancion.m4a",
+  "artworkUrl": "",
   "youtubeId": "ID11CARACT",
   "youtubeUrl": "https://www.youtube.com/watch?v=ID11CARACT",
   "youtubeAlternatives": [],

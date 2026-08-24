@@ -1,165 +1,103 @@
-# CGO Music — catálogo 1.200 · reproducción YouTube estática
+# CGO Music — reproductor híbrido PWA
 
-Versión consolidada del proyecto **CGO Music**.
+Esta versión mantiene el catálogo de **1.200 canciones** y añade un motor de reproducción híbrido pensado para iPhone y Android.
 
-## Qué contiene
+## Cómo elige el reproductor
 
-La estructura incluye **12 listas de 100 canciones = 1.200 registros**:
+Cada canción puede tener una fuente de audio directa:
 
-- Inglés: 50s, 60s, 70s, 80s, 90s y 2000s.
-- Español: 50s, 60s, 70s, 80s, 90s y 2000s.
+```json
+"audioUrl": "https://.../cancion.m4a"
+```
 
-La colección inglesa conserva la comprobación histórica Top 10/UK disponible en el proyecto. La colección en español se muestra como selección musical, sin presentar estados `Pendiente` en la interfaz.
+Si `audioUrl` existe, CGO Music reproduce con el elemento HTML5 `<audio>`. Ese es el modo que puede continuar cuando el teléfono se bloquea y que se integra con Media Session.
 
-## Cambio principal de esta versión
-
-El reproductor **ya no busca videos mientras reproduce**.
-
-La aplicación usa únicamente datos guardados en cada canción:
+Si `audioUrl` está vacío o no existe, la aplicación conserva el funcionamiento anterior y utiliza:
 
 ```json
 "youtubeId": "XXXXXXXXXXX",
 "youtubeUrl": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
-"youtubeAlternatives": ["YYYYYYYYYYY"]
+"youtubeAlternatives": []
 ```
 
-`youtubeQuery` puede permanecer en los JSON, pero se usa solamente como pista de mantenimiento para el actualizador. `js/app.js` no consulta Invidious, no hace búsquedas de YouTube y no guarda resoluciones en `localStorage`.
+En ese caso la canción se reproduce con YouTube IFrame. En iPhone, YouTube puede detenerse cuando la pantalla se bloquea.
 
-Esto deja la aplicación publicada en GitHub Pages como un sitio estático: una vez generados y guardados los IDs, la reproducción utiliza directamente el YouTube IFrame Player.
+## Comportamiento de respaldo
 
-## Primera preparación / completar URLs
+El orden es:
 
-Ejecuta:
+1. `audioUrl` directo.
+2. Si el audio directo falla, `youtubeId`.
+3. Si ese video falla, `youtubeAlternatives`.
+4. Si ninguna fuente funciona, pasa automáticamente a la canción siguiente.
+
+Nunca deben sonar al mismo tiempo `<audio>` y YouTube: al cambiar de motor, la aplicación detiene el otro reproductor.
+
+## Pantalla bloqueada
+
+Cuando se usa `audioUrl`, Media Session publica al sistema:
+
+- título;
+- artista;
+- carátula cuando existe `artworkUrl`;
+- play y pausa;
+- anterior y siguiente;
+- avance/retroceso y posición cuando el sistema los admite.
+
+La prueba previa realizada con audio HTML5 confirmó que el iPhone puede mantener la reproducción después de bloquear la pantalla.
+
+## Campos nuevos por canción
+
+Puedes añadir estos campos sin eliminar los de YouTube:
+
+```json
+{
+  "title": "Nombre de la canción",
+  "artist": "Nombre del artista",
+  "audioUrl": "https://tu-servidor.example/audio/cancion.m4a",
+  "artworkUrl": "https://tu-servidor.example/caratulas/cancion.jpg",
+  "youtubeId": "ID11CARACT",
+  "youtubeUrl": "https://www.youtube.com/watch?v=ID11CARACT"
+}
+```
+
+`artworkUrl` es opcional. Si no existe, CGO Music intenta utilizar la miniatura disponible de YouTube para la interfaz y Media Session.
+
+## Recomendación para audio
+
+Para máxima compatibilidad móvil, utiliza archivos servidos por **HTTPS** y preferentemente formatos ampliamente soportados como AAC/M4A o MP3. La aplicación no extrae audio de YouTube.
+
+GitHub Pages puede alojar archivos de audio, pero una colección de 1.200 canciones puede superar rápidamente los límites prácticos de un repositorio. Para una biblioteca grande conviene utilizar almacenamiento/CDN autorizado y guardar sólo las URLs en los JSON.
+
+## PWA
+
+La versión incluye:
+
+- `manifest.webmanifest`;
+- `sw.js`;
+- iconos para iOS/Android;
+- instalación en pantalla de inicio;
+- Media Session;
+- Service Worker preparado para no interceptar/cachar peticiones Range de audio.
+
+Los archivos de audio se solicitan directamente a la red para evitar problemas con streaming y peticiones parciales en Safari/Chrome móvil.
+
+## Publicar en GitHub Pages
+
+Para actualizar un repositorio existente basta con reemplazar:
 
 ```text
-ACTUALIZAR_URLS_YOUTUBE.bat
+index.html
+css/styles.css
+js/app.js
+manifest.webmanifest
+sw.js
 ```
 
-El archivo:
+No es necesario reemplazar `data/` para instalar el motor híbrido.
 
-1. instala o actualiza `yt-dlp`;
-2. revisa los 12 JSON;
-3. conserva todas las canciones que ya tienen un `youtubeId` válido;
-4. busca solamente las que faltan;
-5. elige preferentemente versiones oficiales / Topic / VEVO y penaliza karaoke, covers, reacciones, slowed/reverb y directos;
-6. escribe físicamente `youtubeId` y `youtubeUrl` dentro de los JSON;
-7. guarda hasta tres alternativas cuando están disponibles;
-8. guarda el avance periódicamente, por lo que una segunda ejecución continúa sólo con lo pendiente.
+Después de subirlos, espera el despliegue de GitHub Pages. Si el iPhone conserva una versión PWA antigua, abre la web en Safari una vez y vuelve a cargarla; el Service Worker nuevo usa el caché `cgo-music-pwa-v2-hybrid`.
 
-El reporte de cada ejecución queda en:
+## Estado actual de los catálogos
 
-```text
-data/youtube_resolution_report.json
-```
-
-## Abrir CGO Music
-
-Ejecuta:
-
-```text
-INICIAR_CGO_MUSIC.bat
-```
-
-Si detecta URLs pendientes y Python está disponible, ofrece ejecutar el actualizador antes de abrir la aplicación.
-
-Después inicia un servidor local y abre:
-
-```text
-http://localhost:8000/
-```
-
-No se recomienda abrir `index.html` directamente con `file://`.
-
-## Reparar una canción puntual
-
-Si en el futuro un video es retirado, queda privado o bloquea la inserción, ejecuta:
-
-```text
-REPARAR_UNA_CANCION.bat
-```
-
-Escribe el ID interno de la canción, por ejemplo:
-
-```text
-en-80s-001
-```
-
-El script vuelve a resolver solamente ese registro y reemplaza su `youtubeId`, `youtubeUrl` y alternativas.
-
-## Comportamiento del reproductor
-
-- Reproducción en orden.
-- Reproducción aleatoria.
-- Siguiente y anterior.
-- Pausa y Stop.
-- Stop invalida cualquier avance programado y no vuelve a iniciar por sí solo.
-- Repetición de lista opcional.
-- Avance automático cuando termina una canción.
-- Si un ID falla, prueba `youtubeAlternatives` y después salta a la siguiente canción.
-- La barra de volumen permanece visible en escritorio, tablet y móvil y siempre se identifica como **Volumen**.
-- El buscador funciona sobre el catálogo completo.
-
-## Auditoría
-
-Para revisar la integridad del proyecto:
-
-```text
-python tools/auditar_catalogos.py
-```
-
-Comprueba:
-
-- 12 catálogos;
-- exactamente 100 canciones por catálogo;
-- 1.200 canciones totales;
-- IDs internos sin duplicados;
-- coherencia `youtubeId` ↔ `youtubeUrl`;
-- cobertura de URLs estáticas por década;
-- consistencia de los registros marcados como Top 10 verificados.
-
-También puedes usar:
-
-```text
-python tools/check_youtube_catalog.py
-```
-
-Devuelve éxito únicamente cuando las 1.200 canciones tienen `youtubeId + youtubeUrl` estáticos.
-
-## Publicación en GitHub Pages
-
-Cuando `ACTUALIZAR_URLS_YOUTUBE.bat` termine, sube/commitea los JSON modificados junto con el resto del proyecto. GitHub Pages no necesita Python ni `yt-dlp`: esas herramientas son sólo para preparar o reparar el catálogo localmente.
-
-## Estructura principal
-
-```text
-CGOMusic/
-├── index.html
-├── css/
-│   └── styles.css
-├── js/
-│   └── app.js
-├── data/
-│   ├── catalogs.json
-│   ├── ingles/
-│   │   ├── 50s.json
-│   │   ├── 60s.json
-│   │   ├── 70s.json
-│   │   ├── 80s.json
-│   │   ├── 90s.json
-│   │   └── 2000s.json
-│   └── espanol/
-│       ├── 50s.json
-│       ├── 60s.json
-│       ├── 70s.json
-│       ├── 80s.json
-│       ├── 90s.json
-│       └── 2000s.json
-├── tools/
-│   ├── resolver_youtube.py
-│   ├── auditar_catalogos.py
-│   ├── check_youtube_catalog.py
-│   └── server.ps1
-├── ACTUALIZAR_URLS_YOUTUBE.bat
-├── REPARAR_UNA_CANCION.bat
-└── INICIAR_CGO_MUSIC.bat
-```
+Los 1.200 registros existentes siguen intactos. Ninguno recibe un `audioUrl` inventado automáticamente. A medida que agregues fuentes de audio autorizadas, esas canciones comenzarán a usar el modo de segundo plano sin necesidad de modificar de nuevo `app.js`.
