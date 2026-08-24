@@ -2155,3 +2155,44 @@ body {
     flex: 0 0 50px;
   }
 }
+
+/* =========================================================
+   CGO Music v18 — colecciones siempre en una sola línea
+   ========================================================= */
+.collection-tabs {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  width: 100%;
+}
+
+.collection-tab {
+  min-width: 0 !important;
+  overflow: hidden;
+}
+
+.collection-tab strong {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  font-size: clamp(12px, 4vw, 22px) !important;
+  font-weight: 300 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em;
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: clip;
+  text-align: center;
+}
+
+@media (max-width: 420px) {
+  .collection-tabs { gap: 5px !important; }
+  .collection-tab {
+    min-height: 64px;
+    padding-inline: 4px !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .collection-tabs { gap: 4px !important; }
+  .collection-tab { padding-inline: 2px !important; }
+  .collection-tab strong { font-size: 12px !important; }
+}

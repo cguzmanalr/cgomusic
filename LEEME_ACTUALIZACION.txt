@@ -1,13 +1,12 @@
-CGO Music v15 — interfaz compacta
+CGO Music v18 — botones de colección en una sola línea
 
 Cambios:
-- Se eliminó por completo el bloque superior “Explora tu catálogo…” para ganar espacio vertical.
-- Los botones Anterior y Siguiente ahora comparten el mismo tamaño, gradiente y estilo visual que Play/Pausa.
-- Service Worker actualizado a v15 para forzar la renovación de caché.
+- Inglés, Español, Mi Música y Favoritos permanecen siempre en una sola fila.
+- El texto de cada botón nunca salta a una segunda línea.
+- El tamaño tipográfico se adapta automáticamente al ancho disponible.
+- Se mantienen los cuatro botones distribuidos en columnas iguales.
+- Service Worker actualizado a v18.
 
-Para GitHub Pages:
-- Reemplaza los archivos de este ZIP.
-- Conserva tus carpetas/archivos actuales data/ y js/config.js.
-
-
-v17: Anterior y Siguiente usan SVG blanco y el mismo tratamiento visual de Play. Service Worker actualizado a v17.
+Al subir a GitHub conserva tus carpetas/archivos actuales:
+- data/
+- js/config.js
